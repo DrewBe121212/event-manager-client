@@ -1,12 +1,11 @@
+import 'babel-polyfill';
 import React from 'react';
 import {render} from 'react-dom';
-import 'babel-polyfill';
+import {BrowserRouter} from 'react-router-dom';
+import {App} from './components/App'
 
-class App extends React.Component {
-  render () {
-    const message = 'Hello World! From React';
-    return <p>{message}</p>;
-  }
-}
-
-render(<App/>, document.getElementById('app'));
+render((
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>
+), document.getElementById('app'));
