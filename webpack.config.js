@@ -27,7 +27,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: ['style', 'css']
+        loaders: [
+          'style-loader',
+          'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss?sourceMap&sourceComments',
+        ],
       }
     ]
   },
@@ -35,8 +38,8 @@ module.exports = {
     host: 'localhost',
     port: 8080,
     inline: true,
-    hot: true,
+    hot: false,
     historyApiFallback: true,
     contentBase: BUILD_DIR
-  },
+  }
 }

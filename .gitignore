@@ -1,4 +1,4 @@
-npm-debug.log
+*.log
 node_modules/
 src/client/public/js/*
 src/client/public/css/*

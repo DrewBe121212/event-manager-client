@@ -1,17 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const initialState = {
-  message: "Default Message"
-};
-
 export class HelloWorld extends React.Component {
 
+  static defaultProps = {
+    message: "Default Message ..."
+  };
+
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.state = Object.assign(initialState, props);
-
+    this.state = Object.assign(props);
   }
 
   render () {
