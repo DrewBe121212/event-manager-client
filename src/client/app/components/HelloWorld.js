@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 export class HelloWorld extends React.Component {
 
   static defaultProps = {
-    message: "Default Message ..."
+    message: "Default Message..."
   };
 
   constructor(props) {

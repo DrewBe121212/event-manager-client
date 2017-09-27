@@ -1,52 +1,54 @@
 const webpack = require('webpack');
-const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackAutoInjectVersion = require('webpack-auto-inject-version');
 
-const CLIENT_PATH = path.resolve(__dirname, 'src/client');
-
-const BUILD_DIR = path.resolve(__dirname, 'dist');
-const APP_DIR = path.resolve(CLIENT_PATH, 'app');
+const CONFIG = require('./config');
+const PATHS = CONFIG.PATHS;
 
 module.exports = {
   entry: [
-    APP_DIR + '/index.js'
+    PATHS.APP_DIR + '/index.js'
   ],
   output: {
-    path: BUILD_DIR,
-    filename: 'js/[name]-[hash].js',
-    publicPath: '/'
+    path: PATHS.BUILD_DIR,
+    filename: 'js/[name].js',
   },
   module: {
     loaders: [
       {
         test: /.json$/,
-        include : APP_DIR,
+        include : PATHS.APP_DIR,
         loaders: ['json']
       },
       {
         test: /\.jsx?$/,
-        include : APP_DIR,
+        include : PATHS.APP_DIR,
         loader: 'babel-loader'
       },
       {
         test: /\.(css|scss)$/,
-        include : APP_DIR,
+        include : PATHS.APP_DIR,
         loaders: ['style', 'css', 'sass']
       }
     ]
   },
   plugins: [
+    new WebpackAutoInjectVersion({
+      SILENT: true
+    }),
     new HtmlWebpackPlugin({
-      template: path.resolve(APP_DIR, 'index.html')
+      template: PATHS.APP_TEMPLATE,
+      xhtml: true
     })
   ],
+  devtool: 'source-map',
   devServer: {
     host: 'localhost',
     port: 8080,
     inline: true,
     hot: false,
     historyApiFallback: true,
-    contentBase: BUILD_DIR
+    contentBase: PATHS.BUILD_DIR
   }
 }
