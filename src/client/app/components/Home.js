@@ -1,14 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const initialState = {};
-
 export class Home extends React.Component {
+
+  static defaultProps = {
+
+  };
 
   constructor(props) {
     super(props)
 
-    this.state = Object.assign(initialState, props);
+    this.state = Object.assign({}, props);
 
   }
 

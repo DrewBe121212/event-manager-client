@@ -1,9 +1,11 @@
-const path = require('path');
 const webpack = require('webpack');
+const path = require('path');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const CLIENT_PATH = path.resolve(__dirname, 'src/client');
 
-const BUILD_DIR = path.resolve(CLIENT_PATH, 'public');
+const BUILD_DIR = path.resolve(__dirname, 'dist');
 const APP_DIR = path.resolve(CLIENT_PATH, 'app');
 
 module.exports = {
@@ -11,29 +13,34 @@ module.exports = {
     APP_DIR + '/index.js'
   ],
   output: {
-    path: path.resolve(BUILD_DIR, 'js'),
-    filename: 'bundle.js'
+    path: BUILD_DIR,
+    filename: 'js/[name]-[hash].js',
+    publicPath: '/'
   },
   module: {
     loaders: [
+      {
+        test: /.json$/,
+        include : APP_DIR,
+        loaders: ['json']
+      },
       {
         test: /\.jsx?$/,
         include : APP_DIR,
         loader: 'babel-loader'
       },
       {
-        test: /\.scss$/,
+        test: /\.(css|scss)$/,
+        include : APP_DIR,
         loaders: ['style', 'css', 'sass']
-      },
-      {
-        test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss?sourceMap&sourceComments',
-        ],
       }
     ]
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(APP_DIR, 'index.html')
+    })
+  ],
   devServer: {
     host: 'localhost',
     port: 8080,

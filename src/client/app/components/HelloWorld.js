@@ -10,7 +10,7 @@ export class HelloWorld extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign(props);
+    this.state = Object.assign({}, props);
   }
 
   render () {
