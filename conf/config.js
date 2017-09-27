@@ -3,6 +3,7 @@ const path = require('path');
 const ROOT_PATH = path.resolve(__dirname, '../');
 const CLIENT_PATH = path.resolve(ROOT_PATH, 'src/client');
 
+const TMP_DIR = path.resolve(ROOT_PATH, '.tmp');
 const BUILD_DIR = path.resolve(ROOT_PATH, 'dist');
 const APP_DIR = path.resolve(CLIENT_PATH, 'app');
 
@@ -12,6 +13,7 @@ module.exports = {
   PATHS: {
     ROOT: ROOT_PATH,
     CLIENT: CLIENT_PATH,
+    TMP_DIR,
     BUILD_DIR: BUILD_DIR,
     APP_DIR: APP_DIR,
     APP_TEMPLATE: APP_TEMPLATE

@@ -11,7 +11,7 @@ module.exports = {
     PATHS.APP_DIR + '/index.js'
   ],
   output: {
-    path: PATHS.BUILD_DIR,
+    path: PATHS.TMP_DIR,
     filename: 'js/[name].js',
   },
   module: {
@@ -49,6 +49,6 @@ module.exports = {
     inline: true,
     hot: false,
     historyApiFallback: true,
-    contentBase: PATHS.BUILD_DIR
+    contentBase: PATHS.TMP_DIR,
   }
 }

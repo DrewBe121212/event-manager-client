@@ -4,10 +4,13 @@
   "description": "Event Technologies Event and Inventory Management application",
   "main": "index.js",
   "scripts": {
-    "build-dev": "webpack -d --config conf/webpack-dev.config.js",
-    "build": "webpack -p --config conf/webpack-dist.config.js",
-    "serve": "concurrently \"webpack -d --config conf/webpack-dev.config.js --watch\" \"webpack-dev-server --config conf/webpack-dev.config.js\"",
-    "start": "npm run build & webpack-dev-server --config conf/webpack-dev.config.js"
+    "build": "webpack -d --config conf/webpack-dev.config.js",
+    "build:dist": "webpack -p --config conf/webpack-dist.config.js",
+    "start": "npm run build & npm run start-server",
+    "start:dist": "npm run build:dist & npm run start-server:dist",
+    "start-server": "webpack-dev-server --config conf/webpack-dev.config.js",
+    "start-server:dist": "webpack-dev-server --config conf/webpack-dist.config.js",
+    "serve": "concurrently \"webpack -d --config conf/webpack-dev.config.js --watch\" \"npm run start-server\""
   },
   "babel": {
     "presets": [

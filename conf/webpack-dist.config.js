@@ -2,7 +2,6 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackAutoInjectVersion = require('webpack-auto-inject-version');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const CONFIG = require('./config');
 const PATHS = CONFIG.PATHS;
@@ -35,16 +34,27 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin([PATHS.BUILD_DIR], {
-      root: PATHS.ROOT,
-      exclude: []
-    }),
     new WebpackAutoInjectVersion({
       SILENT: true
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false
+      }
     }),
     new HtmlWebpackPlugin({
       template: PATHS.APP_TEMPLATE,
       xhtml: true
     })
-  ]
+  ],
+  devServer: {
+    host: 'localhost',
+    port: 8080,
+    inline: true,
+    hot: false,
+    historyApiFallback: true,
+    contentBase: PATHS.BUILD_DIR
+  }
 }
