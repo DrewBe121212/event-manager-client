@@ -17,7 +17,6 @@ export class Home extends React.Component {
   render () {
     return (
       <span>Home Page <Link to='/hello-world'>Hello World</Link></span>
-
     );
   }
 }
