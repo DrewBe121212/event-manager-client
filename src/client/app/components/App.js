@@ -1,24 +1,22 @@
 import React from 'react';
+import Paper from 'material-ui/Paper';
+
 import {Routes} from '../routes';
-import { NavigationBar } from '../layout/NavigationBar';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import deepOrange from 'material-ui/colors/deepOrange';
-import lightBlue from 'material-ui/colors/lightBlue';
+import {NavigationBar} from './layout/NavigationBar';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: deepOrange,
-    secondary: lightBlue
-  }
-});
-
-export class App extends React.Component {
+class App extends React.Component {
   render () {
     return (
-      <MuiThemeProvider theme={theme}>
+      <div>
         <NavigationBar />
-        {Routes}
-      </MuiThemeProvider>
+        <br/><br/><br/>
+        <Paper>
+          {Routes}
+        </Paper>
+
+      </div>
     );
   }
 }
+
+export {App};

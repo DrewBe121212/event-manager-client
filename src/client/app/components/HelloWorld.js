@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-export class HelloWorld extends React.Component {
+class HelloWorld extends React.Component {
 
   static defaultProps = {
-    message: 'Default Messagse...'
+    message: 'Default Message...'
   };
 
   constructor(props) {
@@ -22,3 +22,5 @@ export class HelloWorld extends React.Component {
     );
   }
 }
+
+export {HelloWorld};

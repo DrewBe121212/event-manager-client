@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'recompose';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
@@ -28,13 +30,17 @@ class NavigationBarComponent extends React.Component {
     classes: PropTypes.object.isRequired
   };
 
+  handleDrawerToggle = () => {
+    this.props.handleDrawerToggle()
+  }
+
   render() {
 
     return (
       <div className={this.props.classes.root}>
-        <AppBar position="static">
+        <AppBar>
           <Toolbar>
-            <IconButton className={this.props.classes.menuButton} color="contrast" aria-label="Menu">
+            <IconButton onClick={this.handleDrawerToggle} className={this.props.classes.menuButton} color="contrast" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className={this.props.classes.flex}>
@@ -50,4 +56,17 @@ class NavigationBarComponent extends React.Component {
 
 }
 
-export const NavigationBar = withStyles(styles)(NavigationBarComponent);
+const mapStateToProps = (state) => {
+  return {
+    navigation: state.navigation
+  };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    handleDrawerToggle: () => dispatch({ type: 'TOGGLE_DRAWER' })
+});
+
+export const NavigationBar = compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(NavigationBarComponent);
