@@ -13,19 +13,19 @@ const initialState = {
 const navigation = function(state = initialState, action) {
   switch(action.type) {
 
-    case OPEN_DRAWER:
-      return Object.assign(state, {drawer: {open: true}});
+  case OPEN_DRAWER:
+    return Object.assign({}, state, {drawer: {open: true}});
 
-    case CLOSE_DRAWER:
-      return Object.assign(state, {drawer: {open: false}});
+  case CLOSE_DRAWER:
+    return Object.assign({}, state, {drawer: {open: false}});
 
-    case TOGGLE_DRAWER:
-      return Object.assign(state, {drawer: {open: !state.drawer.open}});
+  case TOGGLE_DRAWER:
+    return Object.assign({}, state, {drawer: {open: !state.drawer.open}});
 
-    default:
-      return state;
+  default:
+    return state;
 
   }
-}
+};
 
 export {navigation};

@@ -3,18 +3,19 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'react-router-redux';
-import {App} from './components/App';
+import {Application} from './components/Application';
 
 import {store, history} from './store';
 
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
-import deepOrange from 'material-ui/colors/deepOrange';
-import lightBlue from 'material-ui/colors/lightBlue'; 
+import teal from 'material-ui/colors/teal';
+import lightBlue from 'material-ui/colors/lightBlue';
 
 const theme = createMuiTheme({
   palette: {
-    primary: deepOrange,
-    secondary: lightBlue
+    primary: teal,
+    secondary: lightBlue,
+    type: 'light'
   }
 });
 
@@ -23,7 +24,7 @@ render(
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
         <ConnectedRouter history={history}>
-          <App/>
+          <Application />
         </ConnectedRouter>
       </MuiThemeProvider>
     </Provider>

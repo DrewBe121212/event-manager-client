@@ -53,5 +53,8 @@ module.exports = {
     hot: false,
     historyApiFallback: true,
     contentBase: PATHS.TMP_DIR,
+    watchOptions: {
+      ignored: /node_modules/
+    }
   }
 }

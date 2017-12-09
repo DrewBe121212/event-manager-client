@@ -12,7 +12,6 @@ const myRouterMiddleware = routerMiddleware(history);
 
 const middleware = [myRouterMiddleware];
 
-/*eslint no-process-env: "error"*/
 if (process.env.NODE_ENV !== 'production') {
   const loggerMiddleware = createLogger({
     duration: true,
