@@ -13,6 +13,7 @@ module.exports = {
   output: {
     path: PATHS.TMP_DIR,
     filename: 'js/[name].js',
+    publicPath: '/'
   },
   module: {
     loaders: [
@@ -52,7 +53,6 @@ module.exports = {
     inline: true,
     hot: false,
     historyApiFallback: true,
-    contentBase: PATHS.TMP_DIR,
     watchOptions: {
       ignored: /node_modules/
     }

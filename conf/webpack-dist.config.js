@@ -13,6 +13,7 @@ module.exports = {
   output: {
     path: PATHS.BUILD_DIR,
     filename: 'js/[name]-[hash].js',
+    publicPath: '/'
   },
   module: {
     loaders: [

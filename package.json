@@ -1,13 +1,18 @@
 {
   "name": "event-manager",
   "version": "0.0.2",
-  "description": "Event Technologies Event and Inventory Management application",
+  "description": "Event/Video Production - Inventory Management Application",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DrewBe121212/event-video-production-event-manager.git"
+  },
   "scripts": {
+    "clean:dist": "rimraf dist",
     "build": "webpack -d --watch --config ./conf/webpack-dev.config.js",
-    "build:dist": "webpack -p --config ./conf/webpack-dist.config.js",
+    "build:dist": "npm run clean:dist && webpack -p --config ./conf/webpack-dist.config.js",
     "start": "npm run build & npm run start-server",
-    "start:dist": "npm run build:dist & npm run start-server:dist",
+    "start:dist": "npm run build:dist && npm run start-server:dist",
     "start-server": "webpack-dev-server --config ./conf/webpack-dev.config.js",
     "start-server:dist": "webpack-dev-server --config ./conf/webpack-dist.config.js",
     "eslint": "eslint ./src/client/app/.",
