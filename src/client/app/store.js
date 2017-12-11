@@ -18,7 +18,9 @@ const history = createHistory();
 const routingMiddleware = routerMiddleware(history);
 
 // array of used middlewares
-const middleware = [routingMiddleware, axiosMiddleware];
+const middleware = [
+  routingMiddleware, axiosMiddleware
+];
 
 if (process.env.NODE_ENV !== 'production') {
   const loggerMiddleware = createLogger({

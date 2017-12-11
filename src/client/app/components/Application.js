@@ -29,7 +29,6 @@ class ApplicationComponent extends React.Component {
     handleDrawerToggle: PropTypes.func.isRequired
   };
 
-
   render () {
 
     return (
@@ -60,6 +59,5 @@ const Application = withRouter(
     connect(mapStateToProps, mapActionsToProps)
   )(ApplicationComponent)
 );
-
 
 export {Application};

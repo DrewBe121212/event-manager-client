@@ -3,7 +3,6 @@ import {
   TOGGLE_DRAWER
 } from '../constants/navigation';
 
-
 const initialState = {
   drawer: {
     open: false
