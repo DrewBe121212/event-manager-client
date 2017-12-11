@@ -32,8 +32,8 @@ class ApplicationBarComponent extends React.Component {
     handleDrawerToggle: PropTypes.func.isRequired
   };
 
-  handleDrawerToggle = () => {
-    this.props.handleDrawerToggle();
+  openDrawer = () => {
+    this.props.handleDrawerToggle(true);
   }
 
   handleUserMenuClick = () => {
@@ -47,7 +47,7 @@ class ApplicationBarComponent extends React.Component {
       <div className={classes.root}>
         <AppBar>
           <Toolbar>
-            <IconButton onClick={this.handleDrawerToggle} className={classes.drawerButton} color="contrast" aria-label="Menu">
+            <IconButton onClick={this.openDrawer} className={classes.drawerButton} color="contrast" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>

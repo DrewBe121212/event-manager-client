@@ -1,8 +1,8 @@
+import {createReducer} from '../utils/redux';
 import {
-  OPEN_DRAWER,
-  CLOSE_DRAWER,
   TOGGLE_DRAWER
 } from '../constants/navigation';
+
 
 const initialState = {
   drawer: {
@@ -10,22 +10,23 @@ const initialState = {
   }
 };
 
-const navigation = function(state = initialState, action) {
-  switch(action.type) {
+const navigation = createReducer(initialState, {
+  [TOGGLE_DRAWER]: (state, payload) => {
 
-  case OPEN_DRAWER:
-    return Object.assign({}, state, {drawer: {open: true}});
+    let open = state.drawer.open;
 
-  case CLOSE_DRAWER:
-    return Object.assign({}, state, {drawer: {open: false}});
+    if (typeof payload === 'boolean') {
+      open = payload ? true : false;
+    } else {
+      open = open ? false : true;
+    }
 
-  case TOGGLE_DRAWER:
-    return Object.assign({}, state, {drawer: {open: !state.drawer.open}});
-
-  default:
-    return state;
-
+    return ({...state,
+      drawer: {
+        open: open
+      }
+    });
   }
-};
+});
 
 export {navigation};

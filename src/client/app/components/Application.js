@@ -4,7 +4,10 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {compose} from 'recompose';
 import {withStyles} from 'material-ui/styles';
+
 import {ApplicationBar} from './layout/ApplicationBar';
+
+import {toggleDrawer} from '../actions/navigation';
 import {Routes} from '../routes';
 
 const styles = () => ({
@@ -26,13 +29,14 @@ class ApplicationComponent extends React.Component {
     handleDrawerToggle: PropTypes.func.isRequired
   };
 
+
   render () {
 
     return (
       <div className={this.props.classes.root}>
         <ApplicationBar handleDrawerToggle={this.props.handleDrawerToggle} />
+
         <div className={this.props.classes.container}>
-          {this.props.navigation.drawer.open ? 'Yes': 'No'}
           {Routes}
         </div>
       </div>
@@ -46,14 +50,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  handleDrawerToggle: () => dispatch({ type: 'TOGGLE_DRAWER' })
-});
+const mapActionsToProps = {
+  handleDrawerToggle: toggleDrawer
+};
 
 const Application = withRouter(
   compose(
     withStyles(styles),
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapActionsToProps)
   )(ApplicationComponent)
 );
 
