@@ -3,9 +3,9 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'react-router-redux';
-import {Application} from './components/Application';
+import {Application} from './client/app/components/Application';
 
-import {store, history} from './store';
+import {store, history} from './client/app/store';
 
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import teal from 'material-ui/colors/teal';

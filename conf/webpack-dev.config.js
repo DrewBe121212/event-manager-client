@@ -8,7 +8,7 @@ const PATHS = CONFIG.PATHS;
 
 module.exports = {
   entry: [
-    PATHS.APP_DIR + '/index.js'
+    PATHS.SRC_DIR + '/index.js'
   ],
   output: {
     path: PATHS.TMP_DIR,
@@ -19,17 +19,17 @@ module.exports = {
     loaders: [
       {
         test: /.json$/,
-        include : PATHS.APP_DIR,
+        include : PATHS.SRC_DIR,
         loaders: ['json']
       },
       {
         test: /\.jsx?$/,
-        include : PATHS.APP_DIR,
+        include : PATHS.SRC_DIR,
         loader: 'babel-loader'
       },
       {
         test: /\.(css|scss)$/,
-        include : PATHS.APP_DIR,
+        include : PATHS.SRC_DIR,
         loaders: ['style', 'css', 'sass']
       }
     ]
