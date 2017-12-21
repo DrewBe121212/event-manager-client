@@ -24,18 +24,22 @@ const styles = () => ({
 class ApplicationComponent extends React.Component {
 
   static propTypes = {
+    title: PropTypes.string.isRequired,
+    drawer: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired,
     handleDrawerToggle: PropTypes.func.isRequired
   };
 
   render () {
 
-    return (
-      <div className={this.props.classes.root}>
-        <ApplicationBar handleDrawerToggle={this.props.handleDrawerToggle} />
+    const { classes } = this.props;
 
-        <div className={this.props.classes.container}>
+    return (
+      <div className={classes.root}>
+        <ApplicationBar title={this.props.title} handleDrawerToggle={this.props.handleDrawerToggle} />
+
+        <div className={classes.container}>
+          {this.props.drawer.open ? 'open' : 'closed'}
           {Routes}
         </div>
       </div>
@@ -45,7 +49,8 @@ class ApplicationComponent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    navigation: state.navigation
+    title: state.navigation.menu.title,
+    drawer: state.navigation.drawer
   };
 };
 

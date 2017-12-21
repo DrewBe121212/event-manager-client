@@ -28,6 +28,7 @@ const styles = (theme) => ({
 class ApplicationBarComponent extends React.Component {
 
   static propTypes = {
+    title: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
     handleDrawerToggle: PropTypes.func.isRequired
   };
@@ -51,7 +52,7 @@ class ApplicationBarComponent extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>
-              Event Technologies
+              {this.props.title}
             </Typography>
             <ApplicationBarButtons />
             <IconButton onClick={this.handleUserMenuClick} color="contrast">
