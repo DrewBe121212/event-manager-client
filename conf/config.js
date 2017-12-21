@@ -10,6 +10,8 @@ const APP_DIR = path.resolve(CLIENT_PATH, 'app');
 
 const APP_TEMPLATE = path.resolve(SRC_PATH, 'index.html');
 
+const NODE_MODULES = path.resolve(ROOT_PATH, 'node_modules');
+
 module.exports = {
   PATHS: {
     ROOT_DIR: ROOT_PATH,
@@ -18,6 +20,7 @@ module.exports = {
     TMP_DIR,
     BUILD_DIR: BUILD_DIR,
     APP_DIR: APP_DIR,
-    APP_TEMPLATE: APP_TEMPLATE
+    APP_TEMPLATE: APP_TEMPLATE,
+    NODE_MODULES
   }
 };

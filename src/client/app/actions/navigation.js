@@ -1,7 +1,7 @@
 import {
   TOGGLE_DRAWER,
   SET_MENU_TITLE
-} from '../constants/navigation';
+} from 'constants/navigation';
 
 const toggleDrawer = (open) => ({
   type: TOGGLE_DRAWER,

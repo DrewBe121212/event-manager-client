@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {compose} from 'recompose';
 import {withStyles} from 'material-ui/styles';
 
-import {setMenuTitle} from '../actions/navigation';
+import {setMenuTitle} from 'actions/navigation';
 
 const styles = () => ({
   root: {

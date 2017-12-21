@@ -6,7 +6,7 @@ import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import axios from 'axios';
 import axiousMiddleware from 'redux-axios-middleware';
 
-import {reducers} from './reducers';
+import {reducers} from 'reducers';
 
 const axiosClient = axios.create({
   baseURL: 'http://localhost:8080/api',

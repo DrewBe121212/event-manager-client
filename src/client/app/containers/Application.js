@@ -5,10 +5,10 @@ import {withRouter} from 'react-router-dom';
 import {compose} from 'recompose';
 import {withStyles} from 'material-ui/styles';
 
-import {ApplicationBar} from './layout/ApplicationBar';
+import {ApplicationBar} from 'components/layout/ApplicationBar';
 
-import {toggleDrawer} from '../actions/navigation';
-import {Routes} from '../routes';
+import {toggleDrawer} from 'actions/navigation';
+import {Routes} from 'routes';
 
 const styles = () => ({
   root: {

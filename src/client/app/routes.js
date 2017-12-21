@@ -1,7 +1,7 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 
-import {DailySchedule} from './containers/DailySchedule';
+import {DailySchedule} from 'containers/pages/DailySchedule';
 
 const Routes = (
   <Switch>

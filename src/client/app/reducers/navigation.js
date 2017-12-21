@@ -1,8 +1,8 @@
-import {createReducer} from '../utils/redux';
+import {createReducer} from 'utils/redux';
 import {
   TOGGLE_DRAWER,
   SET_MENU_TITLE
-} from '../constants/navigation';
+} from 'constants/navigation';
 
 const initialState = {
   menu: {
