@@ -11,11 +11,16 @@ import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import teal from 'material-ui/colors/teal';
 import lightBlue from 'material-ui/colors/lightBlue';
 
+import './client/app/assets/css/application.css';
+
 const theme = createMuiTheme({
   palette: {
     primary: teal,
     secondary: lightBlue,
     type: 'light'
+  },
+  drawer: {
+    width: 250
   }
 });
 

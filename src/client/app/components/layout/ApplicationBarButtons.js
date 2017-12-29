@@ -7,18 +7,6 @@ class ApplicationBarButtonsComponent extends React.Component {
   navbarButtons = () => {
     const buttons = [];
 
-    buttons.push({
-      key: 'daily-schedule',
-      url: '/',
-      label: 'Daily Schedule'
-    });
-
-    buttons.push({
-      key: 'reports',
-      url: '/hello-world',
-      label: 'Reports'
-    });
-
     return buttons;
   }
 

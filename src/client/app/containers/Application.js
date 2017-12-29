@@ -3,20 +3,49 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {compose} from 'recompose';
+import classNames from 'classnames';
 import {withStyles} from 'material-ui/styles';
 
 import {ApplicationBar} from 'components/layout/ApplicationBar';
+import {Navigation} from 'components/layout/Navigation';
 
 import {toggleDrawer} from 'actions/navigation';
 import {Routes} from 'routes';
 
-const styles = () => ({
+const styles = (theme) => ({
   root: {
 
+    position: 'relative',
+    display: 'flex',
+    width: '100%',
+    height: '100%'
+
   },
-  container: {
+  content: {
+    width: '100%',
+    marginLeft: -theme.drawer.width,
     flexGrow: 1,
-    marginTop: 70
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    height: 'calc(100% - 56px)',
+    marginTop: 56,
+    [theme.breakpoints.up('sm')]: {
+      content: {
+        height: 'calc(100% - 64px)',
+        marginTop: 64
+      }
+    }
+  },
+  contentShift: {
+    marginLeft: 0,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
   }
 
 });
@@ -32,14 +61,13 @@ class ApplicationComponent extends React.Component {
 
   render () {
 
-    const { classes } = this.props;
+    const {classes} = this.props;
 
     return (
       <div className={classes.root}>
-        <ApplicationBar title={this.props.title} handleDrawerToggle={this.props.handleDrawerToggle} />
-
-        <div className={classes.container}>
-          {this.props.drawer.open ? 'open' : 'closed'}
+        <ApplicationBar title={this.props.title} drawer={this.props.drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
+        <Navigation drawer={this.props.drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
+        <div className={classNames(classes.content, {[classes.contentShift]: this.props.drawer.open})}>
           {Routes}
         </div>
       </div>

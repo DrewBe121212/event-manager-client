@@ -40,8 +40,8 @@ const mapActionsToProps = {
 };
 
 const DailySchedule = compose(
-    withStyles(styles),
-    connect(mapStateToProps, mapActionsToProps)
-  )(DailyScheduleComponent);
+  withStyles(styles),
+  connect(mapStateToProps, mapActionsToProps)
+)(DailyScheduleComponent);
 
 export {DailySchedule};

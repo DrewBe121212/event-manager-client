@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import classNames from 'classnames';
 import {withStyles} from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -14,13 +14,30 @@ import {ApplicationBarButtons} from './ApplicationBarButtons';
 const styles = (theme) => ({
   root: {
     marginTop: theme.spacing.unit * 3,
-    width: '100%'
+    zIndex: 1,
+    overflow: 'hidden'
   },
-  flex: {
-    flex: 1
+  appBar: {
+    position: 'absolute',
+    transition: theme.transitions.create([
+      'margin', 'width'
+    ], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  appBarShift: {
+    width: `calc(100% - ${theme.drawer.width}px)`,
+    marginLeft: theme.drawer.width,
+    transition: theme.transitions.create([
+      'margin', 'width'
+    ], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   drawerButton: {
-    marginLeft: -12,
+    marginLeft: 12,
     marginRight: 20
   }
 });
@@ -29,12 +46,13 @@ class ApplicationBarComponent extends React.Component {
 
   static propTypes = {
     title: PropTypes.string.isRequired,
+    drawer: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     handleDrawerToggle: PropTypes.func.isRequired
   };
 
   openDrawer = () => {
-    this.props.handleDrawerToggle(true);
+    this.props.handleDrawerToggle();
   }
 
   handleUserMenuClick = () => {
@@ -46,18 +64,14 @@ class ApplicationBarComponent extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar>
-          <Toolbar>
-            <IconButton onClick={this.openDrawer} className={classes.drawerButton} color="contrast" aria-label="Menu">
+        <AppBar className={classNames(classes.appBar, {[classes.appBarShift]: this.props.drawer.open})}>
+          <Toolbar disableGutters={!this.props.drawer.open}>
+            <IconButton onClick={this.openDrawer} className={classNames(classes.drawerButton, {hidden: this.props.drawer.open})} color="contrast" aria-label="Menu">
               <MenuIcon />
             </IconButton>
-            <Typography type="title" color="inherit" className={classes.flex}>
+            <Typography type="title" color="inherit" noWrap>
               {this.props.title}
             </Typography>
-            <ApplicationBarButtons />
-            <IconButton onClick={this.handleUserMenuClick} color="contrast">
-              <AccountCircle />
-            </IconButton>
           </Toolbar>
         </AppBar>
       </div>

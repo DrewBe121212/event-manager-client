@@ -8,16 +8,16 @@ const PATHS = CONFIG.PATHS;
 
 module.exports = {
   entry: [
-    PATHS.SRC_DIR + '/index.js'
+    PATHS.SRC + '/index.js'
   ],
   output: {
-    path: PATHS.TMP_DIR,
+    path: PATHS.TMP,
     filename: 'js/[name].js',
     publicPath: '/'
   },
   resolve: {
     modules: [
-      PATHS.APP_DIR,
+      PATHS.APP,
       PATHS.NODE_MODULES
     ]
   },
@@ -25,18 +25,18 @@ module.exports = {
     loaders: [
       {
         test: /.json$/,
-        include : PATHS.SRC_DIR,
+        include : PATHS.SRC,
         loaders: ['json']
       },
       {
         test: /\.jsx?$/,
-        include : PATHS.SRC_DIR,
+        include : PATHS.SRC,
         loader: 'babel-loader'
       },
       {
         test: /\.(css|scss)$/,
-        include : PATHS.SRC_DIR,
-        loaders: ['style', 'css', 'sass']
+        include : PATHS.CSS,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },
@@ -48,7 +48,7 @@ module.exports = {
       SILENT: true
     }),
     new HtmlWebpackPlugin({
-      template: PATHS.APP_TEMPLATE,
+      template: PATHS.APP_TEMPLATE_FILE,
       xhtml: true
     })
   ],

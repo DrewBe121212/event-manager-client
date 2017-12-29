@@ -11,6 +11,6 @@ const toggleDrawer = (open) => ({
 const setMenuTitle = (title) => ({
   type: SET_MENU_TITLE,
   payload: title
-})
+});
 
 export {toggleDrawer, setMenuTitle};
