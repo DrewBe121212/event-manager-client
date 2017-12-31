@@ -7,13 +7,14 @@ html, body {
   display: none !important;
 }
 
+/* Fade in / Fade Out Animations */
 .fade-enter {
   opacity: 0.01;
 }
 
 .fade-enter.fade-enter-active {
   opacity: 1;
-  transition: opacity 1000ms ease-in;
+  transition: opacity 400ms ease-in;
 }
 
 .fade-exit {
@@ -22,14 +23,5 @@ html, body {
 
 .fade-exit.fade-exit-active {
   opacity: 0.01;
-  transition: opacity 800ms ease-in;
-}
-
-.fade-appear {
-    opacity: 0.01;
-}
-
-.fade-appear.fade-appear-active {
-    opacity: 1;
-    transition: opacity 5000ms ease-in;
+  transition: opacity 400ms ease-in;
 }

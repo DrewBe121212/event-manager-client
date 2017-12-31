@@ -4,7 +4,6 @@ import {withStyles} from 'material-ui/styles';
 
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
-import MenuIcon from 'material-ui-icons/Menu';
 import IconButton from 'material-ui/IconButton';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 

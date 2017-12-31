@@ -3,20 +3,25 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {compose} from 'recompose';
 import {withStyles} from 'material-ui/styles';
+import {CSSTransition} from 'react-transition-group';
 
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
-
-import List, {ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
+import Typography from 'material-ui/Typography';
+import List, {ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import PersonOutlineIcon from 'material-ui-icons/PersonOutline';
 
-const styles = () => ({
-  root: {
+import {GuestSignInForm} from 'components/forms/user/GuestSignInForm';
 
-  }
+const styles = (theme) => ({
+  paper: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3
+  })
 });
 
 class SignInComponent extends React.Component {
@@ -29,20 +34,35 @@ class SignInComponent extends React.Component {
     super(props);
 
     this.state = {
-      guestLogin: false
+      guestLogin: false,
+      fadeIn: false
     };
+  }
+
+  resetFadeIn = () => {
+    this.setState({
+      fadeIn: false
+    });
   }
 
   handleOptionClick = (type) => {
     switch(type) {
-      case 'osu':
-        alert('redirect to shiboleth');
+    case 'osu':
+      alert('redirect to shiboleth');
       break;
 
-      case 'guest':
-        this.setState({
-          guestLogin: !this.state.guestLogin
-        });
+    case 'guest_cancel':
+      this.setState({
+        guestLogin: false,
+        fadeIn: true
+      });
+      break;
+
+    case 'guest':
+      this.setState({
+        guestLogin: true,
+        fadeIn: true
+      });
       break;
     }
   }
@@ -80,16 +100,20 @@ class SignInComponent extends React.Component {
     );
   }
 
-  GuestSignInForm = () => {
-    return 'tom';
-  }
-
   render() {
+
+    const { classes } = this.props;
+
     return (
       <Grid container justify="center">
-        <Grid item xs={4}>
-          <Paper>
-            {this.state.guestLogin ? this.GuestSignInForm() : this.SignInOptions()}
+        <Grid item xs={3}>
+          <Paper className={classes.paper} >
+            <Typography type="headline" gutterBottom>Account Login</Typography>
+            <CSSTransition in={this.state.fadeIn} classNames="fade" timeout={1000} exit={false} onEntered={this.resetFadeIn} exit={false}>
+              <div key={this.state.guestLogin ? 1 : 0}>
+                {this.state.guestLogin ? <GuestSignInForm handleCancel={() => this.handleOptionClick('guest_cancel')} /> : this.SignInOptions()}
+              </div>
+            </CSSTransition>
           </Paper>
         </Grid>
       </Grid>

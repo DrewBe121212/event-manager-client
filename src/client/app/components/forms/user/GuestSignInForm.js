@@ -1,0 +1,61 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {withFormik} from 'formik';
+
+import Grid from 'material-ui/Grid';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+
+const InnerForm = (props) => {
+
+  const {values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, handleCancel} = props;
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Grid container>
+        <Grid item xs={12}>
+          <TextField id="username" label="Username" value={values.username} autoFocus={true} error={touched.username && errors.username ? true : false} helperText={touched.username && errors.username} onChange={handleChange} fullWidth={true} required={true} />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField type="password" id="password" label="Password" value={values.password} error={touched.password && errors.password ? true : false} helperText={touched.password && errors.password} onChange={handleChange} fullWidth={true} required={true} />
+        </Grid>
+      </Grid>
+      <Grid container justify="space-between">
+
+        <Button raised mini onClick={handleCancel}>
+            cancel
+        </Button>
+        <Button raised color="primary" disabled={isSubmitting} onClick={handleSubmit}>
+            Login
+        </Button>
+        
+      </Grid>
+    </form>
+  );
+};
+
+const GuestSignInForm = withFormik({
+  // Transform outer props into form values
+  mapPropsToValues: (props) => ({
+    username: '',
+    password: ''
+  }),
+  // Add a custom validation function (this can be async too!)
+  validate: (values, props) => {
+    const errors = {};
+    if (!values.username) {
+      errors.username = 'Required';
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)
+    ) {
+      errors.username = 'Invalid username';
+    }
+    return errors;
+  },
+  // Submission handler
+  handleSubmit: (values, {props, setSubmitting, setErrors}) => {
+    alert('form submitted!');
+  }
+})(InnerForm);
+
+export {GuestSignInForm};
