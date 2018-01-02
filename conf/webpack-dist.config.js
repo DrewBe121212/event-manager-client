@@ -18,6 +18,7 @@ module.exports = {
   resolve: {
     modules: [
       PATHS.APP,
+      PATHS.ASSETS,
       PATHS.NODE_MODULES
     ]
   },

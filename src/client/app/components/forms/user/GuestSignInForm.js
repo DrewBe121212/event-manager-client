@@ -20,16 +20,14 @@ const InnerForm = (props) => {
           <TextField type="password" id="password" label="Password" value={values.password} error={touched.password && errors.password ? true : false} helperText={touched.password && errors.password} onChange={handleChange} fullWidth={true} required={true} />
         </Grid>
       </Grid>
-      <Grid container justify="space-between">
-
+      <div className="action-bar">
         <Button raised mini onClick={handleCancel}>
             cancel
         </Button>
         <Button raised color="primary" disabled={isSubmitting} onClick={handleSubmit}>
             Login
         </Button>
-        
-      </Grid>
+      </div>
     </form>
   );
 };
