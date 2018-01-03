@@ -1,6 +1,7 @@
 const path = require('path');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
+const CONF_PATH = path.resolve(ROOT_PATH, 'conf');
 const SRC_PATH = path.resolve(ROOT_PATH, 'src');
 const TMP_PATH = path.resolve(ROOT_PATH, '.tmp');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
@@ -11,10 +12,10 @@ const APP_PATH = path.resolve(CLIENT_PATH, 'app');
 const ASSETS_PATH = path.resolve(APP_PATH, 'assets');
 const CSS_PATH = path.resolve(ASSETS_PATH, 'css');
 
-
 module.exports = {
   PATHS: {
     ROOT: ROOT_PATH,
+    CONF: CONF_PATH,
     SRC: SRC_PATH,
     CLIENT: CLIENT_PATH,
     TMP: TMP_PATH,

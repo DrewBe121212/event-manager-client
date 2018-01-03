@@ -12,4 +12,4 @@ const Routes = (
   </Switch>
 );
 
-export {Routes};
+export {Routes}; 

@@ -17,6 +17,7 @@ module.exports = {
   },
   resolve: {
     modules: [
+      PATHS.ROOT,
       PATHS.APP,
       PATHS.ASSETS,
       PATHS.NODE_MODULES
