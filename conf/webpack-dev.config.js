@@ -23,6 +23,9 @@ module.exports = {
       PATHS.NODE_MODULES
     ]
   },
+  externals: {
+    'env-config': JSON.stringify(require('./env-config-dev.json'))
+  },
   module: {
     loaders: [
       {
@@ -44,7 +47,8 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"development"'
+      'process.env.NODE_ENV': '"development"',
+      'process.env.APP_VERSION': JSON.stringify(require('../package.json').version)
     }),
     new WebpackAutoInjectVersion({
       SILENT: true

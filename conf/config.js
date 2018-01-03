@@ -5,7 +5,7 @@ const CONF_PATH = path.resolve(ROOT_PATH, 'conf');
 const SRC_PATH = path.resolve(ROOT_PATH, 'src');
 const TMP_PATH = path.resolve(ROOT_PATH, '.tmp');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
-const NODE_MODULES = path.resolve(ROOT_PATH, 'node_modules');
+const NODE_MODULES_PATH = path.resolve(ROOT_PATH, 'node_modules');
 const CLIENT_PATH = path.resolve(SRC_PATH, 'client');
 const APP_TEMPLATE_FILE = path.resolve(SRC_PATH, 'index.html');
 const APP_PATH = path.resolve(CLIENT_PATH, 'app');
@@ -24,6 +24,6 @@ module.exports = {
     ASSETS: ASSETS_PATH,
     CSS: CSS_PATH,
     APP_TEMPLATE_FILE,
-    NODE_MODULES
+    NODE_MODULES: NODE_MODULES_PATH
   }
 };

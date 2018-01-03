@@ -6,12 +6,14 @@ import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import axios from 'axios';
 import axiousMiddleware from 'redux-axios-middleware';
 
+import {config} from 'config';
 import {reducers} from 'reducers';
 
 const axiosClient = axios.create({
-  baseURL: 'http://127.0.0.1:8080/api',
+  baseURL: config.API.EVENT_MANAGER,
   responseType: 'json'
 });
+
 const axiosMiddleware = axiousMiddleware(axiosClient);
 
 const history = createHistory();
