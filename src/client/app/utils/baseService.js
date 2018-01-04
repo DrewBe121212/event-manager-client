@@ -1,6 +1,3 @@
-import axios from 'axios';
-require('path');
-
 class BaseService {
 
   constructor(endpoint) {
@@ -8,7 +5,7 @@ class BaseService {
   }
 
   find(params) {
-    
+
   }
 
   findById(id) {
@@ -28,3 +25,5 @@ class BaseService {
   }
 
 }
+
+export {BaseService};

@@ -8,16 +8,16 @@ import Button from 'material-ui/Button';
 
 const InnerForm = (props) => {
 
-  const {values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, handleCancel} = props;
+  const {values, errors, touched, handleChange, handleSubmit, isSubmitting, handleCancel} = props;
 
   return (
     <form onSubmit={handleSubmit}>
       <Grid container>
         <Grid item xs={12}>
-          <TextField id="username" label="Username" value={values.username} autoFocus={true} error={touched.username && errors.username ? true : false} helperText={touched.username && errors.username} onChange={handleChange} fullWidth={true} required={true} />
+          <TextField id="username" label="Username" value={values.username} onChange={handleChange} autoFocus={true} error={touched.username && errors.username ? true : false} helperText={touched.username && errors.username} fullWidth={true} required={true} />
         </Grid>
         <Grid item xs={12}>
-          <TextField type="password" id="password" label="Password" value={values.password} error={touched.password && errors.password ? true : false} helperText={touched.password && errors.password} onChange={handleChange} fullWidth={true} required={true} />
+          <TextField type="password" id="password" label="Password" onChange={handleChange} value={values.password} error={touched.password && errors.password ? true : false} helperText={touched.password && errors.password} fullWidth={true} required={true} />
         </Grid>
       </Grid>
       <div className="action-bar">
@@ -30,6 +30,16 @@ const InnerForm = (props) => {
       </div>
     </form>
   );
+};
+
+InnerForm.propTypes = {
+  values: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  touched: PropTypes.object.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired
 };
 
 const GuestSignInForm = withFormik({

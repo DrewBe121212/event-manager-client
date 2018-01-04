@@ -20,19 +20,9 @@ function normalizeData(data = [], id) {
     if (obj[id] !== undefined) {
       normalizedData['_' + obj[id].toString()] = obj;
     }
-  })
+  });
 
   return normalizedData;
 }
-
-const test = [
-  {idx: 1, 'text': 'bob'},
-  {idx: 2, 'text': 'tom'},
-  {idx: 3, 'text': 'frank'},
-  {idx: 4, 'text': 'sara'},
-  {idx: 5, 'text': 'sam'}
-];
-
-console.log( normalizeData(test, 'idx'));
 
 export {createReducer, normalizeData};

@@ -47,24 +47,27 @@ class SignInComponent extends React.Component {
 
   handleOptionClick = (type) => {
     switch(type) {
-    case 'osu':
-      alert('redirect to shiboleth');
-      break;
 
-    case 'guest_cancel':
-      this.setState({
-        guestLogin: false,
-        fadeIn: true
-      });
-      break;
+      case 'osu':
+        alert('redirect to shiboleth');
+        break;
 
-    case 'guest':
-      this.setState({
-        guestLogin: true,
-        fadeIn: true
-      });
-      break;
+      case 'guest_cancel':
+        this.setState({
+          guestLogin: false,
+          fadeIn: true
+        });
+        break;
+
+      case 'guest':
+        this.setState({
+          guestLogin: true,
+          fadeIn: true
+        });
+        break;
+
     }
+
   }
 
   SignInOptions = () => {
@@ -109,9 +112,9 @@ class SignInComponent extends React.Component {
         <Grid item xs={3}>
           <Paper className={classes.paper} >
             <Typography type="headline" gutterBottom>Account Login</Typography>
-            <CSSTransition in={this.state.fadeIn} classNames="fade" timeout={1000} exit={false} onEntered={this.resetFadeIn} exit={false}>
+            <CSSTransition in={this.state.fadeIn} classNames="fade" timeout={1000} exit={false} onEntered={this.resetFadeIn}>
               <div key={this.state.guestLogin ? 1 : 0}>
-                {this.state.guestLogin ? <GuestSignInForm handleCancel={() => this.handleOptionClick('guest_cancel')} /> : this.SignInOptions()}
+                {this.state.guestLogin ? <GuestSignInForm guestLogin={this.state.guestLogin} handleCancel={() => this.handleOptionClick('guest_cancel')} /> : this.SignInOptions()}
               </div>
             </CSSTransition>
           </Paper>

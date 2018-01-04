@@ -3,14 +3,14 @@
 function deepFreeze(obj) {
 
   // Retrieve the property names defined on obj
-  var propNames = Object.getOwnPropertyNames(obj);
+  let propNames = Object.getOwnPropertyNames(obj);
 
   // Freeze properties before freezing self
   propNames.forEach(function(name) {
-    var prop = obj[name];
+    let prop = obj[name];
 
     // Freeze prop if it is an object
-    if (typeof prop == 'object' && prop !== null)
+    if (typeof prop === 'object' && prop !== null)
       deepFreeze(prop);
   });
 
