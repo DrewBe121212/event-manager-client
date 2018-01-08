@@ -1,15 +1,15 @@
 import {
-  TOGGLE_DRAWER,
-  SET_MENU_TITLE
+  NAVIGATION_TOGGLE_DRAWER,
+  NAVIGATION_SET_MENU_TITLE
 } from 'constants/navigation';
 
 const toggleDrawer = (open) => ({
-  type: TOGGLE_DRAWER,
+  type: NAVIGATION_TOGGLE_DRAWER,
   payload: open
 });
 
 const setMenuTitle = (title) => ({
-  type: SET_MENU_TITLE,
+  type: NAVIGATION_SET_MENU_TITLE,
   payload: title
 });
 

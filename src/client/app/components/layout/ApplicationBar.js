@@ -50,7 +50,7 @@ class ApplicationBarComponent extends React.Component {
   };
 
   openDrawer = () => {
-    this.props.handleDrawerToggle();
+    this.props.handleDrawerToggle(true);
   }
 
   handleUserMenuClick = () => {
@@ -58,17 +58,17 @@ class ApplicationBarComponent extends React.Component {
   }
 
   render() {
-    const {classes} = this.props;
+    const {title, drawer, classes} = this.props;
 
     return (
       <div className={classes.root}>
-        <AppBar className={classNames(classes.appBar, {[classes.appBarShift]: this.props.drawer.open})}>
-          <Toolbar disableGutters={!this.props.drawer.open}>
-            <IconButton onClick={this.openDrawer} className={classNames(classes.drawerButton, {hidden: this.props.drawer.open})} color="contrast" aria-label="Menu">
+        <AppBar className={classNames(classes.appBar, {[classes.appBarShift]: drawer.open})}>
+          <Toolbar disableGutters={!drawer.open}>
+            <IconButton onClick={this.openDrawer} className={classNames(classes.drawerButton, {hidden: drawer.open})} color="contrast" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" noWrap>
-              {this.props.title}
+              {title}
             </Typography>
           </Toolbar>
         </AppBar>

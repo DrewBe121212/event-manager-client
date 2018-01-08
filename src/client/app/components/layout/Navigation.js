@@ -52,10 +52,10 @@ class NavigationComponent extends React.Component {
   }
 
   render() {
-    const {classes} = this.props;
+    const {drawer, classes} = this.props;
 
     return (
-      <Drawer type="persistent" open={this.props.drawer.open} classes={{paper: classes.drawerPaper}}>
+      <Drawer type="persistent" open={drawer.open} classes={{paper: classes.drawerPaper}}>
         <div className={classes.drawerInner}>
           <div className={classes.drawerHeader}>
             <div>

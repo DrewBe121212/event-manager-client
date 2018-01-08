@@ -105,7 +105,7 @@ class SignInComponent extends React.Component {
 
   render() {
 
-    const { classes } = this.props;
+    const {classes} = this.props;
 
     return (
       <Grid container justify="center">
