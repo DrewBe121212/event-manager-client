@@ -1,42 +1,33 @@
-import {setUserAuthorization, resetUserAuthorization} from 'actions/user';
+import {setAbility} from 'utils/abilities';
 
-const canManage = (also, except) => {
-  return ['read', 'create', 'update', 'remove'];
-}
+const ability = (role) => {
 
-const setAbility = (objects, actions, roles) => {
+  
 
-  let ability = {};
+  switch(role) {
 
-  if (!Array.isArray(objects)) {
-    objects = objects.split(',');
+    case 'super_admin':
+
+    break;
+
+    case 'admin':
+
+    break;
+
+    case 'contractor':
+
+    break;
+
+    case 'user':
+      setAbility('user.logout', 'view');
+      setAbility('daily_schedule', 'view');
+    break;
+
+    case 'guest':
+      setAbility('guest.sign_in,guest.register', 'view');
+    break;
   }
-  if (!Array.isArray(actions)) {
-    actions = actions.split(',');
-  }
-  if (!Array.isArray(roles)) {
-    roles = roles.split(',');
-  }
-
-  roles.forEach((role) => {
-    console.log(role);
-  });
-
-}
-
-const withAbilities = (store) => {
-  const {user} = store.getState();
-  const {roles} = user;
-
-  let abilities = {};
-
-  if (roles.indexOf('guest') >= 0 || 1 == 1) {
-    abilities['guest_sign_in'] = ['view'];
-  }
-
-  store.dispatch(setUserAuthorization(abilities));
 
 }
 
-
-export {withAbilities};
+export {ability};

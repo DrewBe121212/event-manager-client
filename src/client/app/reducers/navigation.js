@@ -32,7 +32,6 @@ const navigation = createReducer(initialState, {
 
   },
   [NAVIGATION_SET_MENU_TITLE]: (state, title) => {
-
     return ({...state,
       menu: {
         title: title

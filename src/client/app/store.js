@@ -8,7 +8,7 @@ import axiousMiddleware from 'redux-axios-middleware';
 
 import {config} from 'config';
 import {reducers} from 'reducers';
-import {withAbilities} from 'ability';
+import {setAbilitiesFromStore} from 'utils/abilities';
 
 const axiosClient = axios.create({
   baseURL: config.API.EVENT_MANAGER,
@@ -43,6 +43,6 @@ const store = createStore(
   enhancer
 );
 
-withAbilities(store);
+setAbilitiesFromStore(store);
 
 export {history, store};

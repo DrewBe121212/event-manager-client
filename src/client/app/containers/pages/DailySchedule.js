@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {compose} from 'recompose';
 import {withStyles} from 'material-ui/styles';
 
+import {hasAbility} from 'utils/abilities';
 import {setMenuTitle} from 'actions/navigation';
 
 const styles = () => ({
@@ -21,6 +22,12 @@ class DailyScheduleComponent extends React.Component {
 
   constructor(props) {
     super(props);
+
+    if (!hasAbility('view', 'daily_schedule')) {
+      console.log("does not have access");
+    } else {
+      console.log('has access');
+    }
 
     props.setMenuTitle('Daily Schedule');
   }
