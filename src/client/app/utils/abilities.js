@@ -2,16 +2,26 @@ import {ability} from 'ability';
 
 let abilities = {};
 
-const setAbilitiesFromStore = (store) => {
-  /*roles.forEach((role) => {
-    ability(role);
-  });*/
+const setAbilitiesFromState = (state) => {
 
-}
+  const {user} = state;
+  const {roles} = user;
+
+  abilities = {};
+
+  roles.forEach((role) => {
+    ability(role);
+  });
+
+  console.log(abilities);
+
+};
 
 const canManage = (also, except) => {
-  return ['view', 'create', 'update', 'remove'];
-}
+  return [
+    'view', 'create', 'update', 'remove'
+  ];
+};
 
 const setAbility = (objects, actions, can = true) => {
 
@@ -36,7 +46,7 @@ const setAbility = (objects, actions, can = true) => {
     });
   });
 
-}
+};
 
 const hasAbility = (action, object) => {
 
@@ -45,10 +55,10 @@ const hasAbility = (action, object) => {
   }
 
   return false;
-}
+};
 
 const hasAbilityToViewRoute = (object) => {
   return hasAbility('view', object);
-}
+};
 
-export {setAbility, hasAbility, hasAbilityToViewRoute, setAbilitiesFromStore};
+export {setAbility, hasAbility, hasAbilityToViewRoute, setAbilitiesFromState};

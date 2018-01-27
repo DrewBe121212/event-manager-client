@@ -24,7 +24,7 @@ class DailyScheduleComponent extends React.Component {
     super(props);
 
     if (!hasAbility('view', 'daily_schedule')) {
-      console.log("does not have access");
+      console.log('does not have access');
     } else {
       console.log('has access');
     }

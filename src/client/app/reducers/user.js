@@ -7,19 +7,23 @@ import {
 
 const initialState = {
   authenticated: false,
-  roles: ['guest'],
+  roles: [
+    'guest'
+  ],
   username: '',
   first_name: '',
   middle_name: '',
   last_name: '',
-  email: '',
+  email: ''
 };
 
 const user = createReducer(initialState, {
   [USER_SET]: (state, payload) => {
 
-    const authenticated = payload.authenticated || initialState.authenticated;
-    let roles = payload.roles ? [...payload.roles] : [];
+    const authenticated = payload.authenticated || state.authenticated;
+    let roles = payload.roles ? [
+      ...payload.roles
+    ] : [];
 
     if (authenticated) {
       if (roles.indexOf('user') === -1) {
@@ -34,11 +38,11 @@ const user = createReducer(initialState, {
     return ({...state,
       authenticated: authenticated,
       roles: roles,
-      username: payload.username || initialState.username,
-      first_name: payload.first_name || initialState.first_name,
-      middle_name: payload.middle_name || initialState.middle_name,
-      last_name: payload.last_name || initialState.last_name,
-      email: payload.email || initialState.email
+      username: payload.username || state.username,
+      first_name: payload.first_name || state.first_name,
+      middle_name: payload.middle_name || state.middle_name,
+      last_name: payload.last_name || state.last_name,
+      email: payload.email || state.email
     });
   },
   [USER_RESET]: (state) => {

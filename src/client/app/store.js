@@ -5,10 +5,10 @@ import createHistory from 'history/createBrowserHistory';
 import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import axios from 'axios';
 import axiousMiddleware from 'redux-axios-middleware';
-
+import createSagaMiddleware from 'redux-saga';
 import {config} from 'config';
 import {reducers} from 'reducers';
-import {setAbilitiesFromStore} from 'utils/abilities';
+import {sagas} from 'sagas';
 
 const axiosClient = axios.create({
   baseURL: config.API.EVENT_MANAGER,
@@ -20,9 +20,11 @@ const axiosMiddleware = axiousMiddleware(axiosClient);
 const history = createHistory();
 const routingMiddleware = routerMiddleware(history);
 
+const sagaMiddleware = createSagaMiddleware();
+
 // array of used middlewares
 const middleware = [
-  routingMiddleware, axiosMiddleware
+  routingMiddleware, sagaMiddleware, axiosMiddleware
 ];
 
 if (process.env.NODE_ENV !== 'production') {
@@ -43,6 +45,9 @@ const store = createStore(
   enhancer
 );
 
-setAbilitiesFromStore(store);
+// engage the saga middlewares
+for (let saga in sagas) {
+  sagaMiddleware.run(sagas[saga]);
+}
 
 export {history, store};

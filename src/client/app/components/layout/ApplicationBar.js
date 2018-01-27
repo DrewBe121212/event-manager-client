@@ -64,7 +64,7 @@ class ApplicationBarComponent extends React.Component {
       <div className={classes.root}>
         <AppBar className={classNames(classes.appBar, {[classes.appBarShift]: drawer.open})}>
           <Toolbar disableGutters={!drawer.open}>
-            <IconButton onClick={this.openDrawer} className={classNames(classes.drawerButton, {hidden: drawer.open})} color="contrast" aria-label="Menu">
+            <IconButton onClick={this.openDrawer} className={classNames(classes.drawerButton, {hidden: drawer.open})} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" noWrap>

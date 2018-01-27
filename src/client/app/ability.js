@@ -2,32 +2,30 @@ import {setAbility} from 'utils/abilities';
 
 const ability = (role) => {
 
-  
-
   switch(role) {
 
     case 'super_admin':
 
-    break;
+      break;
 
     case 'admin':
 
-    break;
+      break;
 
     case 'contractor':
 
-    break;
+      break;
 
     case 'user':
       setAbility('user.logout', 'view');
       setAbility('daily_schedule', 'view');
-    break;
+      break;
 
     case 'guest':
       setAbility('guest.sign_in,guest.register', 'view');
-    break;
+      break;
   }
 
-}
+};
 
 export {ability};
