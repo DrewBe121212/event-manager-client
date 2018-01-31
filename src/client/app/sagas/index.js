@@ -1,7 +1,9 @@
-import * as abilities from './abilities';
+import * as ability from './ability';
 
-const sagas = {
-  ...abilities
+const sagaGenerators = {
+  ...ability
 };
+
+const sagas = Object.values(sagaGenerators);
 
 export {sagas};

@@ -45,9 +45,6 @@ const store = createStore(
   enhancer
 );
 
-// engage the saga middlewares
-for (let saga in sagas) {
-  sagaMiddleware.run(sagas[saga]);
-}
+sagas.map((saga) => sagaMiddleware.run(saga));
 
 export {history, store};

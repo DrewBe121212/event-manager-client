@@ -2,11 +2,15 @@ import {createReducer} from 'utils/redux';
 
 import {
   USER_SET,
-  USER_RESET
+  USER_RESET,
+  USER_SET_AUTHORIZATION,
+  USER_RESET_AUTHORIZATION
 } from 'constants/user';
 
+const initialAuthorization = {};
 const initialState = {
   authenticated: false,
+  authorization: initialAuthorization,
   roles: [
     'guest'
   ],
@@ -47,6 +51,16 @@ const user = createReducer(initialState, {
   },
   [USER_RESET]: (state) => {
     return({...state, ...initialState});
+  },
+  [USER_SET_AUTHORIZATION]: (state, payload) => {
+    return ({...state,
+      authorization: payload
+    });
+  },
+  [USER_RESET_AUTHORIZATION]: (state) => {
+    return({...state,
+      authorization: initialAuthorization
+    });
   }
 });
 

@@ -17,7 +17,7 @@ const ability = (role) => {
       break;
 
     case 'user':
-      setAbility('user.logout', 'view');
+      setAbility('user,user.logout', 'view');
       setAbility('daily_schedule', 'view');
       break;
 

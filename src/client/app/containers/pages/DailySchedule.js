@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {compose} from 'recompose';
 import {withStyles} from 'material-ui/styles';
 
-import {hasAbility} from 'utils/abilities';
+import {withAuthorization} from 'utils/abilities';
 import {setMenuTitle} from 'actions/navigation';
 
 const styles = () => ({
@@ -15,21 +15,15 @@ const styles = () => ({
 
 class DailyScheduleComponent extends React.Component {
 
+  static authorize = 'daily_schedule';
+
   static propTypes = {
     classes: PropTypes.object.isRequired,
     setMenuTitle: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    if (!hasAbility('view', 'daily_schedule')) {
-      console.log('does not have access');
-    } else {
-      console.log('has access');
-    }
-
-    props.setMenuTitle('Daily Schedule');
+  componentWillMount() {
+    this.props.setMenuTitle('Daily Schedule');
   }
 
   render() {
@@ -38,17 +32,16 @@ class DailyScheduleComponent extends React.Component {
 
 }
 
-const mapStateToProps = (state) => {
-  return {};
-};
+const mapStateToProps = (state) => ({});
 
-const mapActionsToProps = {
+const mapDispatchToProps = {
   setMenuTitle: setMenuTitle
 };
 
 const DailySchedule = compose(
+  withAuthorization,
   withStyles(styles),
-  connect(mapStateToProps, mapActionsToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(DailyScheduleComponent);
 
 export {DailySchedule};

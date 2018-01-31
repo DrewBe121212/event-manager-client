@@ -36,16 +36,8 @@ class NavigationComponent extends React.Component {
   static propTypes = {
     drawer: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-
     handleDrawerToggle: PropTypes.func.isRequired
   };
-
-  constructor(props) {
-    super(props);
-
-    this.state = Object.assign({}, {drawer: props.drawer});
-
-  }
 
   closeDrawer = () => {
     this.props.handleDrawerToggle(false);

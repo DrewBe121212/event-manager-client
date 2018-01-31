@@ -1,3 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+
+import {Error403} from 'components/errors/Error403';
 import {ability} from 'ability';
 
 let abilities = {};
@@ -13,8 +18,7 @@ const setAbilitiesFromState = (state) => {
     ability(role);
   });
 
-  console.log(abilities);
-
+  return abilities;
 };
 
 const canManage = (also, except) => {
@@ -48,17 +52,79 @@ const setAbility = (objects, actions, can = true) => {
 
 };
 
-const hasAbility = (action, object) => {
+const getAbilities = () => {
+  return {...abilities};
+};
 
-  if (typeof abilities[object] !== 'undefined' && typeof abilities[object][action] !== 'undefined') {
-    return abilities[object][action];
+const withAuthorization = (Component) => {
+
+  class AuthorizationComponent extends React.Component {
+
+    static propTypes = {
+      authenticated: PropTypes.bool.isRequired,
+      history: PropTypes.object.isRequired
+    };
+
+    hasAbility = (action, object) => {
+
+      if (typeof abilities[object] !== 'undefined' && typeof abilities[object][action] !== 'undefined') {
+        return abilities[object][action];
+      }
+
+      return false;
+    };
+
+    getAuthorize = () => {
+      return Component.authorize;
+    }
+
+    isAuthorized = () => {
+      return typeof this.getAuthorize() !== 'undefined';
+    }
+
+    componentWillMount() {
+      const {authenticated} = this.props;
+
+      let state = Object.assign({}, {
+        authorized: false,
+        authenticated
+      });
+
+      if (!this.isAuthorized() || this.hasAbility('view', this.getAuthorize())) {
+        state.authorized = true;
+      }
+
+      this.setState(state);
+
+    }
+
+    componentDidMount() {
+      const {history} = this.props;
+
+      if (!this.state.authorized && !this.state.authenticated) {
+        history.push('user/sign-in');
+      }
+
+    }
+
+    render() {
+
+      if (this.state.authorized) {
+        return <Component hasAbility={this.hasAbility} {...this.props} />;
+      } else {
+        return <Error403 />;
+      }
+
+    }
+
   }
 
-  return false;
+  const mapStateToProps = (state) => ({
+    authenticated: state.user.authenticated
+  });
+
+  return connect(mapStateToProps)(AuthorizationComponent);
+
 };
 
-const hasAbilityToViewRoute = (object) => {
-  return hasAbility('view', object);
-};
-
-export {setAbility, hasAbility, hasAbilityToViewRoute, setAbilitiesFromState};
+export {setAbility, getAbilities, setAbilitiesFromState, withAuthorization};

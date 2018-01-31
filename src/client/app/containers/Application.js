@@ -10,6 +10,7 @@ import {ApplicationBar} from 'components/layout/ApplicationBar';
 import {Navigation} from 'components/layout/Navigation';
 
 import {toggleDrawer} from 'actions/navigation';
+
 import {Routes} from 'routes';
 
 const styles = (theme) => ({
@@ -61,14 +62,14 @@ class ApplicationComponent extends React.Component {
 
   render () {
 
-    const {classes} = this.props;
+    const {title, drawer, classes} = this.props;
 
     return (
       <div className={classes.root}>
-        <ApplicationBar title={this.props.title} drawer={this.props.drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
-        <Navigation drawer={this.props.drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
-        <div className={classNames(classes.content, {[classes.contentShift]: this.props.drawer.open})}>
-          {Routes}
+        <ApplicationBar title={title} drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
+        <Navigation drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
+        <div className={classNames(classes.content, {[classes.contentShift]: drawer.open})}>
+          <Routes />
         </div>
       </div>
     );
@@ -78,18 +79,19 @@ class ApplicationComponent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     title: state.navigation.menu.title,
-    drawer: state.navigation.drawer
+    drawer: state.navigation.drawer,
+    user: state.user
   };
 };
 
-const mapActionsToProps = {
+const mapDispatchToProps = {
   handleDrawerToggle: toggleDrawer
 };
 
 const Application = withRouter(
   compose(
     withStyles(styles),
-    connect(mapStateToProps, mapActionsToProps)
+    connect(mapStateToProps, mapDispatchToProps)
   )(ApplicationComponent)
 );
 
