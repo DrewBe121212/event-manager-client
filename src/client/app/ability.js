@@ -1,4 +1,4 @@
-import {setAbility} from 'utils/abilities';
+import {setAbility} from 'libs/abilities/abilities';
 
 const ability = (role) => {
 
@@ -23,6 +23,8 @@ const ability = (role) => {
 
     case 'guest':
       setAbility('guest.sign_in,guest.register', 'view');
+      setAbility('guest.sign_in.osu', 'login');
+      setAbility('guest.sign_in.guest', 'login');
       break;
   }
 

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {compose} from 'recompose';
 import {withStyles} from 'material-ui/styles';
 
-import {withAuthorization} from 'utils/abilities';
+import {withAuthorization} from 'libs/abilities';
 import {setMenuTitle} from 'actions/navigation';
 
 const styles = () => ({

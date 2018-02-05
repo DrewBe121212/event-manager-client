@@ -5,9 +5,10 @@ import {
 } from 'constants/user';
 
 import {setUserAuthorization} from 'actions/user';
-import {setAbilitiesFromState} from 'utils/abilities';
+import {setAbilitiesFromState} from 'libs/abilities';
 
 function* refreshAbilities() {
+
   const state = yield select();
 
   const abilities = yield call(setAbilitiesFromState, state);

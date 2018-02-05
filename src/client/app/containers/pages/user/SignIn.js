@@ -7,14 +7,15 @@ import {CSSTransition} from 'react-transition-group';
 
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import List, {ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import PersonOutlineIcon from 'material-ui-icons/PersonOutline';
 
+import {setMenuTitle} from 'actions/navigation';
 import {GuestSignInForm} from 'components/forms/user/GuestSignInForm';
+import {withAuthorization} from 'libs/abilities';
 
 const styles = (theme) => ({
   paper: theme.mixins.gutters({
@@ -26,12 +27,18 @@ const styles = (theme) => ({
 
 class SignInComponent extends React.Component {
 
+  static authorize = 'guest.sign_in';
+
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    hasAbility: PropTypes.func.isRequired,
+    setMenuTitle: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
+
+    props.setMenuTitle('Account Login');
 
     this.state = {
       guestLogin: false,
@@ -71,36 +78,52 @@ class SignInComponent extends React.Component {
   }
 
   SignInOptions = () => {
-    return (
-      <List>
-        <ListItem button divider onClick={() => this.handleOptionClick('osu')} >
-          <ListItemAvatar>
-            <Avatar>
-              <PersonOutlineIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="OSU User Login" secondary="Ohio State University Login via Single Sign On" />
-          <ListItemSecondaryAction>
-            <IconButton aria-label="OSU User Login">
-              <ChevronRightIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button onClick={() => this.handleOptionClick('guest')}>
-          <ListItemAvatar>
-            <Avatar>
-              <PersonOutlineIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Guest Login" secondary="Sign in using a username and password that is not affiliated with OSU." />
-          <ListItemSecondaryAction>
-            <IconButton aria-label="Guest Login">
-              <ChevronRightIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-      </List>
-    );
+
+    const {hasAbility} = this.props;
+
+    let options = [];
+
+    if (hasAbility('login', 'guest.sign_in.osu')) {
+      options.push({
+        key: 'osu',
+        primary: 'OSU User Login',
+        secondary: 'Ohio State University Login via Single Sign On',
+        icon: <PersonOutlineIcon />
+      });
+    }
+
+    if (hasAbility('login', 'guest.sign_in.guest')) {
+      options.push({
+        key: 'guest',
+        primary: 'Guest Login',
+        secondary: 'Sign in using a username and password that is not affiliated with OSU.',
+        icon: <PersonOutlineIcon />
+      });
+    }
+
+    if (options.length > 0) {
+      return (
+        <List>
+          {options.map((option, index) => (
+            <ListItem button divider={index < options.length-1} onClick={() => this.handleOptionClick(option.key)} key={option.key}>
+              <ListItemAvatar>
+                <Avatar>
+                  {option.icon}
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={option.primary} secondary={option.secondary} />
+              <ListItemSecondaryAction>
+                <IconButton aria-label={option.primary}>
+                  <ChevronRightIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
+      );
+    } else {
+      return 'No login options are available';
+    }
   }
 
   render() {
@@ -109,11 +132,10 @@ class SignInComponent extends React.Component {
 
     return (
       <Grid container justify="center">
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <Paper className={classes.paper} >
-            <Typography type="headline" gutterBottom>Account Login</Typography>
             <CSSTransition in={this.state.fadeIn} classNames="fade" timeout={1000} exit={false} onEntered={this.resetFadeIn}>
-              <div key={this.state.guestLogin ? 1 : 0}>
+              <div>
                 {this.state.guestLogin ? <GuestSignInForm guestLogin={this.state.guestLogin} handleCancel={() => this.handleOptionClick('guest_cancel')} /> : this.SignInOptions()}
               </div>
             </CSSTransition>
@@ -129,13 +151,14 @@ const mapStateToProps = (state) => {
   return {};
 };
 
-const mapActionsToProps = {
-
+const mapDispatchToProps = {
+  setMenuTitle
 };
 
 const SignIn = compose(
+  withAuthorization,
   withStyles(styles),
-  connect(mapStateToProps, mapActionsToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(SignInComponent);
 
 export {SignIn};
