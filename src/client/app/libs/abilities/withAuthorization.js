@@ -16,22 +16,37 @@ const withAuthorization = (Component) => {
       location: PropTypes.object.isRequired
     };
 
-    getAuthorize = () => {
+    getComponentAuthorize = () => {
       return Component.authorize;
     }
 
-    isAuthorized = () => {
-      const authorize = this.getAuthorize();
-      return typeof authorize !== 'undefined' && authorize.length > 0;
+    getAuthorize = () => {
+      const authorize = this.getComponentAuthorize();
+
+      let authorizedAbility = {
+        action: 'view',
+        object: null
+      };
+
+      if (typeof authorize === 'string') {
+        authorizedAbility.object = authorize;
+      } else if (authorizedAbility === Object(authorizedAbility) && authorizedAbility.hasOwnProperty('action') && authorizedAbility.hasOwnProperty('object')) {
+        authorizedAbility = {...authorize};
+      }
+
+      return authorizedAbility;
+
     }
 
     componentWillMount() {
+
+      const authorize = this.getAuthorize();
 
       let state = {
         authorized: false
       };
 
-      if (!this.isAuthorized() || hasAbility('view', this.getAuthorize())) {
+      if (hasAbility(authorize.action, authorize.object)) {
         state.authorized = true;
       }
 

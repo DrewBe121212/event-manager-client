@@ -11,4 +11,4 @@ class User extends baseService {
 
 }
 
-export {User};
+export {new User as User};

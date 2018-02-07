@@ -1,6 +1,4 @@
-import {setAbility} from 'libs/abilities/abilities';
-
-const ability = (role) => {
+const ability = (setAbility, role) => {
 
   switch(role) {
 
@@ -17,14 +15,13 @@ const ability = (role) => {
       break;
 
     case 'user':
-      setAbility('user,user.logout', 'view');
+      setAbility('user', 'view,logout');
       setAbility('daily_schedule', 'view');
       break;
 
     case 'guest':
-      setAbility('guest.sign_in,guest.register', 'view');
-      setAbility('guest.sign_in.osu', 'login');
-      setAbility('guest.sign_in.guest', 'login');
+      setAbility('guest', 'register,login');
+      setAbility('guest', 'login_osu', true);
       break;
   }
 

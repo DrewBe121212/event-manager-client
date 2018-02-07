@@ -9,7 +9,7 @@ const setAbilitiesFromState = (state) => {
   abilities = {};
 
   roles.forEach((role) => {
-    ability(role);
+    ability(setAbility, role);
   });
 
   return abilities;

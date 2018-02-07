@@ -27,7 +27,7 @@ const styles = (theme) => ({
 
 class SignInComponent extends React.Component {
 
-  static authorize = 'guest.sign_in';
+  static authorize = {action: 'login', object: 'guest'};
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -83,7 +83,7 @@ class SignInComponent extends React.Component {
 
     let options = [];
 
-    if (hasAbility('login', 'guest.sign_in.osu')) {
+    if (hasAbility('login_osu', 'guest')) {
       options.push({
         key: 'osu',
         primary: 'OSU User Login',
@@ -92,7 +92,7 @@ class SignInComponent extends React.Component {
       });
     }
 
-    if (hasAbility('login', 'guest.sign_in.guest')) {
+    if (hasAbility('login', 'guest')) {
       options.push({
         key: 'guest',
         primary: 'Guest Login',
