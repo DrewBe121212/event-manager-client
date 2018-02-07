@@ -1,3 +1,5 @@
-.tmp/*
-*.log
+.tmp/
+*.log*
 node_modules/
+package-lock.json
+.vscode
