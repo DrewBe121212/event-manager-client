@@ -1,7 +1,7 @@
 import {createReducer} from 'utils/redux';
 import {
-  NAVIGATION_TOGGLE_DRAWER,
-  NAVIGATION_SET_MENU_TITLE
+  TOGGLE_DRAWER,
+  SET_MENU_TITLE
 } from 'constants/navigation';
 
 const initialState = {
@@ -14,7 +14,7 @@ const initialState = {
 };
 
 const navigation = createReducer(initialState, {
-  [NAVIGATION_TOGGLE_DRAWER]: (state, payload) => {
+  [TOGGLE_DRAWER]: (state, payload) => {
 
     let open = state.drawer.open;
 
@@ -31,7 +31,7 @@ const navigation = createReducer(initialState, {
     });
 
   },
-  [NAVIGATION_SET_MENU_TITLE]: (state, title) => {
+  [SET_MENU_TITLE]: (state, title) => {
     return ({...state,
       menu: {
         title: title

@@ -1,7 +1,7 @@
 import {select, takeEvery, put, call} from 'redux-saga/effects';
 import {
-  USER_SET,
-  USER_RESET
+  SET_USER,
+  RESET_USER
 } from 'constants/user';
 
 import {setUserAuthorization} from 'actions/user';
@@ -19,7 +19,7 @@ function* refreshAbilities() {
 
 function* watchUserUpdates() {
   yield takeEvery([
-    USER_SET, USER_RESET
+    SET_USER, RESET_USER
   ], refreshAbilities);
 }
 

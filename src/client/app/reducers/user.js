@@ -1,10 +1,10 @@
 import {createReducer} from 'utils/redux';
 
 import {
-  USER_SET,
-  USER_RESET,
-  USER_SET_AUTHORIZATION,
-  USER_RESET_AUTHORIZATION
+  SET_USER,
+  RESET_USER,
+  SET_USER_AUTHORIZATION,
+  RESET_USER_AUTHORIZATION
 } from 'constants/user';
 
 const initialAuthorization = {};
@@ -22,7 +22,7 @@ const initialState = {
 };
 
 const user = createReducer(initialState, {
-  [USER_SET]: (state, payload) => {
+  [SET_USER]: (state, payload) => {
 
     const authenticated = payload.authenticated || state.authenticated;
     let roles = payload.roles ? [
@@ -49,15 +49,15 @@ const user = createReducer(initialState, {
       email: payload.email || state.email
     });
   },
-  [USER_RESET]: (state) => {
+  [RESET_USER]: (state) => {
     return({...state, ...initialState});
   },
-  [USER_SET_AUTHORIZATION]: (state, payload) => {
+  [SET_USER_AUTHORIZATION]: (state, payload) => {
     return ({...state,
       authorization: payload
     });
   },
-  [USER_RESET_AUTHORIZATION]: (state) => {
+  [RESET_USER_AUTHORIZATION]: (state) => {
     return({...state,
       authorization: initialAuthorization
     });

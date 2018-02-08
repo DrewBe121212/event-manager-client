@@ -1,26 +1,26 @@
 import {
-  USER_SET,
-  USER_RESET,
-  USER_SET_AUTHORIZATION,
-  USER_RESET_AUTHORIZATION
+  SET_USER,
+  RESET_USER,
+  SET_USER_AUTHORIZATION,
+  RESET_USER_AUTHORIZATION
 } from 'constants/user';
 
 const setUser = (user) => ({
-  type: USER_SET,
+  type: SET_USER,
   payload: user
 });
 
 const resetUser = () => ({
-  type: USER_RESET
+  type: RESET_USER
 });
 
 const setUserAuthorization = (authorization) => ({
-  type: USER_SET_AUTHORIZATION,
+  type: SET_USER_AUTHORIZATION,
   payload: authorization
 });
 
 const resetUserAuthorization = () => ({
-  type: USER_RESET_AUTHORIZATION
+  type: RESET_USER_AUTHORIZATION
 });
 
 export {setUser, resetUser, setUserAuthorization, resetUserAuthorization};
