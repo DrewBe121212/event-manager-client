@@ -132,7 +132,7 @@ class SignInComponent extends React.Component {
 
     return (
       <Grid container justify="center">
-        <Grid item xs={4}>
+        <Grid item xs={12} md={10} lg={8} xl={6}>
           <Paper className={classes.paper} >
             <CSSTransition in={this.state.fadeIn} classNames="fade" timeout={1000} exit={false} onEntered={this.resetFadeIn}>
               <div>

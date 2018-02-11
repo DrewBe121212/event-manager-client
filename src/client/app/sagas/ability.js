@@ -17,10 +17,8 @@ function* refreshAbilities() {
 
 }
 
-function* watchUserUpdates() {
-  yield takeEvery([
-    SET_USER, RESET_USER
-  ], refreshAbilities);
-}
+const watchUserUpdates = takeEvery([
+  SET_USER, RESET_USER
+], refreshAbilities);
 
 export {refreshAbilities, watchUserUpdates};

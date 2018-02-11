@@ -5,6 +5,7 @@ import {withRouter} from 'react-router-dom';
 import {compose} from 'recompose';
 import classNames from 'classnames';
 import {withStyles} from 'material-ui/styles';
+import Reboot from 'material-ui/Reboot';
 
 import {ApplicationBar} from 'components/layout/ApplicationBar';
 import {Navigation} from 'components/layout/Navigation';
@@ -15,12 +16,10 @@ import {Routes} from 'routes';
 
 const styles = (theme) => ({
   root: {
-
     position: 'relative',
     display: 'flex',
     width: '100%',
     height: '100%'
-
   },
   content: {
     width: '100%',
@@ -66,6 +65,7 @@ class ApplicationComponent extends React.Component {
 
     return (
       <div className={classes.root}>
+        <Reboot />
         <ApplicationBar title={title} drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
         <Navigation drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
         <div className={classNames(classes.content, {[classes.contentShift]: drawer.open})}>

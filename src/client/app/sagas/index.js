@@ -1,10 +1,11 @@
-import * as ability from './ability';
+import { all } from 'redux-saga/effects';
+import {watchUserUpdates} from './ability';
 
- /* Ability Sagas should always be first, it determines permissions for everything else */
-const sagaGenerators = {
-  ...ability
-};
+function* rootSaga() {
+  yield all([
+    watchUserUpdates
+  ]);
+}
 
-const sagas = Object.values(sagaGenerators);
-
-export {sagas};
+export {rootSaga};
+export {refreshAbilities} from './ability';

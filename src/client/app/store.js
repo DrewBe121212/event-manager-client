@@ -8,7 +8,7 @@ import axiousMiddleware from 'redux-axios-middleware';
 import createSagaMiddleware from 'redux-saga';
 import {config} from 'config';
 import {reducers} from 'reducers';
-import {sagas} from 'sagas';
+import {rootSaga, refreshAbilities} from 'sagas';
 
 const axiosClient = axios.create({
   baseURL: config.API.EVENT_MANAGER,
@@ -24,7 +24,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 // array of used middlewares
 const middleware = [
-  routingMiddleware, sagaMiddleware, axiosMiddleware
+  routingMiddleware, axiosMiddleware, sagaMiddleware
 ];
 
 if (process.env.NODE_ENV !== 'production') {
@@ -45,6 +45,7 @@ const store = createStore(
   enhancer
 );
 
-sagas.map((saga) => sagaMiddleware.run(saga));
+sagaMiddleware.run(refreshAbilities);
+sagaMiddleware.run(rootSaga);
 
 export {history, store};
