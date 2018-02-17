@@ -10,7 +10,7 @@
   "scripts": {
     "clean:dist": "rimraf dist",
     "build": "webpack -d --watch --config ./conf/webpack-dev.config.js",
-    "build:dist": "npm run clean:dist && webpack -p --config ./conf/webpack-dist.config.js",
+    "build:dist": "npm run clean:dist && webpack --config ./conf/webpack-dist.config.js --define process.env.NODE_ENV='production'",
     "start": "npm run build & npm run start-server",
     "start:dist": "npm run build:dist && npm run start-server:dist",
     "start-server": "webpack-dev-server --config ./conf/webpack-dev.config.js",
@@ -20,20 +20,18 @@
   },
   "babel": {
     "presets": [
-      "env",
-      "react",
       [
         "env",
         {
           "targets": {
             "browsers": [
-              "last 2 versions"
+              "> 5%"
             ],
-            "node": "current",
-            "uglify": true
+            "node": "current"
           }
         }
-      ]
+      ],
+      "react"
     ],
     "plugins": [
       "transform-object-rest-spread",
@@ -69,9 +67,11 @@
     "babel-core": "^6.25.0",
     "babel-eslint": "^8.0.0",
     "babel-loader": "^7.1.1",
+    "babel-minify-webpack-plugin": "^0.3.0",
     "babel-plugin-transform-async-generator-functions": "^6.24.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
