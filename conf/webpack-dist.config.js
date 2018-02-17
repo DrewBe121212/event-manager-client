@@ -54,9 +54,9 @@ module.exports = {
       SILENT: true
     }),
     new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        unused: true,
-        dead_code: true,
+      sourceMap: true,
+      uglifyOptions: {
+        ecma: 8,
         warnings: false
       }
     }),
