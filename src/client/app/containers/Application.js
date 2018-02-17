@@ -22,32 +22,29 @@ const styles = (theme) => ({
     height: '100%'
   },
   content: {
-    width: '100%',
     marginLeft: -theme.drawer.width,
+    width: '100%',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
     height: 'calc(100% - 56px)',
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {
-      content: {
-        height: 'calc(100% - 64px)',
-        marginTop: 64
-      }
-    }
+      height: 'calc(100% - 64px)',
+      marginTop: 64,
+    },
   },
   contentShift: {
     marginLeft: 0,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   }
-
 });
 
 class ApplicationComponent extends React.Component {

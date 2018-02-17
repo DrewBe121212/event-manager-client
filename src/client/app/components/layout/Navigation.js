@@ -49,15 +49,15 @@ class NavigationComponent extends React.Component {
     const {drawer, classes} = this.props;
 
     return (
-      <Drawer type="persistent" open={drawer.open} classes={{paper: classes.drawerPaper}}>
+      <Drawer variant="persistent" open={drawer.open} classes={{paper: classes.drawerPaper}}>
         <div className={classes.drawerInner}>
           <div className={classes.drawerHeader}>
             <div>
               <div>
-                <Typography type="title" gutterBottom>{config.APPLICATION.NAME}</Typography>
+                <Typography variant="title" gutterBottom>{config.APPLICATION.NAME}</Typography>
               </div>
               <div>
-                <Typography type="caption" align="right">Version {config.APPLICATION.VERSION}</Typography>
+                <Typography variant="caption" align="right">Version {config.APPLICATION.VERSION}</Typography>
               </div>
             </div>
             <IconButton onClick={this.closeDrawer}>
