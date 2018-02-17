@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {compose} from 'recompose';
+import {compose} from 'redux';
 import {withStyles} from 'material-ui/styles';
 
 import {withAuthorization} from 'libs/abilities';

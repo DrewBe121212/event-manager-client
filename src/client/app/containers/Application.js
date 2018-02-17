@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {compose} from 'recompose';
+import {compose} from 'redux';
 import classNames from 'classnames';
 import {withStyles} from 'material-ui/styles';
 import Reboot from 'material-ui/Reboot';
