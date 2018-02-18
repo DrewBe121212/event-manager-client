@@ -8,7 +8,7 @@ import axiousMiddleware from 'redux-axios-middleware';
 import createSagaMiddleware from 'redux-saga';
 import {config} from 'config';
 import {reducers} from 'reducers';
-import {rootSaga, refreshAbilities} from 'sagas';
+import {rootSaga} from 'sagas';
 
 const axiosClient = axios.create({
   baseURL: config.API.EVENT_MANAGER,
@@ -45,7 +45,6 @@ const store = createStore(
   enhancer
 );
 
-sagaMiddleware.run(refreshAbilities);
 sagaMiddleware.run(rootSaga);
 
 export {history, store};

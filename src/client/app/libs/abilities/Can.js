@@ -1,7 +1,6 @@
 import {hasAbility} from './abilities';
 
 const Can = (props) => {
-
   const {perform, on, children} = props;
 
   if (hasAbility(perform, on)) {
@@ -9,7 +8,6 @@ const Can = (props) => {
   }
 
   return null;
-
-}
+};
 
 export {Can};

@@ -1,11 +1,11 @@
-import { all } from 'redux-saga/effects';
-import {watchUserUpdates} from './ability';
+import { all, fork } from 'redux-saga/effects';
+import {refreshAbilities, watchUserUpdates} from './ability';
 
 function* rootSaga() {
   yield all([
-    watchUserUpdates
+    fork(refreshAbilities),
+    fork(watchUserUpdates)
   ]);
 }
 
 export {rootSaga};
-export {refreshAbilities} from './ability';

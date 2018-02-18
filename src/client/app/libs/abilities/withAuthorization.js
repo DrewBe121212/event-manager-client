@@ -35,11 +35,9 @@ const withAuthorization = (Component) => {
       }
 
       return authorizedAbility;
-
     }
 
     componentWillMount() {
-
       const authorize = this.getAuthorize();
 
       let state = {
@@ -51,11 +49,9 @@ const withAuthorization = (Component) => {
       }
 
       this.setState(state);
-
     }
 
     componentDidMount() {
-
       const {authenticated, history, location} = this.props;
       const {authorized} = this.state;
       const signInPath = '/user/sign-in';
@@ -67,11 +63,9 @@ const withAuthorization = (Component) => {
       } else if (!authorized && location.pathName !== signInPath) {
         history.push(signInPath);
       }
-
     }
 
     render() {
-
       const {authenticated, authorization, ...other} = this.props;
 
       if (this.state.authorized) {
@@ -79,9 +73,7 @@ const withAuthorization = (Component) => {
       } else {
         return <Error403 />;
       }
-
     }
-
   }
 
   const mapStateToProps = (state) => ({
