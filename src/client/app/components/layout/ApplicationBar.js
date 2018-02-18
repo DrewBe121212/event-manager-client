@@ -12,18 +12,24 @@ import MenuIcon from 'material-ui-icons/Menu';
 const styles = (theme) => ({
   appBar: {
     position: 'absolute',
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create([
+      'margin', 
+      'width'
+    ], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+      duration: theme.transitions.duration.leavingScreen
+    })
   },
   appBarShift: {
     marginLeft: theme.drawer.width,
     width: `calc(100% - ${theme.drawer.width}px)`,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create([
+      'margin', 
+      'width'
+    ], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   drawerButton: {
     marginLeft: 12,
