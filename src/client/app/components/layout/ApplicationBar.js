@@ -10,29 +10,20 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 
 const styles = (theme) => ({
-  root: {
-    marginTop: theme.spacing.unit * 3,
-    zIndex: 1,
-    overflow: 'hidden'
-  },
   appBar: {
     position: 'absolute',
-    transition: theme.transitions.create([
-      'margin', 'width'
-    ], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBarShift: {
-    width: `calc(100% - ${theme.drawer.width}px)`,
     marginLeft: theme.drawer.width,
-    transition: theme.transitions.create([
-      'margin', 'width'
-    ], {
+    width: `calc(100% - ${theme.drawer.width}px)`,
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerButton: {
     marginLeft: 12,
@@ -61,18 +52,16 @@ class ApplicationBarComponent extends React.Component {
     const {title, drawer, classes} = this.props;
 
     return (
-      <div className={classes.root}>
-        <AppBar className={classNames(classes.appBar, {[classes.appBarShift]: drawer.open})}>
-          <Toolbar disableGutters={!drawer.open}>
-            <IconButton onClick={this.openDrawer} className={classNames(classes.drawerButton, {hidden: drawer.open})} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography type="title" color="inherit" noWrap>
-              {title}
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </div>
+      <AppBar className={classNames(classes.appBar, {[classes.appBarShift]: drawer.open})}>
+        <Toolbar disableGutters={!drawer.open}>
+          <IconButton onClick={this.openDrawer} className={classNames(classes.drawerButton, {hidden: drawer.open})} color="inherit" aria-label="Menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="title" color="inherit" noWrap>
+            {title}
+          </Typography>
+        </Toolbar>
+      </AppBar>
     );
 
   }

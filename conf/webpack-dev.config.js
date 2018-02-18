@@ -29,11 +29,6 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /.json$/,
-        include : PATHS.SRC,
-        loaders: ['json']
-      },
-      {
         test: /\.jsx?$/,
         include : PATHS.SRC,
         loader: 'babel-loader'
@@ -42,6 +37,11 @@ module.exports = {
         test: /\.(css|scss)$/,
         include : PATHS.CSS,
         loaders: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /.json$/,
+        include : PATHS.SRC,
+        loaders: ['json']
       }
     ]
   },

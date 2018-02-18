@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {Error403} from 'components/errors/Error403';
+import {Error403} from 'components/errors';
 import {hasAbility} from './abilities';
 
 const withAuthorization = (Component) => {

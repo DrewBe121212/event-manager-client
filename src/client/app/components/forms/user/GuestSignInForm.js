@@ -21,10 +21,10 @@ const InnerForm = (props) => {
         </Grid>
       </Grid>
       <div className="action-bar">
-        <Button raised mini onClick={handleCancel}>
+        <Button mini onClick={handleCancel}>
             cancel
         </Button>
-        <Button raised color="primary" disabled={isSubmitting} onClick={handleSubmit}>
+        <Button color="primary" disabled={isSubmitting} onClick={handleSubmit}>
             Login
         </Button>
       </div>
