@@ -24,7 +24,9 @@ const sagaMiddleware = createSagaMiddleware();
 
 // array of used middlewares
 const middleware = [
-  routingMiddleware, axiosMiddleware, sagaMiddleware
+  routingMiddleware,
+  axiosMiddleware,
+  sagaMiddleware
 ];
 
 if (process.env.NODE_ENV !== 'production') {
