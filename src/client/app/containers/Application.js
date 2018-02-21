@@ -52,19 +52,34 @@ class ApplicationComponent extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     drawer: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     handleDrawerToggle: PropTypes.func.isRequired
   };
 
-  render () {
+  handleMenuItemClick = (url) => {
+    const {location, history} = this.props;
 
+    if (url && url.length > 0 && url !== location.pathname) {
+        history.push(url);
+      }
+  };
+
+  isActiveMenu = (url) => {
+    const {location} = this.props;
+
+    return location.pathname && location.pathname.length > 0 && location.pathname === url;
+  };
+
+  render () {
     const {title, drawer, classes} = this.props;
 
     return (
       <div className={classes.root}>
         <Reboot />
         <ApplicationBar title={title} drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
-        <Navigation drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
+        <Navigation drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} isActiveMenu={this.isActiveMenu} handleNavigationMenuItemClick={this.handleMenuItemClick} />
         <div className={classNames(classes.content, {[classes.contentShift]: drawer.open})}>
           <Routes />
         </div>

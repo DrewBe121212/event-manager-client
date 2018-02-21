@@ -1,23 +1,18 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 import {MenuItem} from 'material-ui/Menu';
 
-const NavigationMenuItemComponent = (props) => {
-  const {children, url, history, location} = props;
+const NavigationMenuItem = (props) => {
+  const {children, url, isActiveMenu, handleNavigationMenuItemClick} = props;
 
   function handleClick() {
-    if (url !== location.pathname) {
-      history.push(url);
-    }
+    handleNavigationMenuItemClick(url);
   }
 
   return(
-    <MenuItem selected={url === location.pathname} onClick={handleClick}>
+    <MenuItem selected={isActiveMenu(url)} onClick={handleClick}>
       {children}
     </MenuItem>
   );
 };
-
-const NavigationMenuItem = withRouter(NavigationMenuItemComponent);
 
 export {NavigationMenuItem};
