@@ -6,7 +6,7 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
-const InnerForm = (props) => {
+const Form = (props) => {
 
   const {values, errors, touched, handleChange, handleSubmit, isSubmitting, handleCancel} = props;
 
@@ -32,7 +32,7 @@ const InnerForm = (props) => {
   );
 };
 
-InnerForm.propTypes = {
+Form.propTypes = {
   values: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   touched: PropTypes.object.isRequired,
@@ -64,6 +64,6 @@ const GuestSignInForm = withFormik({
   handleSubmit: (values, {props, setSubmitting, setErrors}) => {
     alert('form submitted!');
   }
-})(InnerForm);
+})(Form);
 
 export {GuestSignInForm};

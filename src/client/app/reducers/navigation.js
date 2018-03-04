@@ -24,21 +24,19 @@ const navigation = createReducer(initialState, {
       open = open ? false : true;
     }
 
-    return ({...state,
+    return Object.assign({}, state, {
       drawer: {
-        open: open
+        open
       }
     });
-
   },
-  [SET_MENU_TITLE]: (state, title) => {
-    return ({...state,
+  [SET_MENU_TITLE]: (state, title) => (
+    Object.assign({}, state, {
       menu: {
-        title: title
+        title
       }
-    });
-
-  }
+    })
+  )
 });
 
 export {navigation};

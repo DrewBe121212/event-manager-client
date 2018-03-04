@@ -49,19 +49,19 @@ const user = createReducer(initialState, {
       email: payload.email || state.email
     });
   },
-  [RESET_USER]: (state) => {
-    return({...state, ...initialState});
-  },
-  [SET_USER_AUTHORIZATION]: (state, payload) => {
-    return ({...state,
+  [RESET_USER]: () => (
+    Object.assign({}, initialState)
+  ),
+  [SET_USER_AUTHORIZATION]: (state, payload) => (
+    Object.assign({}, state, {
       authorization: payload
-    });
-  },
-  [RESET_USER_AUTHORIZATION]: (state) => {
-    return({...state,
+    })
+  ),
+  [RESET_USER_AUTHORIZATION]: (state) => (
+    Object.assign({}, state, {
       authorization: initialAuthorization
-    });
-  }
+    })
+  )
 });
 
 export {user};
