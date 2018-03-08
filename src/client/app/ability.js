@@ -1,4 +1,4 @@
-const ability = (setAbility, role) => {
+export const ability = (setAbility, role) => {
 
   switch(role) {
 
@@ -26,5 +26,3 @@ const ability = (setAbility, role) => {
   }
 
 };
-
-export {ability};

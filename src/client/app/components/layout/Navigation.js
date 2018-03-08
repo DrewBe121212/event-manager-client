@@ -12,6 +12,9 @@ import {NavigationMenu} from './NavigationMenu';
 import {config} from 'config';
 
 const styles = (theme) => ({
+  environment: {
+    textTransform: 'capitalize'
+  },
   drawerPaper: {
     position: 'relative',
     height: '100%',
@@ -42,10 +45,10 @@ const NavigationComponent = (props) => {
         <div className={classes.drawerHeader}>
           <div>
             <div>
-              <Typography variant="title" gutterBottom>{config.APPLICATION.NAME}</Typography>
+              <Typography variant="subheading" noWrap>{config.APPLICATION.NAME}</Typography>
             </div>
             <div>
-              <Typography variant="caption" align="right">Version {config.APPLICATION.VERSION}</Typography>
+              <Typography variant="caption" noWrap align="right" className={classes.environment}>Version {config.APPLICATION.VERSION}</Typography>
             </div>
           </div>
           <IconButton onClick={closeDrawer}>

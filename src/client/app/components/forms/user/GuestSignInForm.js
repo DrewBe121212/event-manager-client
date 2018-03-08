@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withFormik} from 'formik';
-
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
 const Form = (props) => {
-
   const {values, errors, touched, handleChange, handleSubmit, isSubmitting, handleCancel} = props;
 
   return (
@@ -21,10 +19,13 @@ const Form = (props) => {
         </Grid>
       </Grid>
       <div className="action-bar">
-        <Button mini onClick={handleCancel}>
+        <Button onClick={handleCancel}>
             cancel
         </Button>
-        <Button color="primary" disabled={isSubmitting} onClick={handleSubmit}>
+        <Button color="secondary">
+          Forgot Password
+        </Button>
+        <Button variant="raised" color="primary" disabled={isSubmitting} onClick={handleSubmit}>
             Login
         </Button>
       </div>
@@ -39,7 +40,8 @@ Form.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  handleCancel: PropTypes.func.isRequired
+  handleCancel: PropTypes.func.isRequired,
+  authenticateUser: PropTypes.func.isRequired
 };
 
 const GuestSignInForm = withFormik({
@@ -48,21 +50,8 @@ const GuestSignInForm = withFormik({
     username: '',
     password: ''
   }),
-  // Add a custom validation function (this can be async too!)
-  validate: (values, props) => {
-    const errors = {};
-    if (!values.username) {
-      errors.username = 'Required';
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)
-    ) {
-      errors.username = 'Invalid username';
-    }
-    return errors;
-  },
-  // Submission handler
   handleSubmit: (values, {props, setSubmitting, setErrors}) => {
-    alert('form submitted!');
+    props.authenticateUser(values.username, values.password);
   }
 })(Form);
 

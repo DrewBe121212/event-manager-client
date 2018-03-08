@@ -1,13 +1,29 @@
+import {config} from 'config';
 import axios from 'axios';
+import path from 'path';
 
-class BaseService {
+const clients = {
+  eventManager: axios.create({
+    baseURL: config.API.EVENT_MANAGER,
+    responseType: 'json'
+  })
+};
 
-  constructor(resource) {
-    this.axios = axios;
+export class BaseService {
+
+  constructor(resource, resources) {
+    this.resource = resource;
+    this.resources = resources;
+  }
+
+  axios(method, endpoint, params, client='eventManager') {
+    if (clients[client]) {
+      return clients[client].call(method, path.resolve(this.resource, endpoint), params);
+    }
   }
 
   find(params) {
-    return this.axios.get(this.resource, params);
+    return this.axios('get', '', params);
   }
 
   findById(id) {
@@ -27,5 +43,3 @@ class BaseService {
   }
 
 }
-
-export {BaseService};

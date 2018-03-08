@@ -16,6 +16,14 @@ const withAuthorization = (Component) => {
       location: PropTypes.object.isRequired
     };
 
+    constructor(props) { 
+      super(props);
+
+      this.state = {
+        authorized: false
+      };
+    }
+
     getComponentAuthorize = () => {
       return Component.authorize;
     }
@@ -40,15 +48,11 @@ const withAuthorization = (Component) => {
     componentWillMount() {
       const authorize = this.getAuthorize();
 
-      let state = {
-        authorized: false
-      };
-
       if (hasAbility(authorize.action, authorize.object)) {
-        state.authorized = true;
+        this.setState({
+          authorized: true
+        })
       }
-
-      this.setState(state);
     }
 
     componentDidMount() {

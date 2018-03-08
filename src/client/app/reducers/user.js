@@ -21,7 +21,7 @@ const initialState = {
   email: ''
 };
 
-const user = createReducer(initialState, {
+export const userReducer = createReducer(initialState, {
   [SET_USER]: (state, payload) => {
 
     const authenticated = payload.authenticated || state.authenticated;
@@ -63,5 +63,3 @@ const user = createReducer(initialState, {
     })
   )
 });
-
-export {user};

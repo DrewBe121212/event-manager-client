@@ -13,7 +13,7 @@ const initialState = {
   }
 };
 
-const navigation = createReducer(initialState, {
+export const navigationReducer = createReducer(initialState, {
   [TOGGLE_DRAWER]: (state, payload) => {
 
     let open = state.drawer.open;
@@ -38,5 +38,3 @@ const navigation = createReducer(initialState, {
     })
   )
 });
-
-export {navigation};

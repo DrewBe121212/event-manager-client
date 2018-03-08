@@ -1,13 +1,11 @@
 import {combineReducers} from 'redux';
 import {routerReducer} from 'react-router-redux';
 
-import {navigation} from 'reducers/navigation';
-import {user} from 'reducers/user';
+import {navigationReducer} from 'reducers/navigation';
+import {userReducer} from 'reducers/user';
 
-const reducers = combineReducers({
-  routerReducer,
-  navigation,
-  user
+export const reducers = combineReducers({
+  router: routerReducer,
+  navigation: navigationReducer,
+  user: userReducer
 });
-
-export {reducers};

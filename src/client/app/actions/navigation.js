@@ -3,14 +3,12 @@ import {
   SET_MENU_TITLE
 } from 'constants/navigation';
 
-const toggleDrawer = (open) => ({
+export const toggleDrawer = (open) => ({
   type: TOGGLE_DRAWER,
   payload: open
 });
 
-const setMenuTitle = (title) => ({
+export const setMenuTitle = (title) => ({
   type: SET_MENU_TITLE,
   payload: title
 });
-
-export {toggleDrawer, setMenuTitle};

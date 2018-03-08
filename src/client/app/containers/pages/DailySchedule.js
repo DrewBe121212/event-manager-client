@@ -22,6 +22,14 @@ class DailyScheduleComponent extends React.Component {
     setMenuTitle: PropTypes.func.isRequired
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      events: []
+    };
+  }
+
   componentWillMount() {
     this.props.setMenuTitle('Daily Schedule');
   }
@@ -39,8 +47,8 @@ const mapDispatchToProps = {
 };
 
 const DailySchedule = compose(
-  withAuthorization,
   withStyles(styles),
+  withAuthorization,
   connect(mapStateToProps, mapDispatchToProps)
 )(DailyScheduleComponent);
 

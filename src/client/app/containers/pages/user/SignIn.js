@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {withStyles} from 'material-ui/styles';
 import {CSSTransition} from 'react-transition-group';
-
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import List, {ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
@@ -13,6 +12,7 @@ import Avatar from 'material-ui/Avatar';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import PersonOutlineIcon from 'material-ui-icons/PersonOutline';
 
+import {authenticateUser} from 'actions/user';
 import {setMenuTitle} from 'actions/navigation';
 import {GuestSignInForm} from 'components/forms/user/GuestSignInForm';
 import {withAuthorization} from 'libs/abilities';
@@ -52,29 +52,22 @@ class SignInComponent extends React.Component {
     });
   }
 
-  handleOptionClick = (type) => {
-    switch(type) {
+  shibolethLogin = () => {
+    alert('redirect to shiboleth');
+  }
 
-      case 'osu':
-        alert('redirect to shiboleth');
-        break;
+  guestLogin = () => {
+    this.setState({
+      guestLogin: true,
+      fadeIn: true
+    });
+  }
 
-      case 'guest_cancel':
-        this.setState({
-          guestLogin: false,
-          fadeIn: true
-        });
-        break;
-
-      case 'guest':
-        this.setState({
-          guestLogin: true,
-          fadeIn: true
-        });
-        break;
-
-    }
-
+  cancelGuestLogin = () => {
+    this.setState({
+      guestLogin: false,
+      fadeIn: true
+    });
   }
 
   SignInOptions = () => {
@@ -88,7 +81,8 @@ class SignInComponent extends React.Component {
         key: 'osu',
         primary: 'OSU User Login',
         secondary: 'Ohio State University Login via Single Sign On',
-        icon: <PersonOutlineIcon />
+        icon: <PersonOutlineIcon />,
+        onClick: this.shibolethLogin
       });
     }
 
@@ -97,7 +91,8 @@ class SignInComponent extends React.Component {
         key: 'guest',
         primary: 'Guest Login',
         secondary: 'Sign in using a username and password that is not affiliated with OSU.',
-        icon: <PersonOutlineIcon />
+        icon: <PersonOutlineIcon />,
+        onClick: this.guestLogin
       });
     }
 
@@ -105,7 +100,7 @@ class SignInComponent extends React.Component {
       return (
         <List>
           {options.map((option, index) => (
-            <ListItem button divider={index < options.length-1} onClick={() => this.handleOptionClick(option.key)} key={option.key}>
+            <ListItem button divider={index < options.length-1} onClick={option.onClick} key={option.key}>
               <ListItemAvatar>
                 <Avatar>
                   {option.icon}
@@ -127,8 +122,7 @@ class SignInComponent extends React.Component {
   }
 
   render() {
-
-    const {classes} = this.props;
+    const {classes, authenticateUser} = this.props;
 
     return (
       <Grid container justify="center">
@@ -136,7 +130,7 @@ class SignInComponent extends React.Component {
           <Paper className={classes.paper} >
             <CSSTransition in={this.state.fadeIn} classNames="fade" timeout={1000} exit={false} onEntered={this.resetFadeIn}>
               <div>
-                {this.state.guestLogin ? <GuestSignInForm guestLogin={this.state.guestLogin} handleCancel={() => this.handleOptionClick('guest_cancel')} /> : this.SignInOptions()}
+                {this.state.guestLogin ? <GuestSignInForm authenticateUser={authenticateUser} handleCancel={this.cancelGuestLogin} /> : this.SignInOptions()}
               </div>
             </CSSTransition>
           </Paper>
@@ -152,12 +146,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  setMenuTitle
+  setMenuTitle,
+  authenticateUser
 };
 
 const SignIn = compose(
-  withAuthorization,
   withStyles(styles),
+  withAuthorization,
   connect(mapStateToProps, mapDispatchToProps)
 )(SignInComponent);
 

@@ -7,20 +7,14 @@ import {
 import {setUserAuthorization} from 'actions/user';
 import {setAbilitiesFromState} from 'libs/abilities';
 
-function* refreshAbilities() {
-
+export function* refreshAbilities() {
   const state = yield select();
-
   const abilities = yield call(setAbilitiesFromState, state);
-
   yield put(setUserAuthorization(abilities));
-
 }
 
-function* watchUserUpdates() {
+export function* watchUserUpdates() {
   yield takeEvery([
     SET_USER, RESET_USER
   ], refreshAbilities);
 }
-
-export {refreshAbilities, watchUserUpdates};

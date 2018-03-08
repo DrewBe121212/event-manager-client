@@ -4,31 +4,24 @@ import {routerMiddleware} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import axios from 'axios';
-import axiousMiddleware from 'redux-axios-middleware';
 import createSagaMiddleware from 'redux-saga';
-import {config} from 'config';
 import {reducers} from 'reducers';
 import {rootSaga} from 'sagas';
 
-const axiosClient = axios.create({
-  baseURL: config.API.EVENT_MANAGER,
-  responseType: 'json'
-});
-
-const axiosMiddleware = axiousMiddleware(axiosClient);
-
+// initialize history
 const history = createHistory();
-const routingMiddleware = routerMiddleware(history);
 
+// initialize middleware
+const routingMiddleware = routerMiddleware(history);
 const sagaMiddleware = createSagaMiddleware();
 
 // array of used middlewares
 const middleware = [
   routingMiddleware,
-  axiosMiddleware,
   sagaMiddleware
 ];
 
+// add logging to non production environments
 if (process.env.NODE_ENV !== 'production') {
   const loggerMiddleware = createLogger({
     duration: true,

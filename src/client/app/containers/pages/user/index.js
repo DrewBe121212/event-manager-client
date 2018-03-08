@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom';
 
 import {SignIn} from './SignIn';
 
-function User() {
+export function UserRoute() {
   return (
     <Switch>
       <Route exact path='/user' />
@@ -12,5 +12,3 @@ function User() {
     </Switch>
   );
 }
-
-export {User};

@@ -13,6 +13,9 @@ const ASSETS_PATH = path.resolve(APP_PATH, 'assets');
 const CSS_PATH = path.resolve(ASSETS_PATH, 'css');
 
 module.exports = {
+  APPLICATION: {
+    NAME: "Event Management"
+  },
   PATHS: {
     ROOT: ROOT_PATH,
     CONF: CONF_PATH,

@@ -1,8 +1,5 @@
 {
-  "APPLICATION": {
-    "NAME": "Event Management"
-  },
   "API": {
-    "EVENT_MANAGER": "http://127.0.0.1/api"
+    "EVENT_MANAGER": "http://localhost:8080/api"
   }
 }

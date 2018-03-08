@@ -1,14 +1,17 @@
-import {baseService} from './baseService';
+import {BaseService} from './baseService';
 
-class User extends baseService {
+class User extends BaseService {
   constructor() {
-    super('user');
+    super('user', 'users');
   }
 
-  login(username, password) {
-
+  authenticate(user, password) {
+    return this.axios('post', 'authenticate', {
+      user,
+      password
+    });
   }
 
 }
 
-export {User};
+export const UserService = new User();
