@@ -62,8 +62,8 @@ class ApplicationComponent extends React.Component {
     const {location, history} = this.props;
 
     if (url && url.length > 0 && url !== location.pathname) {
-        history.push(url);
-      }
+      history.push(url);
+    }
   };
 
   isActiveMenu = (url) => {

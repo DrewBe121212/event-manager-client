@@ -51,7 +51,12 @@ const GuestSignInForm = withFormik({
     password: ''
   }),
   handleSubmit: (values, {props, setSubmitting, setErrors}) => {
-    props.authenticateUser(values.username, values.password);
+    const {authenticateUser} = props;
+
+    authenticateUser(values.username, values.password)
+      .then(((response) => {
+        setSubmitting(false);
+      }));
   }
 })(Form);
 

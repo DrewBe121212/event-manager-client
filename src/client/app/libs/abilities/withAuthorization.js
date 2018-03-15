@@ -51,7 +51,7 @@ const withAuthorization = (Component) => {
       if (hasAbility(authorize.action, authorize.object)) {
         this.setState({
           authorized: true
-        })
+        });
       }
     }
 

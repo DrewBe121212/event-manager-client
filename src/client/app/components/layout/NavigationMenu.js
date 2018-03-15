@@ -31,6 +31,6 @@ const NavigationMenu = (props) => {
       </Can>
     </MenuList>
   );
-}
+};
 
 export {NavigationMenu};

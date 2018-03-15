@@ -8,14 +8,25 @@ import {
   RESET_USER_AUTHORIZATION
 } from 'constants/user';
 
+import {UserService} from 'api';
 
-export const authenticateUser = (user, password) => ({
-  type: AUTHENTICATE_USER,
-  payload: {
-    user,
-    password
-  }
-});
+export const authenticateUser = (user, password) => (dispatch, getState) => {
+  dispatch({
+    type: AUTHENTICATE_USER,
+    payload: {
+      user,
+      password
+    }
+  });
+
+  return UserService.authenticate(user, password)
+    .then((response) => {
+      dispatch(authenticateUserSuccessful(response.data));
+    })
+    .catch((error) => {
+      dispatch(authenticateUserFailure(error));
+    });
+};
 
 export const authenticateUserSuccessful = (user) => ({
   type: AUTHENTICATE_USER_SUCCESSFUL,

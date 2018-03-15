@@ -60,9 +60,9 @@ const NavigationComponent = (props) => {
       </div>
     </Drawer>
   );
-}
+};
 
-NavigationComponent.propTypes  = {
+NavigationComponent.propTypes = {
   drawer: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   handleDrawerToggle: PropTypes.func.isRequired,

@@ -1,6 +1,9 @@
 import {createReducer} from 'utils/redux';
 
 import {
+  AUTHENTICATE_USER,
+  AUTHENTICATE_USER_FAILURE,
+  AUTHENTICATE_USER_SUCCESSFUL,
   SET_USER,
   RESET_USER,
   SET_USER_AUTHORIZATION,
@@ -9,6 +12,7 @@ import {
 
 const initialAuthorization = {};
 const initialState = {
+  authenticating: false,
   authenticated: false,
   authorization: initialAuthorization,
   roles: [
@@ -22,12 +26,27 @@ const initialState = {
 };
 
 export const userReducer = createReducer(initialState, {
+  [AUTHENTICATE_USER]: (state) => ({
+    Object.assign({}, state, {
+      authenticating: true,
+      authenticated: false
+    })
+  }),
+  [AUTHENTICATE_USER_FAILURE]: (state) => ({
+    Object.assign({}, state, {
+      authenticating: false,
+      authenticated: false
+    })
+  }),
+  [AUTHENTICATE_USER_SUCCESSFUL]: (state) => ({
+    Object.assign({}, state, {
+      authenticating: true,
+      authenticated: true
+    })
+  }),
   [SET_USER]: (state, payload) => {
 
-    const authenticated = payload.authenticated || state.authenticated;
-    let roles = payload.roles ? [
-      ...payload.roles
-    ] : [];
+    let roles = payload.roles ? payload.roles.concat() : [];
 
     if (authenticated) {
       if (roles.indexOf('user') === -1) {
@@ -40,7 +59,6 @@ export const userReducer = createReducer(initialState, {
     }
 
     return ({...state,
-      authenticated: authenticated,
       roles: roles,
       username: payload.username || state.username,
       first_name: payload.first_name || state.first_name,

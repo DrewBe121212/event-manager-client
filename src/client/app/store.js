@@ -1,10 +1,11 @@
 import {createStore, applyMiddleware} from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import thunk from 'redux-thunk';
 import {createLogger} from 'redux-logger';
 import {routerMiddleware} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
-import axios from 'axios';
-import createSagaMiddleware from 'redux-saga';
+
 import {reducers} from 'reducers';
 import {rootSaga} from 'sagas';
 
@@ -17,6 +18,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 // array of used middlewares
 const middleware = [
+  thunk,
   routingMiddleware,
   sagaMiddleware
 ];

@@ -32,7 +32,8 @@ class SignInComponent extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     hasAbility: PropTypes.func.isRequired,
-    setMenuTitle: PropTypes.func.isRequired
+    setMenuTitle: PropTypes.func.isRequired,
+    authenticateUser: PropTypes.func.isRequired
   };
 
   constructor(props) {
