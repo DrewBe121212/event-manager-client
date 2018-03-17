@@ -26,24 +26,24 @@ const initialState = {
 };
 
 export const userReducer = createReducer(initialState, {
-  [AUTHENTICATE_USER]: (state) => ({
+  [AUTHENTICATE_USER]: (state) => (
     Object.assign({}, state, {
       authenticating: true,
       authenticated: false
     })
-  }),
-  [AUTHENTICATE_USER_FAILURE]: (state) => ({
+  ),
+  [AUTHENTICATE_USER_FAILURE]: (state) => (
     Object.assign({}, state, {
       authenticating: false,
       authenticated: false
     })
-  }),
-  [AUTHENTICATE_USER_SUCCESSFUL]: (state) => ({
+  ),
+  [AUTHENTICATE_USER_SUCCESSFUL]: (state) => (
     Object.assign({}, state, {
       authenticating: true,
       authenticated: true
     })
-  }),
+  ),
   [SET_USER]: (state, payload) => {
 
     let roles = payload.roles ? payload.roles.concat() : [];
