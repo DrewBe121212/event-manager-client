@@ -56,7 +56,7 @@
     "babel-preset-minify": "^0.3.0",
     "babel-preset-react": "^6.24.1",
     "babel-runtime": "^6.25.0",
-    "clean-webpack-plugin": "^0.1.17",
+    "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.8",
     "eslint": "^4.10.0",
     "eslint-plugin-flowtype": "^2.40.1",
@@ -65,13 +65,13 @@
     "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^3.0.4",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.8.2",
     "postcss-loader": "^2.0.10",
     "redux-freeze": "^0.1.5",
     "sass-loader": "^6.0.6",
-    "style-loader": "^0.20.0",
+    "style-loader": "^0.20.3",
     "webpack": "^3.4.1",
-    "webpack-auto-inject-version": "^1.0.0",
+    "webpack-auto-inject-version": "^1.1.0",
     "webpack-dev-server": "^2.10.0"
   }
 }
