@@ -5,7 +5,7 @@ import {withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import classNames from 'classnames';
 import {withStyles} from 'material-ui/styles';
-import Reboot from 'material-ui/Reboot';
+import CssBaseline from 'material-ui/CssBaseline';
 
 import {ApplicationBar} from 'components/layout/ApplicationBar';
 import {Navigation} from 'components/layout/Navigation';
@@ -77,7 +77,7 @@ class ApplicationComponent extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Reboot />
+        <CssBaseline />
         <ApplicationBar title={title} drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
         <Navigation drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} isActiveMenu={this.isActiveMenu} handleNavigationMenuItemClick={this.handleMenuItemClick} />
         <div className={classNames(classes.content, {[classes.contentShift]: drawer.open})}>

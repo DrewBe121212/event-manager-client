@@ -58,13 +58,13 @@ export const userReducer = createReducer(initialState, {
       }
     }
 
-    return ({...state,
+    return Object.assign({}, state, {
       roles: roles,
       username: payload.username || state.username,
       first_name: payload.first_name || state.first_name,
       middle_name: payload.middle_name || state.middle_name,
       last_name: payload.last_name || state.last_name,
-      email: payload.email || state.email
+      email: payload.email || state.email      
     });
   },
   [RESET_USER]: () => (

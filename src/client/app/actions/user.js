@@ -21,7 +21,12 @@ export const authenticateUser = (user, password) => (dispatch, getState) => {
 
   return UserService.authenticate(user, password)
     .then((response) => {
-      dispatch(authenticateUserSuccessful(response.data));
+      if (response.data.errors) { 
+        dispatch(authenticateUserFailure(response.data.errors));
+      } else {
+        dispatch(authenticateUserSuccessful());
+        dispatch(setUser(response.data));
+      }
     })
     .catch((error) => {
       dispatch(authenticateUserFailure(error));
