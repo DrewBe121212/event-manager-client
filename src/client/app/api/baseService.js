@@ -20,7 +20,7 @@ export class BaseService {
     if (clients[client]) {
       return clients[client].request({
         method: method,
-        url: endpoint,
+        url: path.resolve(this.resources, endpoint.toString()),
         data: params
       });
     }
@@ -31,7 +31,7 @@ export class BaseService {
   }
 
   findById(id) {
-    return this.find({id: id});
+    return this.axios('get', id);
   }
 
   create(params) {
