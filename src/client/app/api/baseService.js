@@ -16,9 +16,13 @@ export class BaseService {
     this.resources = resources;
   }
 
-  axios(method, endpoint, params, client='eventManager') {
+  axios(method = 'get', endpoint, params, client='eventManager') {
     if (clients[client]) {
-      return clients[client].call(method, path.resolve(this.resource, endpoint), params);
+      return clients[client].request({
+        method: method,
+        url: endpoint,
+        data: params
+      });
     }
   }
 
