@@ -29,7 +29,7 @@ export const authenticateUser = (user, password) => (dispatch, getState) => {
       }
     })
     .catch((error) => {
-      dispatch(authenticateUserFailure(error));
+      dispatch(authenticateUserFailure(error.message));
     });
 };
 

@@ -12,6 +12,7 @@ import Avatar from 'material-ui/Avatar';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import PersonOutlineIcon from 'material-ui-icons/PersonOutline';
 
+import {loadForm, saveForm} from 'actions/forms';
 import {authenticateUser} from 'actions/user';
 import {setMenuTitle} from 'actions/navigation';
 import {GuestSignInForm} from 'components/forms/user/GuestSignInForm';
@@ -123,7 +124,7 @@ class SignInComponent extends React.Component {
   }
 
   render() {
-    const {classes, authenticateUser} = this.props;
+    const {classes, loadForm, saveForm, form, loginForm, authenticateUser} = this.props;
 
     return (
       <Grid container justify="center">
@@ -131,7 +132,7 @@ class SignInComponent extends React.Component {
           <Paper className={classes.paper} >
             <CSSTransition in={this.state.fadeIn} classNames="fade" timeout={1000} exit={false} onEntered={this.resetFadeIn}>
               <div>
-                {this.state.guestLogin ? <GuestSignInForm authenticateUser={authenticateUser} handleCancel={this.cancelGuestLogin} /> : this.SignInOptions()}
+                {this.state.guestLogin ? <GuestSignInForm authenticateUser={authenticateUser} loadForm={loadForm} saveForm={saveForm} form={form} handleCancel={this.cancelGuestLogin} /> : this.SignInOptions()}
               </div>
             </CSSTransition>
           </Paper>
@@ -142,11 +143,13 @@ class SignInComponent extends React.Component {
 
 }
 
-const mapStateToProps = (state) => {
-  return {};
-};
+const mapStateToProps = (state) => ({
+  form: state.forms
+});
 
 const mapDispatchToProps = {
+  loadForm,
+  saveForm,
   setMenuTitle,
   authenticateUser
 };

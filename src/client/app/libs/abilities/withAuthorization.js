@@ -16,33 +16,12 @@ const withAuthorization = (Component) => {
       location: PropTypes.object.isRequired
     };
 
-    constructor(props) { 
+    constructor(props) {
       super(props);
 
       this.state = {
         authorized: false
       };
-    }
-
-    getComponentAuthorize = () => {
-      return Component.authorize;
-    }
-
-    getAuthorize = () => {
-      const authorize = this.getComponentAuthorize();
-
-      let authorizedAbility = {
-        action: 'view',
-        object: null
-      };
-
-      if (typeof authorize === 'string') {
-        authorizedAbility.object = authorize;
-      } else if (authorizedAbility === Object(authorizedAbility) && authorizedAbility.hasOwnProperty('action') && authorizedAbility.hasOwnProperty('object')) {
-        authorizedAbility = {...authorize};
-      }
-
-      return authorizedAbility;
     }
 
     componentWillMount() {
@@ -67,6 +46,27 @@ const withAuthorization = (Component) => {
       } else if (!authorized && location.pathName !== signInPath) {
         history.push(signInPath);
       }
+    }
+
+    getComponentAuthorize = () => {
+      return Component.authorize;
+    }
+
+    getAuthorize = () => {
+      const authorize = this.getComponentAuthorize();
+
+      let authorizedAbility = {
+        action: 'view',
+        object: null
+      };
+
+      if (typeof authorize === 'string') {
+        authorizedAbility.object = authorize;
+      } else if (authorizedAbility === Object(authorizedAbility) && authorizedAbility.hasOwnProperty('action') && authorizedAbility.hasOwnProperty('object')) {
+        authorizedAbility = {...authorize};
+      }
+
+      return authorizedAbility;
     }
 
     render() {
