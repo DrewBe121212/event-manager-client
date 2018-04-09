@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withFormik} from 'formik';
+import { withFormik } from 'formik';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import { OverallErrors } from 'components/forms';
 
 class Form extends React.Component {
 
@@ -18,43 +19,28 @@ class Form extends React.Component {
     authenticateUser: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    props.loadForm({
-      promiseExample2: new Promise(function(resolve, reject) {
-        setTimeout(resolve, 700, {data: {Cheeeeeese: 'from promise 2'}});
-      }),
-      dataPoint: 'stuff',
-      anotherDataPoint: 'bob',
-      promiseExample: new Promise(function(resolve, reject) {
-        setTimeout(reject, 1000, {data: {dataStuff: 'from promise'}});
-      })
-    });
-  }
-
   render() {
-    const {values, errors, touched, handleChange, handleSubmit, isSubmitting, handleCancel} = this.props;
+    const { values, errors, touched, handleChange, handleSubmit, isSubmitting, handleCancel } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
         <Grid container>
           <Grid item xs={12}>
-            <TextField id="username" label="Username" value={values.username} onChange={handleChange} autoFocus={true} error={touched.username && errors.username ? true : false} helperText={touched.username && errors.username} fullWidth={true} required={true} />
+            <TextField name="username" id="username" label="Username" value={values.username} onChange={handleChange} error={errors.username ? true : false} helperText={errors.username} fullWidth={true} required={true} autoFocus={true} />
           </Grid>
           <Grid item xs={12}>
-            <TextField type="password" id="password" label="Password" onChange={handleChange} value={values.password} error={touched.password && errors.password ? true : false} helperText={touched.password && errors.password} fullWidth={true} required={true} />
+            <TextField name="password" id="password" label="Password" type="password" value={values.password} onChange={handleChange}  error={errors.password ? true : false} helperText={errors.password} fullWidth={true} required={true} />
           </Grid>
         </Grid>
         <div className="action-bar">
           <Button onClick={handleCancel}>
-              cancel
+            cancel
           </Button>
           <Button color="secondary">
             Forgot Password
           </Button>
           <Button variant="raised" color="primary" disabled={isSubmitting} onClick={handleSubmit}>
-              Login
+            Login
           </Button>
         </div>
       </form>
@@ -63,19 +49,21 @@ class Form extends React.Component {
 }
 
 const GuestSignInForm = withFormik({
-  // Transform outer props into form values
+  validateOnBlur: false,
+  validateOnChange: false,
   mapPropsToValues: (props) => ({
     username: '',
     password: ''
   }),
-  handleSubmit: (values, {props, setSubmitting, setErrors}) => {
-    const {authenticateUser} = props;
-
-    props.saveForm(authenticateUser, values.username, values.password).finally(() => {
-      setSubmitting(false);
-    });
+  handleSubmit: (values, { props, setSubmitting, setErrors }) => {
+    const { authenticateUser } = props;
+    
+    authenticateUser(values.username, values.password)
+      .finally(() => {
+        setSubmitting(false);
+      })
 
   }
 })(Form);
 
-export {GuestSignInForm};
+export { GuestSignInForm };

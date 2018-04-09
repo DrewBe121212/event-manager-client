@@ -1,11 +1,11 @@
-import {select, takeEvery, put, call} from 'redux-saga/effects';
+import { select, takeEvery, put, call } from 'redux-saga/effects';
 import {
   SET_USER,
   RESET_USER
 } from 'constants/user';
 
-import {setUserAuthorization} from 'actions/user';
-import {setAbilitiesFromState} from 'libs/abilities';
+import { setUserAuthorization } from 'actions/user';
+import { setAbilitiesFromState } from 'libs/abilities';
 
 export function* refreshAbilities() {
   const state = yield select();

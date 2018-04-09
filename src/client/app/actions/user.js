@@ -8,19 +8,26 @@ import {
   RESET_USER_AUTHORIZATION
 } from 'constants/user';
 
-import {UserService} from 'api';
+import {SessionService} from 'api';
 
-export const authenticateUser = (user, password) => (dispatch, getState) => {
+export const authenticateUser = (username, password) => (dispatch, getState) => {
   dispatch({
     type: AUTHENTICATE_USER,
     payload: {
-      user,
+      username,
       password
+    },
+    meta: {
+      form: {
+        success: AUTHENTICATE_USER_SUCCESSFUL,
+        failure: AUTHENTICATE_USER_FAILURE
+      }
     }
   });
 
-  return UserService.authenticate(user, password)
+  return SessionService.authenticate(username, password)
     .then((response) => {
+      console.log(response);
       if (response.data.errors) { 
         dispatch(authenticateUserFailure(response.data.errors));
       } else {
@@ -29,7 +36,7 @@ export const authenticateUser = (user, password) => (dispatch, getState) => {
       }
     })
     .catch((error) => {
-      dispatch(authenticateUserFailure(error.message));
+      dispatch(authenticateUserFailure(error.response.data));
     });
 };
 
@@ -40,7 +47,9 @@ export const authenticateUserSuccessful = (user) => ({
 
 export const authenticateUserFailure = (error) => ({
   type: AUTHENTICATE_USER_FAILURE,
-  payload: error
+  payload: {
+    ...error
+  }
 });
 
 export const setUser = (user) => ({

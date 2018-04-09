@@ -1,13 +1,12 @@
-import {createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import thunk from 'redux-thunk';
-import {createLogger} from 'redux-logger';
-import {routerMiddleware} from 'react-router-redux';
+import { createLogger } from 'redux-logger';
+import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
-import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
-
-import {reducers} from 'reducers';
-import {rootSaga} from 'sagas';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import { reducers } from 'reducers/index';
+import { rootSaga } from 'sagas';
 
 // initialize history
 const history = createHistory();
@@ -16,7 +15,7 @@ const history = createHistory();
 const routingMiddleware = routerMiddleware(history);
 const sagaMiddleware = createSagaMiddleware();
 
-// array of used middlewares
+// collect the middlewares used
 const middleware = [
   thunk,
   routingMiddleware,
@@ -44,4 +43,4 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-export {history, store};
+export { history, store };

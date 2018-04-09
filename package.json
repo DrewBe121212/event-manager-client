@@ -13,7 +13,7 @@
     "build:dist": "npm run clean:dist && webpack --config ./conf/webpack-dist.config.js",
     "start": "npm run build & npm run start-server",
     "start:dist": "npm run build:dist && npm run start-server:dist",
-    "start-server": "webpack-dev-server --config ./conf/webpack-dev.config.js",
+    "start-server": "webpack-dev-server --progress --config ./conf/webpack-dev.config.js",
     "start-server:dist": "webpack-dev-server --config ./conf/webpack-dist.config.js",
     "eslint": "eslint ./src/client/app/.",
     "eslint:fix": "eslint ./src/client/app/. --fix"
