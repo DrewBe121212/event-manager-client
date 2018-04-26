@@ -30,7 +30,7 @@ class DailyScheduleComponent extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.setMenuTitle('Daily Schedule');
   }
 
@@ -48,8 +48,8 @@ const mapDispatchToProps = {
 
 const DailySchedule = compose(
   withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps),
   withAuthorization,
-  connect(mapStateToProps, mapDispatchToProps)
 )(DailyScheduleComponent);
 
 export {DailySchedule};

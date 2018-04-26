@@ -10,21 +10,21 @@ import PersonOutlineIcon from 'material-ui-icons/PersonOutline';
 
 export const GuestSignInOptions = (props) => {
 
-  const { hasAbility, shibolethLogin, guestLogin } = props;
+  const { hasAbility, SSOLogin, guestLogin } = props;
 
   let options = [];
 
-  if (hasAbility('login_osu', 'guest')) {
+  if (hasAbility('new', 'session_sso')) {
     options.push({
       key: 'osu',
       primary: 'OSU User Login',
       secondary: 'Ohio State University Login via Single Sign On',
       icon: <PersonOutlineIcon />,
-      onClick: shibolethLogin
+      onClick: SSOLogin
     });
   }
 
-  if (hasAbility('login', 'guest')) {
+  if (hasAbility('new', 'session')) {
     options.push({
       key: 'guest',
       primary: 'Guest Login',

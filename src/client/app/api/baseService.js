@@ -11,8 +11,8 @@ const clients = {
 
 export class BaseService {
 
-  constructor(resources) {
-    this.resources = resources;
+  constructor(resource) {
+    this.resource = resource;
   }
 
   axios(method = 'GET', endpoint = null, params, client='eventManager') {
@@ -21,9 +21,9 @@ export class BaseService {
     let url = '';
 
     if (endpoint && endpoint.length > 0) {
-      url = path.resolve(this.resources, endpoint + extension);
+      url = path.resolve(this.resource, endpoint + extension);
     } else {
-      url = this.resources + extension;
+      url = this.resource + extension;
     }
 
     if (clients[client]) {
@@ -39,7 +39,7 @@ export class BaseService {
     return this.axios('GET', null, params);
   }
 
-  get(id) {
+  get(id = null) {
     return this.axios('GET', id);
   }
 
@@ -51,7 +51,11 @@ export class BaseService {
     return this.axios('PUT', id, params);
   }
 
-  remove(id) {
+  delete(id = null) {
+    return this.update(id, { deleted: true });
+  }
+
+  destroy(id = null) {
     return this.axios('DELETE', id);
   }
 

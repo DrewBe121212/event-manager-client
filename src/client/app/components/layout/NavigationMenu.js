@@ -13,7 +13,7 @@ const NavigationMenu = (props) => {
 
   return (
     <MenuList>
-      <Can perform="login" on="guest">
+      <Can perform="new" on="session">
         <NavigationMenuItem url="/user/sign-in" isActiveMenu={isActiveMenu} handleNavigationMenuItemClick={handleNavigationMenuItemClick}>
           <ListItemIcon>
             <PersonOutlineIcon />

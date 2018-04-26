@@ -2,37 +2,25 @@ import {
   AUTHENTICATE_USER,
   AUTHENTICATE_USER_SUCCESSFUL,
   AUTHENTICATE_USER_FAILURE,
-  SET_USER,
-  RESET_USER,
-  SET_USER_AUTHORIZATION,
-  RESET_USER_AUTHORIZATION
+  FETCH_USER,
+  FETCH_USER_SUCCESSFUL,
+  FETCH_USER_FAILURE
 } from 'constants/user';
 
-import {SessionService} from 'api';
+import { SessionService } from 'api';
+import { formatAbilities } from 'libs/abilities';
 
 export const authenticateUser = (username, password) => (dispatch, getState) => {
   dispatch({
-    type: AUTHENTICATE_USER,
-    payload: {
-      username,
-      password
-    },
-    meta: {
-      form: {
-        success: AUTHENTICATE_USER_SUCCESSFUL,
-        failure: AUTHENTICATE_USER_FAILURE
-      }
-    }
+    type: AUTHENTICATE_USER
   });
 
   return SessionService.authenticate(username, password)
     .then((response) => {
-      console.log(response);
-      if (response.data.errors) { 
+      if (response.data.errors) {
         dispatch(authenticateUserFailure(response.data.errors));
       } else {
         dispatch(authenticateUserSuccessful());
-        dispatch(setUser(response.data));
       }
     })
     .catch((error) => {
@@ -40,32 +28,42 @@ export const authenticateUser = (username, password) => (dispatch, getState) => 
     });
 };
 
-export const authenticateUserSuccessful = (user) => ({
+const authenticateUserSuccessful = (user) => ({
   type: AUTHENTICATE_USER_SUCCESSFUL,
   payload: user
 });
 
-export const authenticateUserFailure = (error) => ({
+const authenticateUserFailure = (error) => ({
   type: AUTHENTICATE_USER_FAILURE,
   payload: {
     ...error
   }
 });
 
-export const setUser = (user) => ({
-  type: SET_USER,
-  payload: user
-});
+export const fetchUser = () => (dispatch) => {
+  dispatch({
+    type: FETCH_USER
+  });
 
-export const resetUser = () => ({
-  type: RESET_USER
-});
+  return SessionService.profile()
+    .then((response) => {
+      dispatch(fetchUserSuccessful(response.data));
+    }).catch((error) => {
+      dispatch(fetchUserFailure(error.response.message));
+    })
+};
 
-export const setUserAuthorization = (authorization) => ({
-  type: SET_USER_AUTHORIZATION,
-  payload: authorization
-});
+const fetchUserSuccessful = (payload) => {
+  
+  payload.abilities = formatAbilities(payload.abilities);
 
-export const resetUserAuthorization = () => ({
-  type: RESET_USER_AUTHORIZATION
+  return {
+    type: FETCH_USER_SUCCESSFUL,
+    payload
+  };
+};
+
+const fetchUserFailure = (error) => ({
+  type: FETCH_USER_FAILURE,
+  payload: error
 });

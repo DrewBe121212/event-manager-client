@@ -1,33 +1,20 @@
-import {ability} from 'ability';
-
-let abilities = {};
-
-const setAbilitiesFromState = (state) => {
-
-  const {user: {roles}} = state;
-
-  abilities = {};
-
-  roles.forEach((role) => {
-    ability(setAbility, role);
-  });
-
-  return abilities;
-};
+import { store } from 'store';
 
 const canManage = (can = true) => {
 
   const actions = {
-    'view' : can,
-    'create': can,
+    'view': can,
+    'new': can,
     'update': can,
-    'remove': can
+    'destroy': can
   };
 
-  return {...actions};
+  return actions;
 };
 
 const setAbility = (objects = [], actions = [], can = true) => {
+
+  let abilities = {};
 
   if (!Array.isArray(objects)) {
     objects = objects.split(',');
@@ -48,23 +35,37 @@ const setAbility = (objects = [], actions = [], can = true) => {
     }
 
     actions.forEach((action) => {
-
-      switch(action) {
+      switch (action) {
         case 'manage':
-          abilities[object] = {...abilities[object], ...canManage(can)};
+          abilities[object] = { ...abilities[object], ...canManage(can) };
           break;
 
         default:
           abilities[object][action] = can;
-
       }
-
     });
   });
 
+  return abilities;
 };
 
-const hasAbility = (action, object) => {
+export const formatAbilities = ({ can, cannot }) => {
+  let abilities = {};
+
+  // rebuild
+  for (let action in can) {
+    abilities = Object.assign({}, abilities, setAbility(can[action], action, true));
+  }
+
+  for (let action in cannot) {
+    abilities = Object.assign({}, abilities, setAbility(cannot[action], action, false));
+  }
+
+  return abilities;
+};
+
+export const hasAbility = (action, object) => {
+  const { abilities } = store.getState().user;
 
   if (typeof abilities[object] !== 'undefined' && typeof abilities[object][action] !== 'undefined') {
     return abilities[object][action];
@@ -72,5 +73,3 @@ const hasAbility = (action, object) => {
 
   return false;
 };
-
-export {setAbility, hasAbility, setAbilitiesFromState};

@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {Error403} from 'components/errors';
-import {hasAbility} from './abilities';
+import { Error403 } from 'components/errors';
+import { hasAbility } from './abilities';
 
-const withAuthorization = (Component) => {
+export const withAuthorization = (Component) => {
 
   class AuthorizationComponent extends React.Component {
 
     static propTypes = {
       authenticated: PropTypes.bool.isRequired,
-      authorization: PropTypes.object.isRequired,
+      abilities: PropTypes.object.isRequired,
       history: PropTypes.object.isRequired,
       location: PropTypes.object.isRequired
     };
@@ -35,8 +35,8 @@ const withAuthorization = (Component) => {
     }
 
     componentDidMount() {
-      const {authenticated, history, location} = this.props;
-      const {authorized} = this.state;
+      const { authenticated, history, location } = this.props;
+      const { authorized } = this.state;
       const signInPath = '/user/sign-in';
 
       if (authenticated) {
@@ -63,14 +63,14 @@ const withAuthorization = (Component) => {
       if (typeof authorize === 'string') {
         authorizedAbility.object = authorize;
       } else if (authorizedAbility === Object(authorizedAbility) && authorizedAbility.hasOwnProperty('action') && authorizedAbility.hasOwnProperty('object')) {
-        authorizedAbility = {...authorize};
+        authorizedAbility = { ...authorize };
       }
-
+      
       return authorizedAbility;
     }
 
     render() {
-      const {authenticated, authorization, ...other} = this.props;
+      const { authenticated, abilities, ...other } = this.props;
 
       if (this.state.authorized) {
         return <Component hasAbility={hasAbility} {...other} />;
@@ -82,11 +82,9 @@ const withAuthorization = (Component) => {
 
   const mapStateToProps = (state) => ({
     authenticated: state.user.authenticated,
-    authorization: state.user.authorization
+    abilities: state.user.abilities
   });
 
   return connect(mapStateToProps)(AuthorizationComponent);
 
 };
-
-export {withAuthorization};

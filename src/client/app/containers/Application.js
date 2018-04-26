@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import {compose} from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import classNames from 'classnames';
-import {withStyles} from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import CssBaseline from 'material-ui/CssBaseline';
 
-import {ApplicationBar} from 'components/layout/ApplicationBar';
-import {Navigation} from 'components/layout/Navigation';
+import { ApplicationBar } from 'components/layout/ApplicationBar';
+import { Navigation } from 'components/layout/Navigation';
+import { toggleDrawer } from 'actions/navigation';
+import { fetchUser } from 'actions/user';
 
-import {toggleDrawer} from 'actions/navigation';
-
-import {Routes} from 'routes';
+import { Routes } from 'routes';
 
 const styles = (theme) => ({
   root: {
@@ -52,14 +52,25 @@ class ApplicationComponent extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     drawer: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    handleDrawerToggle: PropTypes.func.isRequired
+    handleDrawerToggle: PropTypes.func.isRequired,
+    fetchUser: PropTypes.func.isRequired
   };
 
+  componentDidMount = () => {
+    const { loaded, loading } = this.props.user;
+    const { fetchUser } = this.props;
+
+    if (!loaded) {
+      fetchUser();
+    }
+  }
+
   handleMenuItemClick = (url) => {
-    const {location, history} = this.props;
+    const { location, history } = this.props;
 
     if (url && url.length > 0 && url !== location.pathname) {
       history.push(url);
@@ -67,21 +78,22 @@ class ApplicationComponent extends React.Component {
   };
 
   isActiveMenu = (url) => {
-    const {location} = this.props;
+    const { location } = this.props;
 
     return location.pathname && location.pathname.length > 0 && location.pathname === url;
   };
 
-  render () {
-    const {title, drawer, classes} = this.props;
-
+  render() {
+    const { title, drawer, classes } = this.props;
+    const { loaded } = this.props.user;
+    
     return (
       <div className={classes.root}>
         <CssBaseline />
         <ApplicationBar title={title} drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
         <Navigation drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} isActiveMenu={this.isActiveMenu} handleNavigationMenuItemClick={this.handleMenuItemClick} />
-        <div className={classNames(classes.content, {[classes.contentShift]: drawer.open})}>
-          <Routes />
+        <div className={classNames(classes.content, { [classes.contentShift]: drawer.open })}>
+          {loaded ? <Routes /> : null }
         </div>
       </div>
     );
@@ -97,7 +109,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  handleDrawerToggle: toggleDrawer
+  handleDrawerToggle: toggleDrawer,
+  fetchUser
 };
 
 const Application = withRouter(
@@ -107,4 +120,4 @@ const Application = withRouter(
   )(ApplicationComponent)
 );
 
-export {Application};
+export { Application };

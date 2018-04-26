@@ -22,7 +22,7 @@ const styles = (theme) => ({
 
 class SignInComponent extends React.Component {
 
-  static authorize = { action: 'login', object: 'guest' };
+  static authorize = { action: 'new', object: 'session' };
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -47,7 +47,7 @@ class SignInComponent extends React.Component {
     });
   }
 
-  shibolethLogin = () => {
+  SSOLogin = () => {
     alert('redirect to shiboleth');
   }
 
@@ -65,7 +65,6 @@ class SignInComponent extends React.Component {
     });
   }
 
-
   render() {
     const { classes, hasAbility, authenticateUser } = this.props;
 
@@ -76,9 +75,16 @@ class SignInComponent extends React.Component {
             <CSSTransition in={this.state.fadeIn} classNames="fade" timeout={1000} exit={false} onEntered={this.resetFadeIn}>
               <div>
                 {this.state.guestLogin ? 
-                  <GuestSignInForm authenticateUser={authenticateUser} handleCancel={this.cancelGuestLogin} /> 
-                  : 
-                  <GuestSignInOptions hasAbility={hasAbility} shibolethLogin={this.shibolethLogin} guestLogin={this.guestLogin} />
+                  <GuestSignInForm 
+                    authenticateUser={authenticateUser} 
+                    handleCancel={this.cancelGuestLogin} 
+                    />
+                    : 
+                  <GuestSignInOptions 
+                    hasAbility={hasAbility} 
+                    SSOLogin={this.SSOLogin} 
+                    guestLogin={this.guestLogin} 
+                    />
                 }
               </div>
             </CSSTransition>
@@ -96,6 +102,6 @@ const mapDispatchToProps = {
 
 export const SignIn = compose(
   withStyles(styles),
+  connect(null, mapDispatchToProps),
   withAuthorization,
-  connect(null, mapDispatchToProps)
 )(SignInComponent);
