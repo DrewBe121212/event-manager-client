@@ -65,7 +65,7 @@ export const formatAbilities = ({ can, cannot }) => {
 };
 
 export const hasAbility = (action, object) => {
-  const { abilities } = store.getState().user;
+  const { abilities } = store.getState().user.authorization;
 
   if (typeof abilities[object] !== 'undefined' && typeof abilities[object][action] !== 'undefined') {
     return abilities[object][action];

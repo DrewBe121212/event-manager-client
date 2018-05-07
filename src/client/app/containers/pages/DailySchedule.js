@@ -1,25 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {withStyles} from 'material-ui/styles';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
-import {withAuthorization} from 'libs/abilities';
-import {setMenuTitle} from 'actions/navigation';
-
-const styles = () => ({
-  root: {
-
-  }
-});
-
-class DailyScheduleComponent extends React.Component {
-
-  static authorize = 'daily_schedule';
-
+class DailyScheduleComponent extends React.PureComponent {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
-    setMenuTitle: PropTypes.func.isRequired
+    
   };
 
   constructor(props) {
@@ -30,10 +16,6 @@ class DailyScheduleComponent extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.setMenuTitle('Daily Schedule');
-  }
-
   render() {
     return 'Daily Schedule';
   }
@@ -42,14 +24,6 @@ class DailyScheduleComponent extends React.Component {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {
-  setMenuTitle: setMenuTitle
-};
-
-const DailySchedule = compose(
-  withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps),
-  withAuthorization,
+export const DailySchedule = compose(
+  connect(mapStateToProps)
 )(DailyScheduleComponent);
-
-export {DailySchedule};

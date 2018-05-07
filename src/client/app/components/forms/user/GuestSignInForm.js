@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { OverallErrors } from 'components/forms';
 
-class Form extends React.Component {
+class Form extends React.PureComponent {
 
   static propTypes = {
     values: PropTypes.object.isRequired,
@@ -29,7 +29,7 @@ class Form extends React.Component {
             <TextField name="username" id="username" label="Username" value={values.username} onChange={handleChange} error={errors.username ? true : false} helperText={errors.username} fullWidth={true} required={true} autoFocus={true} />
           </Grid>
           <Grid item xs={12}>
-            <TextField name="password" id="password" label="Password" type="password" value={values.password} onChange={handleChange}  error={errors.password ? true : false} helperText={errors.password} fullWidth={true} required={true} />
+            <TextField name="password" id="password" label="Password" type="password" value={values.password} onChange={handleChange} error={errors.password ? true : false} helperText={errors.password} fullWidth={true} required={true} />
           </Grid>
         </Grid>
         <div className="action-bar">
@@ -61,7 +61,7 @@ const GuestSignInForm = withFormik({
     authenticateUser(values.username, values.password)
       .finally(() => {
         setSubmitting(false);
-      })
+      });
 
   }
 })(Form);

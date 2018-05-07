@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Drawer from 'material-ui/Drawer';
 
@@ -8,8 +8,8 @@ import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 
-import {NavigationMenu} from './NavigationMenu';
-import {config} from 'config';
+import { NavigationMenu } from './NavigationMenu';
+import { config } from 'config';
 
 const styles = (theme) => ({
   environment: {
@@ -33,14 +33,14 @@ const styles = (theme) => ({
 });
 
 const NavigationComponent = (props) => {
-  const {drawer, classes, isActiveMenu, handleDrawerToggle, handleNavigationMenuItemClick} = props;
+  const { links, activeLink, navigationDrawer, classes, handleDrawerToggle, handleNavigationMenuItemClick } = props;
 
   function closeDrawer() {
     handleDrawerToggle(false);
   }
 
   return (
-    <Drawer variant="persistent" open={drawer.open} classes={{paper: classes.drawerPaper}}>
+    <Drawer variant="persistent" open={navigationDrawer.open} classes={{ paper: classes.drawerPaper }}>
       <div className={classes.drawerInner}>
         <div className={classes.drawerHeader}>
           <div>
@@ -56,22 +56,26 @@ const NavigationComponent = (props) => {
           </IconButton>
         </div>
         <Divider />
-        <NavigationMenu isActiveMenu={isActiveMenu} handleNavigationMenuItemClick={handleNavigationMenuItemClick} />
+        <NavigationMenu 
+          links={links} 
+          activeLink={activeLink} 
+          handleNavigationMenuItemClick={handleNavigationMenuItemClick}
+          navigationDrawerOpenMenus={navigationDrawer.openMenus}
+          />
       </div>
     </Drawer>
   );
 };
 
 NavigationComponent.propTypes = {
-  drawer: PropTypes.object.isRequired,
+  links: PropTypes.array.isRequired,
+  activeLink: PropTypes.array.isRequired,
+  navigationDrawer: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   handleDrawerToggle: PropTypes.func.isRequired,
-  isActiveMenu: PropTypes.func.isRequired,
   handleNavigationMenuItemClick: PropTypes.func.isRequired
 };
 
-const Navigation = withStyles(
+export const Navigation = withStyles(
   styles
 )(NavigationComponent);
-
-export {Navigation};

@@ -1,5 +1,8 @@
-const Error404 = () => {
-  return 'Error 404 not found';
-};
+import React from 'react';
+import { ErrorContainer } from './ErrorContainer';
 
-export {Error404};
+export const Error404 = () => (
+  <ErrorContainer>
+    Error 404 not found
+  </ErrorContainer>  
+);

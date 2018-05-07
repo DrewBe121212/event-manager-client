@@ -14,4 +14,4 @@ export const OverallErrors = ({ errors = [] }) => {
   }
 
   return null;
-}
+};

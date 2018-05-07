@@ -1,5 +1,5 @@
 function createReducer(initialState, handlers) {
-  return function reducer(state=initialState, action) {
+  return function reducer(state = initialState, action) {
     if (handlers.hasOwnProperty(action.type)) {
       return handlers[action.type](state, action.payload, action.meta);
     } else {
@@ -25,4 +25,4 @@ function normalizeData(data = [], id) {
   return normalizedData;
 }
 
-export {createReducer, normalizeData};
+export { createReducer, normalizeData };

@@ -6,11 +6,8 @@ import { withStyles } from 'material-ui/styles';
 import { CSSTransition } from 'react-transition-group';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
-
-import { setMenuTitle } from 'actions/navigation';
 import { authenticateUser } from 'actions/user';
 import { GuestSignInForm, GuestSignInOptions } from 'components/forms/user';
-import { withAuthorization } from 'libs/abilities';
 
 const styles = (theme) => ({
   paper: theme.mixins.gutters({
@@ -20,20 +17,13 @@ const styles = (theme) => ({
   })
 });
 
-class SignInComponent extends React.Component {
-
-  static authorize = { action: 'new', object: 'session' };
-
+class SignInComponent extends React.PureComponent {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
-    hasAbility: PropTypes.func.isRequired,
-    setMenuTitle: PropTypes.func.isRequired
+    classes: PropTypes.object.isRequired
   };
 
   constructor(props) {
     super(props);
-
-    props.setMenuTitle('Account Login');
 
     this.state = {
       guestLogin: false,
@@ -66,7 +56,7 @@ class SignInComponent extends React.Component {
   }
 
   render() {
-    const { classes, hasAbility, authenticateUser } = this.props;
+    const { classes, authenticateUser } = this.props;
 
     return (
       <Grid container justify="center">
@@ -78,13 +68,12 @@ class SignInComponent extends React.Component {
                   <GuestSignInForm 
                     authenticateUser={authenticateUser} 
                     handleCancel={this.cancelGuestLogin} 
-                    />
-                    : 
+                  />
+                  : 
                   <GuestSignInOptions 
-                    hasAbility={hasAbility} 
                     SSOLogin={this.SSOLogin} 
                     guestLogin={this.guestLogin} 
-                    />
+                  />
                 }
               </div>
             </CSSTransition>
@@ -96,12 +85,10 @@ class SignInComponent extends React.Component {
 }
 
 const mapDispatchToProps = {
-  setMenuTitle,
   authenticateUser
 };
 
 export const SignIn = compose(
   withStyles(styles),
   connect(null, mapDispatchToProps),
-  withAuthorization,
 )(SignInComponent);

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import List, { ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
@@ -6,11 +5,10 @@ import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import PersonOutlineIcon from 'material-ui-icons/PersonOutline';
-
+import { hasAbility } from 'libs/abilities';
 
 export const GuestSignInOptions = (props) => {
-
-  const { hasAbility, SSOLogin, guestLogin } = props;
+  const { SSOLogin, guestLogin } = props;
 
   let options = [];
 
@@ -57,4 +55,4 @@ export const GuestSignInOptions = (props) => {
   } else {
     return 'No login options are available';
   }
-}
+};

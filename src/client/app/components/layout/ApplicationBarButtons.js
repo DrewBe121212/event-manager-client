@@ -1,8 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 
-class ApplicationBarButtonsComponent extends React.Component {
+export class ApplicationBarButtons extends React.Component {
 
   navbarButtons = () => {
     const buttons = [];
@@ -22,5 +22,3 @@ class ApplicationBarButtonsComponent extends React.Component {
   }
 
 }
-
-export {ApplicationBarButtonsComponent as ApplicationBarButtons};

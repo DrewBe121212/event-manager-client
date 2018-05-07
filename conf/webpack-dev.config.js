@@ -29,21 +29,35 @@ module.exports = {
     'env-config': JSON.stringify(require('./env-config-dev.json'))
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         include : PATHS.SRC,
-        loader: 'babel-loader'
+        use: {
+          loader: 'babel-loader'
+        }
       },
       {
         test: /\.(css|scss)$/,
         include : PATHS.CSS,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: 'sass-loader'
+          }         
+        ]
       },
       {
         test: /.json$/,
         include : PATHS.SRC,
-        loaders: ['json']
+        use: {
+          loader: 'json'
+        }
       }
     ]
   },
@@ -52,12 +66,12 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.APP_VERSION': JSON.stringify(require('../package.json').version)
     }),
-    new WebpackAutoInjectVersion({
-      SILENT: true
-    }),
     new HtmlWebpackPlugin({
       template: PATHS.APP_TEMPLATE_FILE,
       xhtml: true
+    }),
+    new WebpackAutoInjectVersion({
+      SILENT: true
     })
   ],
   devtool: 'source-map',

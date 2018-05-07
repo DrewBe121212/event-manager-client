@@ -2,11 +2,11 @@ import {
   AUTHENTICATE_USER,
   AUTHENTICATE_USER_SUCCESSFUL,
   AUTHENTICATE_USER_FAILURE,
-  FETCH_USER,
-  FETCH_USER_SUCCESSFUL,
-  FETCH_USER_FAILURE
+  FETCH_USER_PROFILE,
+  FETCH_USER_PROFILE_SUCCESSFUL,
+  FETCH_USER_PROFILE_FAILURE
 } from 'constants/user';
-
+import { setAppLoading } from './navigation';
 import { SessionService } from 'api';
 import { formatAbilities } from 'libs/abilities';
 
@@ -14,7 +14,7 @@ export const authenticateUser = (username, password) => (dispatch, getState) => 
   dispatch({
     type: AUTHENTICATE_USER
   });
-
+  
   return SessionService.authenticate(username, password)
     .then((response) => {
       if (response.data.errors) {
@@ -24,7 +24,7 @@ export const authenticateUser = (username, password) => (dispatch, getState) => 
       }
     })
     .catch((error) => {
-      dispatch(authenticateUserFailure(error.response.data));
+      dispatch(authenticateUserFailure(error));
     });
 };
 
@@ -40,30 +40,35 @@ const authenticateUserFailure = (error) => ({
   }
 });
 
-export const fetchUser = () => (dispatch) => {
+export const fetchUserProfile = () => (dispatch) => {
   dispatch({
-    type: FETCH_USER
+    type: FETCH_USER_PROFILE
   });
+
+  dispatch(setAppLoading());
 
   return SessionService.profile()
     .then((response) => {
-      dispatch(fetchUserSuccessful(response.data));
-    }).catch((error) => {
-      dispatch(fetchUserFailure(error.response.message));
+      dispatch(fetchUserProfileSuccessful(response.data));
     })
+    .catch((error) => {
+      dispatch(fetchUserProfileFailure(error));
+    })
+    .finally(() => {
+      dispatch(setAppLoading(false));
+    });
 };
 
-const fetchUserSuccessful = (payload) => {
-  
+const fetchUserProfileSuccessful = (payload) => {
   payload.abilities = formatAbilities(payload.abilities);
 
   return {
-    type: FETCH_USER_SUCCESSFUL,
+    type: FETCH_USER_PROFILE_SUCCESSFUL,
     payload
   };
 };
 
-const fetchUserFailure = (error) => ({
-  type: FETCH_USER_FAILURE,
+const fetchUserProfileFailure = (error) => ({
+  type: FETCH_USER_PROFILE_FAILURE,
   payload: error
 });
