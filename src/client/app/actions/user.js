@@ -6,7 +6,7 @@ import {
   FETCH_USER_PROFILE_SUCCESSFUL,
   FETCH_USER_PROFILE_FAILURE
 } from 'constants/user';
-import { setAppLoading } from './navigation';
+import { setAppLoading } from './application';
 import { SessionService } from 'api';
 import { formatAbilities } from 'libs/abilities';
 

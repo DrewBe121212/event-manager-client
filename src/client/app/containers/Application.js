@@ -6,8 +6,8 @@ import { compose } from 'redux';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import CssBaseline from 'material-ui/CssBaseline';
-import { LinearProgress } from 'material-ui/Progress';
 import { hasAbility } from 'libs/abilities';
+import { ApplicationLoadingBar } from 'components/layout/ApplicationLoadingBar';
 import { ApplicationBar } from 'components/layout/ApplicationBar';
 import { Navigation } from 'components/layout/Navigation';
 import { Error401, Error500 } from 'components/errors';
@@ -50,7 +50,7 @@ class ApplicationComponent extends React.PureComponent {
   static propTypes = {
     navigationMenu: PropTypes.object.isRequired,
     navigationDrawer: PropTypes.object.isRequired,
-    appLoading: PropTypes.bool.isRequired,
+    applicationLoader: PropTypes.object.isRequired,
     userProfile: PropTypes.object.isRequired,
     userAuthenticated: PropTypes.bool.isRequired,
     location: PropTypes.object.isRequired,
@@ -166,11 +166,10 @@ class ApplicationComponent extends React.PureComponent {
         return <Error401 />
       }
     }
-
   };
 
   render() {
-    const { appLoading, navigationDrawer, userProfile, location, classes } = this.props;
+    const { applicationLoader, navigationDrawer, userProfile, location, classes } = this.props;
     const { title, active, links } = this.props.navigationMenu;
 
     return (
@@ -190,7 +189,7 @@ class ApplicationComponent extends React.PureComponent {
           handleDrawerToggle={this.handleDrawerToggle} />
 
         <div className={classNames(classes.content, { [classes.contentShift]: navigationDrawer.open })}>
-          {appLoading ? <LinearProgress /> : null}
+          <ApplicationLoadingBar applicationLoader={applicationLoader} />
           {this.content()}
         </div>
       </div>
@@ -200,7 +199,7 @@ class ApplicationComponent extends React.PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    appLoading: state.navigation.loader.loading,
+    applicationLoader: state.application.loader,
     navigationMenu: state.navigation.menu,
     navigationDrawer: state.navigation.drawer,
     userProfile: state.user.profile,

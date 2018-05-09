@@ -99,48 +99,26 @@ const initialState = {
   drawer: {
     open: false,
     openMenus: []
-  },
-  loader: {
-    active: 0,
-    loading: false
   }
 };
 
 initialState.menu.links_mapping = mapMenuLinks(initialState.menu.links);
 
 export const navigationReducer = createReducer(initialState, {
-  [TOGGLE_DRAWER]: (state, payload) => {
-    let open = state.drawer.open;
-
-    if (typeof payload === 'boolean') {
-      open = payload ? true : false;
-    } else {
-      open = state.drawer.open ? false : true;
-    }
-
-    return {
-      ...state,
-      drawer: Object.assign({}, state.drawer, {
-        open
-      })
-    };
-  },
+  [TOGGLE_DRAWER]: (state, payload) => ({
+    ...state,
+    drawer: Object.assign({}, state.drawer, {
+      open: payload
+    })
+  }),
   [TOGGLE_DRAWER_MENU]: (state, payload) => {
     let openMenus = state.drawer.openMenus.concat();
     const currentMenuIndex = openMenus.indexOf(payload.menu);
     const currentlyOpen = currentMenuIndex >= 0;
 
-    let open;
-    
-    if (typeof payload.open === 'boolean') {
-      open = payload.open ? true : false;
-    } else {
-      open = currentlyOpen ? false : true;
-    }
-
-    if (open && !currentlyOpen) {
+    if (payload.open && !currentlyOpen) {
       openMenus.push(payload.menu);
-    } else if (!open && currentlyOpen) {
+    } else if (!payload.open && currentlyOpen) {
       openMenus.splice(payload.currentMenuIndex, 1);
     }
 
@@ -150,16 +128,6 @@ export const navigationReducer = createReducer(initialState, {
         openMenus,
       })
     };
-  },
-  [SET_APP_LOADING]: (state, payload) => {
-    const count = state.loader.active + (payload ? +1 : -1);
-
-    return Object.assign({}, state, {
-      loader: {
-        active: count,
-        loading: count > 0
-      }
-    });
   },
   [SET_MENU_TITLE]: (state, title) => ({
     ...state,
