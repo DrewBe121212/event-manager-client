@@ -1,83 +1,116 @@
-import {createReducer} from 'utils/redux';
+import { createReducer } from 'utils/redux';
 
 import {
   AUTHENTICATE_USER,
   AUTHENTICATE_USER_FAILURE,
   AUTHENTICATE_USER_SUCCESSFUL,
-  SET_USER,
-  RESET_USER,
-  SET_USER_AUTHORIZATION,
-  RESET_USER_AUTHORIZATION
+  FETCH_USER_PROFILE,
+  FETCH_USER_PROFILE_SUCCESSFUL,
+  FETCH_USER_PROFILE_FAILURE
 } from 'constants/user';
 
-const initialAuthorization = {};
 const initialState = {
-  authenticating: false,
-  authenticated: false,
-  authorization: initialAuthorization,
-  roles: [
-    'guest'
-  ],
-  username: '',
-  first_name: '',
-  middle_name: '',
-  last_name: '',
-  email: ''
+  profile: {
+    loading: false,
+    loaded: false,
+    id: null,
+    username: null,
+    email: null,
+    first_name: null,
+    middle_name: null,
+    last_name: null,
+    sso: false,
+    active: false,
+    reset_password_sent_at: null,
+    current_sign_in_at: null,
+    last_sign_in_at: null,
+    confirmed_at: null,
+    confirmation_sent_at: null,
+    unconfirmed_email: null,
+    created_at: null,
+    updated_at: null,
+    roles: [],
+    errors: null
+  },
+  authentication: {
+    authenticating: false,
+    authenticated: false,
+    token: null,
+    errors: null
+  },
+  authorization: {
+    abilities: {
+      can: {},
+      cannot: {}
+    }
+  }
 };
 
 export const userReducer = createReducer(initialState, {
   [AUTHENTICATE_USER]: (state) => ({
-    Object.assign({}, state, {
-      authenticating: true,
-      authenticated: false
+    ...state,
+    authentication: Object.assign({}, state.authentication, {
+      authenticating: true
     })
   }),
-  [AUTHENTICATE_USER_FAILURE]: (state) => ({
-    Object.assign({}, state, {
-      authenticating: false,
-      authenticated: false
+  [AUTHENTICATE_USER_FAILURE]: (state, payload) => ({
+    ...state,
+    authentication: Object.assign({}, state.authentication, {
+      errors: payload
     })
   }),
-  [AUTHENTICATE_USER_SUCCESSFUL]: (state) => ({
-    Object.assign({}, state, {
-      authenticating: true,
-      authenticated: true
-    })
-  }),
-  [SET_USER]: (state, payload) => {
+  [AUTHENTICATE_USER_SUCCESSFUL]: (state, payload) => {
+    const authenticated = payload.authenticated && payload.token ? true : false;
+    const token = authenticated && payload.token;
 
-    let roles = payload.roles ? payload.roles.concat() : [];
-
-    if (authenticated) {
-      if (roles.indexOf('user') === -1) {
-        roles.push('user');
-      }
-    } else {
-      if (roles.indexOf('guest') === -1) {
-        roles.push('guest');
-      }
-    }
-
-    return ({...state,
-      roles: roles,
-      username: payload.username || state.username,
-      first_name: payload.first_name || state.first_name,
-      middle_name: payload.middle_name || state.middle_name,
-      last_name: payload.last_name || state.last_name,
-      email: payload.email || state.email
-    });
+    return {
+      ...state,
+      authentication: Object.assign({}, state.authentication, {
+        authenticating: false,
+        authenticated: authenticated || state.authentication.authenticated,
+        token: token || state.authentication.token
+      })
+    };
   },
-  [RESET_USER]: () => (
-    Object.assign({}, initialState)
-  ),
-  [SET_USER_AUTHORIZATION]: (state, payload) => (
-    Object.assign({}, state, {
-      authorization: payload
+  [FETCH_USER_PROFILE]: (state) => ({
+    ...state,
+    profile: Object.assign({}, initialState.profile, {
+      loading: true
     })
-  ),
-  [RESET_USER_AUTHORIZATION]: (state) => (
-    Object.assign({}, state, {
-      authorization: initialAuthorization
+  }),
+  [FETCH_USER_PROFILE_FAILURE]: (state, payload) => ({
+    ...state,
+    profile: Object.assign({}, state.profile, {
+      loading: false,
+      loaded: false,
+      errors: payload.message
     })
-  )
+  }),
+  [FETCH_USER_PROFILE_SUCCESSFUL]: (state, payload) => ({
+    ...state,
+    profile: Object.assign({}, state.profile, {
+      loading: false,
+      loaded: true,
+      id: payload.id || state.profile.id,
+      username: payload.username || state.profile.username,
+      email: payload.email || state.profile.email,
+      first_name: payload.first_name || state.profile.first_name,
+      middle_name: payload.middle_name || state.profile.middle_name,
+      last_name: payload.last_name || state.profile.last_name,
+      sso: payload.sso || state.profile.sso,
+      active: payload.active || state.profile.active,
+      reset_password_sent_at: payload.reset_password_sent_at || state.profile.reset_password_sent_at,
+      current_sign_in_at: payload.current_sign_in_at || state.profile.current_sign_in_at,
+      last_sign_in_at: payload.last_sign_in_at || state.profile.last_sign_in_at,
+      confirmed_at: payload.confirmed_at || state.profile.confirmed_at,
+      confirmation_sent_at: payload.confirmation_sent_at || state.profile.confirmation_sent_at,
+      unconfirmed_email: payload.unconfirmed_email || state.profile.unconfirmed_email,
+      created_at: payload.created_at || state.profile.created_at,
+      updated_at: payload.updated_at || state.profile.updated_at,
+      roles: payload.roles || state.profile.roles
+    }),
+    authorization: Object.assign({}, state.authorization, {
+      abilities: payload.abilities || state.authorization.abilities
+    })
+  })
 });

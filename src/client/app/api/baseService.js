@@ -1,6 +1,6 @@
-import {config} from 'config';
 import axios from 'axios';
 import path from 'path';
+import config from 'config';
 
 const clients = {
   eventManager: axios.create({
@@ -11,35 +11,52 @@ const clients = {
 
 export class BaseService {
 
-  constructor(resource, resources) {
+  constructor(resource) {
     this.resource = resource;
-    this.resources = resources;
   }
 
-  axios(method, endpoint, params, client='eventManager') {
+  axios(method = 'GET', endpoint = null, params, client = 'eventManager') {
+
+    const extension = '.json';
+    let url = '';
+
+    if (endpoint && endpoint.length > 0) {
+      url = path.resolve(this.resource, endpoint + extension);
+    } else {
+      url = this.resource + extension;
+    }
+
     if (clients[client]) {
-      return clients[client].call(method, path.resolve(this.resource, endpoint), params);
+      return clients[client].request({
+        method: method.toUpperCase(),
+        url,
+        data: params
+      });
     }
   }
 
   find(params) {
-    return this.axios('get', '', params);
+    return this.axios('GET', null, params);
   }
 
-  findById(id) {
-    return this.find({id: id});
+  get(id = null) {
+    return this.axios('GET', id);
   }
 
   create(params) {
-
+    return this.axios('POST', null, params);
   }
 
   update(id, params) {
-
+    return this.axios('PUT', id, params);
   }
 
-  remove(id) {
+  delete(id = null) {
+    return this.update(id, { deleted: true });
+  }
 
+  destroy(id = null) {
+    return this.axios('DELETE', id);
   }
 
 }

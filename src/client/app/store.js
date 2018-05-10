@@ -1,26 +1,22 @@
-import {createStore, applyMiddleware} from 'redux';
-import createSagaMiddleware from 'redux-saga';
+import { createStore, applyMiddleware } from 'redux';
+import { persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
-import {createLogger} from 'redux-logger';
-import {routerMiddleware} from 'react-router-redux';
+import { createLogger } from 'redux-logger';
+import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
-import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
-
-import {reducers} from 'reducers';
-import {rootSaga} from 'sagas';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import { rootReducer } from 'reducers/index';
 
 // initialize history
 const history = createHistory();
 
 // initialize middleware
 const routingMiddleware = routerMiddleware(history);
-const sagaMiddleware = createSagaMiddleware();
 
-// array of used middlewares
+// collect the middlewares used
 const middleware = [
   thunk,
-  routingMiddleware,
-  sagaMiddleware
+  routingMiddleware
 ];
 
 // add logging to non production environments
@@ -37,11 +33,17 @@ const enhancer = composeWithDevTools(
   applyMiddleware(...middleware)
 );
 
+// create store
 const store = createStore(
-  reducers,
+  rootReducer,
   enhancer
 );
 
-sagaMiddleware.run(rootSaga);
+// persist store
+const persistor = persistStore(store);
 
-export {history, store};
+export { 
+  history, 
+  store, 
+  persistor 
+};

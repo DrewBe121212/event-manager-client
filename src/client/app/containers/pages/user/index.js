@@ -1,14 +1,16 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router-dom';
+import { SignIn } from './SignIn';
 
-import {SignIn} from './SignIn';
+const UserRoutes = ({match}) => (
+  <Switch>
+    <Route path={`${match.path}/sign-in`} component={SignIn} />
+  </Switch>
+);
 
-export function UserRoute() {
-  return (
-    <Switch>
-      <Route exact path='/user' />
-      <Route path='/user/sign-in' component={SignIn} />
-      <Route path='/user/*' />
-    </Switch>
-  );
-}
+UserRoutes.propTypes = {
+  match: PropTypes.object.isRequired
+};
+
+export default UserRoutes;

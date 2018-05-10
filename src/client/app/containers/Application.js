@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import {compose} from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import classNames from 'classnames';
-import {withStyles} from 'material-ui/styles';
-import Reboot from 'material-ui/Reboot';
-
-import {ApplicationBar} from 'components/layout/ApplicationBar';
-import {Navigation} from 'components/layout/Navigation';
-
-import {toggleDrawer} from 'actions/navigation';
-
-import {Routes} from 'routes';
+import { withStyles } from 'material-ui/styles';
+import CssBaseline from 'material-ui/CssBaseline';
+import ApplicationLoadingBar from 'components/layout/ApplicationLoadingBar';
+import ApplicationBar from 'components/layout/ApplicationBar';
+import Navigation from 'components/layout/Navigation';
+import { Error503 } from 'components/errors';
+import { toggleDrawer, toggleDrawerMenu } from 'actions/navigation';
+import { fetchUserProfile } from 'actions/user';
+import Routes from 'routes';
 
 const styles = (theme) => ({
   root: {
@@ -26,13 +26,11 @@ const styles = (theme) => ({
     width: '100%',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
     height: 'calc(100% - 56px)',
-    marginTop: 56,
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
       marginTop: 64
@@ -48,40 +46,76 @@ const styles = (theme) => ({
 });
 
 class ApplicationComponent extends React.Component {
-
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    drawer: PropTypes.object.isRequired,
+    navigationDrawer: PropTypes.object.isRequired,
+    applicationLoader: PropTypes.object.isRequired,
+    navigationMenu: PropTypes.object.isRequired,
+    userProfile: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    handleDrawerToggle: PropTypes.func.isRequired
+    toggleDrawer: PropTypes.func.isRequired,
+    toggleDrawerMenu: PropTypes.func.isRequired,
+    fetchUserProfile: PropTypes.func.isRequired
   };
 
-  handleMenuItemClick = (url) => {
-    const {location, history} = this.props;
+  componentDidMount = () => {
+    const { fetchUserProfile } = this.props;
 
-    if (url && url.length > 0 && url !== location.pathname) {
-      history.push(url);
+    fetchUserProfile();
+  }
+
+  handleNavigationMenuItemClick = (link) => {
+    const { location, history } = this.props;
+
+    if (link.url && link.url.length > 0 && link.url !== location.pathname) {
+      history.push(link.url);
+    } else if (link.nested_links) {
+      this.handleToggleDrawerMenu(link.position);
     }
   };
 
-  isActiveMenu = (url) => {
-    const {location} = this.props;
-
-    return location.pathname && location.pathname.length > 0 && location.pathname === url;
+  handleToggleDrawer = (open) => {
+    this.props.toggleDrawer(open);
   };
 
-  render () {
-    const {title, drawer, classes} = this.props;
+  handleToggleDrawerMenu = (menu, open) => {
+    this.props.toggleDrawerMenu(menu, open);
+  }
+
+  content = () => {
+    const { loaded, errors } = this.props.userProfile;
+
+    if (loaded) {
+      return <Routes />;
+    } else if (errors !== null) {
+      return <Error503 />;
+    }
+  };
+
+  render() {
+    const { applicationLoader, navigationDrawer, userProfile, classes } = this.props;
+    const { title, active, links } = this.props.navigationMenu;
 
     return (
       <div className={classes.root}>
-        <Reboot />
-        <ApplicationBar title={title} drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} />
-        <Navigation drawer={drawer} handleDrawerToggle={this.props.handleDrawerToggle} isActiveMenu={this.isActiveMenu} handleNavigationMenuItemClick={this.handleMenuItemClick} />
-        <div className={classNames(classes.content, {[classes.contentShift]: drawer.open})}>
-          <Routes />
+        <CssBaseline />
+        <ApplicationBar
+          userProfile={userProfile}
+          title={title}
+          navigationDrawer={navigationDrawer}
+          handleToggleDrawer={this.handleToggleDrawer}
+        />
+        <Navigation
+          links={links}
+          activeLink={active}
+          handleNavigationMenuItemClick={this.handleNavigationMenuItemClick}
+          navigationDrawer={navigationDrawer}
+          handleToggleDrawer={this.handleToggleDrawer} />
+
+        <div className={classNames(classes.content, { [classes.contentShift]: navigationDrawer.open })}>
+          <ApplicationLoadingBar applicationLoader={applicationLoader} />
+          {this.content()}
         </div>
       </div>
     );
@@ -90,14 +124,17 @@ class ApplicationComponent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    title: state.navigation.menu.title,
-    drawer: state.navigation.drawer,
-    user: state.user
+    applicationLoader: state.application.loader,
+    navigationMenu: state.navigation.menu,
+    navigationDrawer: state.navigation.drawer,
+    userProfile: state.user.profile
   };
 };
 
 const mapDispatchToProps = {
-  handleDrawerToggle: toggleDrawer
+  toggleDrawer,
+  toggleDrawerMenu,
+  fetchUserProfile
 };
 
 const Application = withRouter(
@@ -107,4 +144,4 @@ const Application = withRouter(
   )(ApplicationComponent)
 );
 
-export {Application};
+export { Application };
