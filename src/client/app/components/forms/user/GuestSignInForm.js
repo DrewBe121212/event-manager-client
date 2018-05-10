@@ -4,7 +4,7 @@ import { withFormik } from 'formik';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import { OverallErrors } from 'components/forms';
+import { ErrorMessage } from 'components/errors';
 
 class Form extends React.PureComponent {
 

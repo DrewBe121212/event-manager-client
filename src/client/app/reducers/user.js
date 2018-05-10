@@ -30,13 +30,13 @@ const initialState = {
     created_at: null,
     updated_at: null,
     roles: [],
-    errors: {}
+    errors: null
   },
   authentication: {
     authenticating: false,
     authenticated: false,
     token: null,
-    errors: {}
+    errors: null
   },
   authorization: {
     abilities: {
@@ -49,15 +49,15 @@ const initialState = {
 export const userReducer = createReducer(initialState, {
   [AUTHENTICATE_USER]: (state) => ({
     ...state,
-    authentication: {
+    authentication: Object.assign({}, state.authentication, {
       authenticating: true
-    }
+    })
   }),
   [AUTHENTICATE_USER_FAILURE]: (state, payload) => ({
     ...state,
-    authentication: {
+    authentication: Object.assign({}, state.authentication, {
       errors: payload
-    }
+    })
   }),
   [AUTHENTICATE_USER_SUCCESSFUL]: (state, payload) => {
     const authenticated = payload.authenticated && payload.token ? true : false;
@@ -65,16 +65,16 @@ export const userReducer = createReducer(initialState, {
 
     return {
       ...state,
-      authentication: {
+      authentication: Object.assign({}, state.authentication, {
         authenticating: false,
         authenticated: authenticated || state.authentication.authenticated,
         token: token || state.authentication.token
-      }
+      })
     };
   },
   [FETCH_USER_PROFILE]: (state) => ({
     ...state,
-    profile: Object.assign({}, state.profile, {
+    profile: Object.assign({}, initialState.profile, {
       loading: true
     })
   }),

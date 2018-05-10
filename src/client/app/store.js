@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware } from 'redux';
+import { persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import { reducers } from 'reducers/index';
+import { rootReducer } from 'reducers/index';
+
 
 // initialize history
 const history = createHistory();
@@ -33,8 +35,10 @@ const enhancer = composeWithDevTools(
 );
 
 const store = createStore(
-  reducers,
+  rootReducer,
   enhancer
 );
 
-export { history, store };
+const persistor = persistStore(store);
+
+export { history, store, persistor };

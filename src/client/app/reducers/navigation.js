@@ -7,13 +7,13 @@ import {
   SET_MENU_ACTIVE
 } from 'constants/navigation';
 
-const mapMenuLinks = (links, position = [], title = []) => {
+const mapMenuLinks = (links, position, title = []) => {
   let mapping = {};
 
   links.forEach((link, index) => {
-    const linkIndex = [...position, index];
-    link.position = [...linkIndex];
-    link.active = [...linkIndex];
+    const linkIndex = position ? position.concat(':', index) : index.toString();
+    link.position = linkIndex.concat();
+    link.active = linkIndex.concat();
     link.full_title = [...title];
 
     link.full_title.push(link.title);
@@ -22,9 +22,10 @@ const mapMenuLinks = (links, position = [], title = []) => {
       mapping[link.url] = linkIndex;
     }
 
-    if (link.activeParent) {
-      link.active.splice(-1, link.activeParent);
+    if (link.activeParent && link.activeParent > 0) {
+      link.active = link.active.slice(0, (-link.activeParent));
     }
+
 
     if (link.nested_links) {
       mapping = Object.assign(mapping, mapMenuLinks(link.nested_links, linkIndex, link.full_title));

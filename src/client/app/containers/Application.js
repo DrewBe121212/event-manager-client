@@ -10,7 +10,7 @@ import { hasAbility } from 'libs/abilities';
 import { ApplicationLoadingBar } from 'components/layout/ApplicationLoadingBar';
 import { ApplicationBar } from 'components/layout/ApplicationBar';
 import { Navigation } from 'components/layout/Navigation';
-import { Error401, Error500 } from 'components/errors';
+import { Error401, Error503 } from 'components/errors';
 import { toggleDrawer, toggleDrawerMenu, setMenuTitle, setMenuActive } from 'actions/navigation';
 import { fetchUserProfile } from 'actions/user';
 import { Routes } from 'routes';
@@ -64,7 +64,8 @@ class ApplicationComponent extends React.PureComponent {
   };
 
   state = {
-    authorized: false
+    authorized: false,
+    validLink: false
   };
 
   componentDidMount = () => {
@@ -85,7 +86,7 @@ class ApplicationComponent extends React.PureComponent {
 
   getActiveLink = (pathname) => {
     const { links, links_mapping } = this.props.navigationMenu;
-    const link_map = links_mapping[pathname];
+    const link_map = links_mapping[pathname].split(':');
     let link = null;
 
     if (link_map) {
@@ -106,36 +107,40 @@ class ApplicationComponent extends React.PureComponent {
     const signInPath = '/user/sign-in';
     const link = this.getActiveLink(pathname);
     let authorized = false;
+    let validLink = false;
 
     if (link) {
+      validLink = true;
       if (link.can && link.can.perform && link.can.on) {
         authorized = hasAbility(link.can.perform, link.can.on);
       }
-    }
+    } 
 
     this.setState({
-      authorized
+      authorized,
+      validLink
     }, () => {
-      if (userAuthenticated && location.pathname === signInPath) {
-        history.push('/');
-      } else if (!userAuthenticated && !this.state.authorized && location.pathName !== signInPath) {
-        history.push(signInPath);
-      } else if (link) {
-        if (link.full_title && link.full_title.length > 0) {
-          const full_title = [...link.full_title];
+      if (this.state.validLink) {
+        if (userAuthenticated && location.pathname === signInPath) {
+          history.push('/');
+        } else if (!userAuthenticated && !this.state.authorized && location.pathName !== signInPath) {
+          history.push(signInPath);
+        } else if (link) {
+          if (link.full_title && link.full_title.length > 0) {
+            const full_title = [...link.full_title];
 
-          if (full_title.length === 1) {
-            setMenuTitle(full_title.toString());
-          } else {
-            const endTitle = full_title.splice(-1, 1).toString();
-            setMenuTitle(full_title.join(' - ').concat(`: ${endTitle}`));
+            if (full_title.length === 1) {
+              setMenuTitle(full_title.toString());
+            } else {
+              const endTitle = full_title.splice(-1, 1).toString();
+              setMenuTitle(full_title.join(' - ').concat(`: ${endTitle}`));
+            }
           }
-        }
 
-        setMenuActive(link.active);
+          setMenuActive(link.active);
+        }
       }
     });
-
   }
 
   handleNavigationMenuItemClick = (link) => {
@@ -158,13 +163,18 @@ class ApplicationComponent extends React.PureComponent {
 
   content = () => {
     const { loading, loaded, errors } = this.props.userProfile;
+    const { validLink, authorized } = this.state;
 
     if (loaded) {
-      if (this.state.authorized) {
+      // We let !validLink through to routes incase its an invalid path
+      // Routes handle the 404. 
+      if (authorized || !validLink) {
         return <Routes />;
       } else {
         return <Error401 />
       }
+    } else if (errors !== null) {
+      return <Error503 />
     }
   };
 

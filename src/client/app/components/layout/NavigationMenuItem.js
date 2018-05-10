@@ -20,7 +20,7 @@ const NavigationMenuItemComponent = (props) => {
     <MenuItem 
       onClick={handleClick}
       className={classNames({[classes.nested]: link.position.length > 1 })}
-      selected={link.position.join('-') === activeLink.join('-')}
+      selected={link.position === activeLink}
       > 
         {children}
     </MenuItem>
