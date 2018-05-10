@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import withNavigationAuthorization from 'components/withNavigationAuthorization';
 
 class DailyScheduleComponent extends React.PureComponent {
   static propTypes = {
@@ -25,5 +26,6 @@ class DailyScheduleComponent extends React.PureComponent {
 const mapStateToProps = (state) => ({});
 
 export const DailySchedule = compose(
-  connect(mapStateToProps)
+  connect(mapStateToProps),
+  withNavigationAuthorization,
 )(DailyScheduleComponent);

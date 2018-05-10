@@ -18,4 +18,4 @@ function deepFreeze(obj) {
   return Object.freeze(obj);
 }
 
-export { deepFreeze };
+export default deepFreeze;

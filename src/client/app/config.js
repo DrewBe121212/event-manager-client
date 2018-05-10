@@ -1,6 +1,6 @@
 import * as baseConfig from 'conf/config';
 import * as envConfig from 'env-config';
-import { deepFreeze } from 'utils/deepFreeze';
+import deepFreeze from 'utils/deepFreeze';
 
 let config = { ...baseConfig.default, ...envConfig.default };
 

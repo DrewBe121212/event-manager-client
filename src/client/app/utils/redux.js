@@ -9,7 +9,6 @@ function createReducer(initialState, handlers) {
 }
 
 function normalizeData(data = [], id) {
-
   let normalizedData = {};
 
   if (typeof id === undefined) {

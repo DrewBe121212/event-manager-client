@@ -6,25 +6,32 @@ import {
   SET_MENU_ACTIVE
 } from 'constants/navigation';
 
-const mapMenuLinks = (links, position, title = []) => {
+const mapMenuLinks = (links, position = [], title = []) => {
   let mapping = {};
 
   links.forEach((link, index) => {
-    const linkIndex = position ? position.concat(':', index) : index.toString();
-    link.position = linkIndex.concat();
-    link.active = linkIndex.concat();
+    const linkIndex = [
+      ...position, index
+    ];
+    link.position = [
+      ...linkIndex
+    ];
+    link.active = [
+      ...linkIndex
+    ];
     link.full_title = [
-      ...title
+      ...title, link.title
     ];
 
-    link.full_title.push(link.title);
-
-    if (link.url) {
-      mapping[link.url] = linkIndex;
+    if (link.activeParent && link.activeParent > 0) {
+      link.active.splice(-1, link.activeParent);
     }
 
-    if (link.activeParent && link.activeParent > 0) {
-      link.active = link.active.slice(0, (-link.activeParent));
+    link.position = link.position.join(':');
+    link.active = link.active.join(':');
+
+    if (link.url) {
+      mapping[link.url] = link.position.toString();
     }
 
     if (link.nested_links) {
@@ -43,7 +50,7 @@ const initialState = {
     links: [
       {
         title: 'Daily Schedule',
-        url: '/',
+        url: '/daily-schedule',
         icon: 'Schedule',
         can: {
           perform: 'view',
@@ -69,24 +76,24 @@ const initialState = {
             icon: 'PeopleOutline',
             can: {
               perform: 'view',
-              on: 'daily_schedule'
+              on: 'users'
             },
             nested_links: [
               {
                 title: 'New',
                 url: '/admin/accounts/new',
                 can: {
-                  perform: 'view',
-                  on: 'daily_schedule'
+                  perform: 'new',
+                  on: 'user'
                 },
                 activeParent: 1
               },
               {
                 title: 'Edit',
-                url: '/admin/accounts/edit/:id',
+                url: '/admin/accounts/:id',
                 can: {
-                  perform: 'view',
-                  on: 'daily_schedule'
+                  perform: 'edit',
+                  on: 'user'
                 },
                 activeParent: 1
               }

@@ -8,6 +8,7 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { authenticateUser } from 'actions/user';
 import { GuestSignInForm, GuestSignInOptions } from 'components/forms/user';
+import withNavigationAuthorization from 'components/withNavigationAuthorization';
 
 const styles = (theme) => ({
   paper: theme.mixins.gutters({
@@ -86,6 +87,7 @@ const mapDispatchToProps = {
 };
 
 export const SignIn = compose(
-  withStyles(styles),
   connect(null, mapDispatchToProps),
+  withStyles(styles),
+  withNavigationAuthorization
 )(SignInComponent);

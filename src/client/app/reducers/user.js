@@ -85,7 +85,7 @@ export const userReducer = createReducer(initialState, {
       loaded: false,
       errors: payload.message
     })
-  }),  
+  }),
   [FETCH_USER_PROFILE_SUCCESSFUL]: (state, payload) => ({
     ...state,
     profile: Object.assign({}, state.profile, {

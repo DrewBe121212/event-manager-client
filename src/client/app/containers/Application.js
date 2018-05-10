@@ -6,14 +6,13 @@ import { compose } from 'redux';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import CssBaseline from 'material-ui/CssBaseline';
-import { hasAbility } from 'libs/abilities';
 import ApplicationLoadingBar from 'components/layout/ApplicationLoadingBar';
 import ApplicationBar from 'components/layout/ApplicationBar';
 import Navigation from 'components/layout/Navigation';
-import { Error401, Error503 } from 'components/errors';
-import { toggleDrawer, toggleDrawerMenu, setMenuTitle, setMenuActive } from 'actions/navigation';
+import { Error503 } from 'components/errors';
+import { toggleDrawer, toggleDrawerMenu } from 'actions/navigation';
 import { fetchUserProfile } from 'actions/user';
-import { Routes } from 'routes';
+import Routes from 'routes';
 
 const styles = (theme) => ({
   root: {
@@ -46,103 +45,24 @@ const styles = (theme) => ({
   }
 });
 
-class ApplicationComponent extends React.PureComponent {
+class ApplicationComponent extends React.Component {
   static propTypes = {
-    navigationMenu: PropTypes.object.isRequired,
     navigationDrawer: PropTypes.object.isRequired,
     applicationLoader: PropTypes.object.isRequired,
+    navigationMenu: PropTypes.object.isRequired,
     userProfile: PropTypes.object.isRequired,
-    userAuthenticated: PropTypes.bool.isRequired,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     toggleDrawer: PropTypes.func.isRequired,
     toggleDrawerMenu: PropTypes.func.isRequired,
-    setMenuTitle: PropTypes.func.isRequired,
-    setMenuActive: PropTypes.func.isRequired,
     fetchUserProfile: PropTypes.func.isRequired
-  };
-
-  state = {
-    authorized: false,
-    validLink: false
   };
 
   componentDidMount = () => {
     const { fetchUserProfile } = this.props;
 
     fetchUserProfile();
-  }
-
-  componentDidUpdate = (prevProps) => {
-    if (prevProps.userProfile.loaded !== this.props.userProfile.loaded && this.props.userProfile.loaded) {
-      this.handleLocationChange(this.props.location.pathname);
-
-      this.props.history.listen((location, history) => {
-        this.handleLocationChange(location.pathname);
-      });
-    }
-  }
-
-  getActiveLink = (pathname) => {
-    const { links, links_mapping } = this.props.navigationMenu;
-    const link_map = links_mapping[pathname].split(':');
-    let link = null;
-
-    if (link_map) {
-      link_map.forEach((linkIndex, index) => {
-        if (index === 0) {
-          link = links[linkIndex];
-        } else {
-          link = link.nested_links[linkIndex];
-        }
-      });
-    }
-
-    return link;
-  }
-
-  handleLocationChange = (pathname) => {
-    const { setMenuTitle, setMenuActive, userAuthenticated, location, history } = this.props;
-    const signInPath = '/user/sign-in';
-    const link = this.getActiveLink(pathname);
-    let authorized = false;
-    let validLink = false;
-
-    if (link) {
-      validLink = true;
-      if (link.can && link.can.perform && link.can.on) {
-        authorized = hasAbility(link.can.perform, link.can.on);
-      }
-    } 
-
-    this.setState({
-      authorized,
-      validLink
-    }, () => {
-      if (this.state.validLink) {
-        if (userAuthenticated && location.pathname === signInPath) {
-          history.push('/');
-        } else if (!userAuthenticated && !this.state.authorized && location.pathName !== signInPath) {
-          history.push(signInPath);
-        } else if (link) {
-          if (link.full_title && link.full_title.length > 0) {
-            const full_title = [
-              ...link.full_title
-            ];
-
-            if (full_title.length === 1) {
-              setMenuTitle(full_title.toString());
-            } else {
-              const endTitle = full_title.splice(-1, 1).toString();
-              setMenuTitle(full_title.join(' - ').concat(`: ${endTitle}`));
-            }
-          }
-
-          setMenuActive(link.active);
-        }
-      }
-    });
   }
 
   handleNavigationMenuItemClick = (link) => {
@@ -165,16 +85,9 @@ class ApplicationComponent extends React.PureComponent {
 
   content = () => {
     const { loaded, errors } = this.props.userProfile;
-    const { validLink, authorized } = this.state;
 
     if (loaded) {
-      // We let !validLink through to routes incase its an invalid path
-      // Routes handle the 404. 
-      if (authorized || !validLink) {
-        return <Routes />;
-      } else {
-        return <Error401 />;
-      }
+      return <Routes />;
     } else if (errors !== null) {
       return <Error503 />;
     }
@@ -214,16 +127,13 @@ const mapStateToProps = (state) => {
     applicationLoader: state.application.loader,
     navigationMenu: state.navigation.menu,
     navigationDrawer: state.navigation.drawer,
-    userProfile: state.user.profile,
-    userAuthenticated: state.user.authentication.authenticated
+    userProfile: state.user.profile
   };
 };
 
 const mapDispatchToProps = {
   toggleDrawer,
   toggleDrawerMenu,
-  setMenuTitle,
-  setMenuActive,
   fetchUserProfile
 };
 

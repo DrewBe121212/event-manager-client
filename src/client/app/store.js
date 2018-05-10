@@ -33,11 +33,17 @@ const enhancer = composeWithDevTools(
   applyMiddleware(...middleware)
 );
 
+// create store
 const store = createStore(
   rootReducer,
   enhancer
 );
 
+// persist store
 const persistor = persistStore(store);
 
-export { history, store, persistor };
+export { 
+  history, 
+  store, 
+  persistor 
+};
