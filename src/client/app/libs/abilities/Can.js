@@ -1,7 +1,7 @@
-import {hasAbility} from './abilities';
+import { hasAbility } from './abilities';
 
 const Can = (props) => {
-  const {perform, on, children} = props;
+  const { perform, on, children } = props;
 
   if (hasAbility(perform, on)) {
     return children;
@@ -10,4 +10,4 @@ const Can = (props) => {
   return null;
 };
 
-export {Can};
+export { Can };

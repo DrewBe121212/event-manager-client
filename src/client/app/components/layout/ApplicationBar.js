@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {withStyles} from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -13,7 +13,7 @@ const styles = (theme) => ({
   appBar: {
     position: 'absolute',
     transition: theme.transitions.create([
-      'margin', 
+      'margin',
       'width'
     ], {
       easing: theme.transitions.easing.sharp,
@@ -24,7 +24,7 @@ const styles = (theme) => ({
     marginLeft: theme.drawer.width,
     width: `calc(100% - ${theme.drawer.width}px)`,
     transition: theme.transitions.create([
-      'margin', 
+      'margin',
       'width'
     ], {
       easing: theme.transitions.easing.easeOut,
@@ -37,17 +37,18 @@ const styles = (theme) => ({
   }
 });
 
-class ApplicationBarComponent extends React.Component {
+class ApplicationBar extends React.PureComponent {
 
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    drawer: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired,
-    handleDrawerToggle: PropTypes.func.isRequired
+    title: PropTypes.string,
+    userProfile: PropTypes.object.isRequired,
+    navigationDrawer: PropTypes.object.isRequired,
+    handleToggleDrawer: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired
   };
 
   openDrawer = () => {
-    this.props.handleDrawerToggle(true);
+    this.props.handleToggleDrawer(true);
   }
 
   handleUserMenuClick = () => {
@@ -55,12 +56,12 @@ class ApplicationBarComponent extends React.Component {
   }
 
   render() {
-    const {title, drawer, classes} = this.props;
+    const { title, userProfile, navigationDrawer, classes } = this.props;
 
     return (
-      <AppBar className={classNames(classes.appBar, {[classes.appBarShift]: drawer.open})}>
-        <Toolbar disableGutters={!drawer.open}>
-          <IconButton onClick={this.openDrawer} className={classNames(classes.drawerButton, {hidden: drawer.open})} color="inherit" aria-label="Menu">
+      <AppBar className={classNames(classes.appBar, { [classes.appBarShift]: navigationDrawer.open })}>
+        <Toolbar disableGutters={!navigationDrawer.open}>
+          <IconButton disabled={!userProfile.loaded} onClick={this.openDrawer} className={classNames(classes.drawerButton, { hidden: navigationDrawer.open })} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
           <Typography variant="title" color="inherit" noWrap>
@@ -69,13 +70,7 @@ class ApplicationBarComponent extends React.Component {
         </Toolbar>
       </AppBar>
     );
-
   }
-
 }
 
-const ApplicationBar = withStyles(
-  styles
-)(ApplicationBarComponent);
-
-export {ApplicationBar};
+export default withStyles(styles)(ApplicationBar);
