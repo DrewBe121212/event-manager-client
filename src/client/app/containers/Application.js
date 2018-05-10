@@ -7,9 +7,9 @@ import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import CssBaseline from 'material-ui/CssBaseline';
 import { hasAbility } from 'libs/abilities';
-import { ApplicationLoadingBar } from 'components/layout/ApplicationLoadingBar';
-import { ApplicationBar } from 'components/layout/ApplicationBar';
-import { Navigation } from 'components/layout/Navigation';
+import ApplicationLoadingBar from 'components/layout/ApplicationLoadingBar';
+import ApplicationBar from 'components/layout/ApplicationBar';
+import Navigation from 'components/layout/Navigation';
 import { Error401, Error503 } from 'components/errors';
 import { toggleDrawer, toggleDrawerMenu, setMenuTitle, setMenuActive } from 'actions/navigation';
 import { fetchUserProfile } from 'actions/user';
@@ -127,7 +127,9 @@ class ApplicationComponent extends React.PureComponent {
           history.push(signInPath);
         } else if (link) {
           if (link.full_title && link.full_title.length > 0) {
-            const full_title = [...link.full_title];
+            const full_title = [
+              ...link.full_title
+            ];
 
             if (full_title.length === 1) {
               setMenuTitle(full_title.toString());
@@ -153,7 +155,7 @@ class ApplicationComponent extends React.PureComponent {
     }
   };
 
-  handleDrawerToggle = (open) => {
+  handleToggleDrawer = (open) => {
     this.props.toggleDrawer(open);
   };
 
@@ -162,7 +164,7 @@ class ApplicationComponent extends React.PureComponent {
   }
 
   content = () => {
-    const { loading, loaded, errors } = this.props.userProfile;
+    const { loaded, errors } = this.props.userProfile;
     const { validLink, authorized } = this.state;
 
     if (loaded) {
@@ -171,15 +173,15 @@ class ApplicationComponent extends React.PureComponent {
       if (authorized || !validLink) {
         return <Routes />;
       } else {
-        return <Error401 />
+        return <Error401 />;
       }
     } else if (errors !== null) {
-      return <Error503 />
+      return <Error503 />;
     }
   };
 
   render() {
-    const { applicationLoader, navigationDrawer, userProfile, location, classes } = this.props;
+    const { applicationLoader, navigationDrawer, userProfile, classes } = this.props;
     const { title, active, links } = this.props.navigationMenu;
 
     return (
@@ -189,14 +191,14 @@ class ApplicationComponent extends React.PureComponent {
           userProfile={userProfile}
           title={title}
           navigationDrawer={navigationDrawer}
-          handleDrawerToggle={this.handleDrawerToggle}
+          handleToggleDrawer={this.handleToggleDrawer}
         />
         <Navigation
           links={links}
           activeLink={active}
           handleNavigationMenuItemClick={this.handleNavigationMenuItemClick}
           navigationDrawer={navigationDrawer}
-          handleDrawerToggle={this.handleDrawerToggle} />
+          handleToggleDrawer={this.handleToggleDrawer} />
 
         <div className={classNames(classes.content, { [classes.contentShift]: navigationDrawer.open })}>
           <ApplicationLoadingBar applicationLoader={applicationLoader} />

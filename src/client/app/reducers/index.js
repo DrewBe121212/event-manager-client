@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { routerReducer } from 'react-router-redux';
 import { applicationReducer } from './application';
 import { navigationReducer } from './navigation';
@@ -11,16 +11,20 @@ const keyPrefix = 'event-manager:';
 const navigationPersistConfig = {
   keyPrefix,
   key: 'navigation',
-  whitelist: ['drawer'],
+  whitelist: [
+    'drawer'
+  ],
   storage
 };
 
 const userPersistConfig = {
   keyPrefix,
   key: 'user',
-  whitelist: ['authentication'],
+  whitelist: [
+    'authentication'
+  ],
   storage
-}
+};
 
 export const rootReducer = combineReducers({
   router: routerReducer,

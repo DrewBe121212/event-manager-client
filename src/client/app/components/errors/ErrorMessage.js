@@ -5,7 +5,9 @@ export const ErrorMessage = ({ message }) => {
   let messages = [];
 
   if (Array.isArray(message)) {
-    messages = [...message];
+    messages = [
+      ...message
+    ];
   } else if (typeof message === 'object') {
     Object.keys(message).forEach((key) => {
       messages.push(message[key]);
@@ -15,20 +17,22 @@ export const ErrorMessage = ({ message }) => {
   }
 
   if (messages.length > 0) {
-    <div>
-      {messages.length === 1 ? 
-        messages.toString() : 
-        <ul>
-        {messages.map((msg, index) => (
-          <li key={index}>{msg}</li>
-        ))}
-        </ul>
-      }
+    return (
+      <div>
+        {messages.length === 1 ?
+          messages.toString() :
+          <ul>
+            {messages.map((msg, index) => (
+              <li key={index}>{msg}</li>
+            ))}
+          </ul>
+        }
       </div>
+    );
   }
 
   return null;
-}
+};
 
 ErrorMessage.propTypes = {
   message: PropTypes.oneOfType([

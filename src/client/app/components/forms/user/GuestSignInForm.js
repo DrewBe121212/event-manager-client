@@ -4,10 +4,8 @@ import { withFormik } from 'formik';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import { ErrorMessage } from 'components/errors';
 
 class Form extends React.PureComponent {
-
   static propTypes = {
     values: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
@@ -20,7 +18,7 @@ class Form extends React.PureComponent {
   };
 
   render() {
-    const { values, errors, touched, handleChange, handleSubmit, isSubmitting, handleCancel } = this.props;
+    const { values, errors, handleChange, handleSubmit, isSubmitting, handleCancel } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
@@ -48,7 +46,7 @@ class Form extends React.PureComponent {
   }
 }
 
-const GuestSignInForm = withFormik({
+export const GuestSignInForm = withFormik({
   validateOnBlur: false,
   validateOnChange: false,
   mapPropsToValues: (props) => ({
@@ -65,5 +63,3 @@ const GuestSignInForm = withFormik({
 
   }
 })(Form);
-
-export { GuestSignInForm };

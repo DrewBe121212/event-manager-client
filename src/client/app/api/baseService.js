@@ -1,6 +1,6 @@
 import axios from 'axios';
 import path from 'path';
-import {config} from 'config';
+import config from 'config';
 
 const clients = {
   eventManager: axios.create({
@@ -15,8 +15,8 @@ export class BaseService {
     this.resource = resource;
   }
 
-  axios(method = 'GET', endpoint = null, params, client='eventManager') {
-    
+  axios(method = 'GET', endpoint = null, params, client = 'eventManager') {
+
     const extension = '.json';
     let url = '';
 

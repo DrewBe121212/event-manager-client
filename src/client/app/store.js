@@ -7,7 +7,6 @@ import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { rootReducer } from 'reducers/index';
 
-
 // initialize history
 const history = createHistory();
 

@@ -19,17 +19,14 @@ const styles = (theme) => ({
 
 class SignInComponent extends React.PureComponent {
   static propTypes = {
+    authenticateUser: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      guestLogin: false,
-      fadeIn: false
-    };
-  }
+  state = {
+    guestLogin: false,
+    fadeIn: false
+  };
 
   resetFadeIn = () => {
     this.setState({
@@ -56,7 +53,7 @@ class SignInComponent extends React.PureComponent {
   }
 
   render() {
-    const { classes, authenticateUser } = this.props;
+    const { authenticateUser, classes } = this.props;
 
     return (
       <Grid container justify="center">
@@ -64,15 +61,15 @@ class SignInComponent extends React.PureComponent {
           <Paper className={classes.paper} >
             <CSSTransition in={this.state.fadeIn} classNames="fade" timeout={1000} exit={false} onEntered={this.resetFadeIn}>
               <div>
-                {this.state.guestLogin ? 
-                  <GuestSignInForm 
-                    authenticateUser={authenticateUser} 
-                    handleCancel={this.cancelGuestLogin} 
+                {this.state.guestLogin ?
+                  <GuestSignInForm
+                    authenticateUser={authenticateUser}
+                    handleCancel={this.cancelGuestLogin}
                   />
-                  : 
-                  <GuestSignInOptions 
-                    SSOLogin={this.SSOLogin} 
-                    guestLogin={this.guestLogin} 
+                  :
+                  <GuestSignInOptions
+                    SSOLogin={this.SSOLogin}
+                    guestLogin={this.guestLogin}
                   />
                 }
               </div>

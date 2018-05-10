@@ -1,15 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import { MenuItem } from 'material-ui/Menu';
 
-const styles = theme => ({
+const styles = (theme) => ({
   nested: {
-    paddingLeft: theme.spacing.unit * 4,
-  },
+    paddingLeft: theme.spacing.unit * 4
+  }
 });
 
-const NavigationMenuItemComponent = (props) => {
+const NavigationMenuItem = (props) => {
   const { link, activeLink, handleNavigationMenuItemClick, children, classes } = props;
 
   function handleClick() {
@@ -21,12 +22,18 @@ const NavigationMenuItemComponent = (props) => {
       onClick={handleClick}
       className={classNames({[classes.nested]: link.position.length > 1 })}
       selected={link.position === activeLink}
-      > 
-        {children}
+    > 
+      {children}
     </MenuItem>
   );
 };
 
-export const NavigationMenuItem = withStyles(
-  styles
-)(NavigationMenuItemComponent);
+NavigationMenuItem.propTypes = {
+  link: PropTypes.object.isRequired,
+  activeLink: PropTypes.string.isRequired,
+  handleNavigationMenuItemClick: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(NavigationMenuItem);

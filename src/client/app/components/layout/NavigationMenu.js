@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Collapse from 'material-ui/transitions/Collapse';
 import { MenuList } from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
@@ -8,7 +9,7 @@ import ScheduleIcon from 'material-ui-icons/Schedule';
 import SettingsIcon from 'material-ui-icons/Settings';
 import ExpandLessIcon from 'material-ui-icons/ExpandLess';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import { NavigationMenuItem } from './NavigationMenuItem';
+import NavigationMenuItem from './NavigationMenuItem';
 import { hasAbility } from 'libs/abilities';
 
 const maxDepth = 1;
@@ -18,7 +19,7 @@ const icons = {
   PeopleOutline: PeopleOutlineIcon,
   Schedule: ScheduleIcon,
   Settings: SettingsIcon
-}
+};
 
 const renderExpandIcon = (expanded) => {
   if (expanded) {
@@ -26,14 +27,13 @@ const renderExpandIcon = (expanded) => {
   } else {
     return <ExpandMoreIcon />;
   }
-}
+};
 
-export const NavigationMenu = (props) => {
+const NavigationMenu = (props) => {
   const { links, activeLink, handleNavigationMenuItemClick, navigationDrawerOpenMenus } = props;
 
   const renderNavigationMenuItem = (link, activeLink, nested = false, currentlyExpanded = false, depth) => {
     const LinkIcon = icons[link.icon];
-
 
     return (
       <NavigationMenuItem
@@ -71,15 +71,13 @@ export const NavigationMenu = (props) => {
         </React.Fragment>
       );
     }
-  }
+  };
   
   const renderMenuList = (links, activeLink, depth = 0) => {
     let authorizedLinks = [];
   
     if (depth <= maxDepth) {
-      links.map((link) => {
-        const hasNestedLinks = link.nested_links && link.nested_links.length > 0;
-  
+      links.forEach((link) => {
         if (link.can && link.can.perform && link.can.on) {
           const hasAuthorization = hasAbility(link.can.perform, link.can.on);
   
@@ -104,4 +102,13 @@ export const NavigationMenu = (props) => {
   };  
 
   return renderMenuList(links, activeLink);
-}
+};
+
+NavigationMenu.propTypes = {
+  links: PropTypes.array.isRequired,
+  activeLink: PropTypes.string.isRequired,
+  handleNavigationMenuItemClick: PropTypes.func.isRequired,
+  navigationDrawerOpenMenus: PropTypes.array.isRequired
+};
+
+export default NavigationMenu;

@@ -37,18 +37,18 @@ const styles = (theme) => ({
   }
 });
 
-class ApplicationBarComponent extends React.PureComponent {
+class ApplicationBar extends React.PureComponent {
 
   static propTypes = {
     title: PropTypes.string,
     userProfile: PropTypes.object.isRequired,
     navigationDrawer: PropTypes.object.isRequired,
-    handleDrawerToggle: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
+    handleToggleDrawer: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired
   };
 
   openDrawer = () => {
-    this.props.handleDrawerToggle(true);
+    this.props.handleToggleDrawer(true);
   }
 
   handleUserMenuClick = () => {
@@ -73,6 +73,4 @@ class ApplicationBarComponent extends React.PureComponent {
   }
 }
 
-export const ApplicationBar = withStyles(
-  styles
-)(ApplicationBarComponent);
+export default withStyles(styles)(ApplicationBar);

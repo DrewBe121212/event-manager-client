@@ -7,7 +7,7 @@ import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import PersonOutlineIcon from 'material-ui-icons/PersonOutline';
 import { hasAbility } from 'libs/abilities';
 
-export const GuestSignInOptions = (props) => {
+const GuestSignInOptions = (props) => {
   const { SSOLogin, guestLogin } = props;
 
   let options = [];
@@ -56,3 +56,10 @@ export const GuestSignInOptions = (props) => {
     return 'No login options are available';
   }
 };
+
+GuestSignInOptions.propTypes = {
+  SSOLogin: PropTypes.func.isRequired,
+  guestLogin: PropTypes.func.isRequired
+};
+
+export { GuestSignInOptions };

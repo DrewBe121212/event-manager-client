@@ -2,7 +2,6 @@ import { createReducer } from 'utils/redux';
 import {
   TOGGLE_DRAWER,
   TOGGLE_DRAWER_MENU,
-  SET_APP_LOADING,
   SET_MENU_TITLE,
   SET_MENU_ACTIVE
 } from 'constants/navigation';
@@ -14,7 +13,9 @@ const mapMenuLinks = (links, position, title = []) => {
     const linkIndex = position ? position.concat(':', index) : index.toString();
     link.position = linkIndex.concat();
     link.active = linkIndex.concat();
-    link.full_title = [...title];
+    link.full_title = [
+      ...title
+    ];
 
     link.full_title.push(link.title);
 
@@ -26,7 +27,6 @@ const mapMenuLinks = (links, position, title = []) => {
       link.active = link.active.slice(0, (-link.activeParent));
     }
 
-
     if (link.nested_links) {
       mapping = Object.assign(mapping, mapMenuLinks(link.nested_links, linkIndex, link.full_title));
     }
@@ -34,12 +34,12 @@ const mapMenuLinks = (links, position, title = []) => {
   });
 
   return mapping;
-}
+};
 
 const initialState = {
   menu: {
     title: null,
-    active: [],
+    active: '',
     links: [
       {
         title: 'Daily Schedule',
@@ -57,7 +57,7 @@ const initialState = {
         can: {
           perform: 'new',
           on: 'session'
-        },
+        }
       },
       {
         title: 'Administration',
@@ -126,7 +126,7 @@ export const navigationReducer = createReducer(initialState, {
     return {
       ...state,
       drawer: Object.assign({}, state.drawer, {
-        openMenus,
+        openMenus
       })
     };
   },

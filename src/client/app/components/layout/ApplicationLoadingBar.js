@@ -11,11 +11,12 @@ const initialState = {
   time: 0
 };
 
-export class ApplicationLoadingBar extends React.PureComponent {
+class ApplicationLoadingBar extends React.PureComponent {
   static propTypes = {
     applicationLoader: PropTypes.object.isRequired,
     timeConstant: PropTypes.number.isRequired,
-    frequency: PropTypes.number.isRequired
+    frequency: PropTypes.number.isRequired,
+    timeout: PropTypes.number.isRequired
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -51,8 +52,6 @@ export class ApplicationLoadingBar extends React.PureComponent {
 
   state = initialState;
 
-  timer = null;
-
   componentDidUpdate(prevProps, prevState) {
     const { frequency } = this.props;
     const { active } = this.state;
@@ -70,9 +69,11 @@ export class ApplicationLoadingBar extends React.PureComponent {
     clearInterval(this.timer);
   }
 
+  timer = null;
+
   progress = () => {
     const { timeConstant, frequency } = this.props;
-    const { active, progress, buffer, time } = this.state;
+    const { time } = this.state;
     const newTime = time + frequency;
     let newProgress = (1 - Math.exp(-1 * newTime / timeConstant)) * 100;
     let newBuffer = newProgress + Math.random() * 10;
@@ -109,3 +110,5 @@ export class ApplicationLoadingBar extends React.PureComponent {
     );
   }
 }
+
+export default ApplicationLoadingBar;
