@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Fade from 'material-ui/transitions/Fade';
 import { hasAbility } from 'libs/abilities';
+import { setAppLoading } from 'actions/application';
 import { setMenuTitle, setMenuActive } from 'actions/navigation';
-import { Error401 } from 'components/errors';
+import { Error401, Error404 } from 'components/errors';
 
 const withNavigationAuthorization = (WrappedComponent) => {
   class withNavigationAuthorizationComponent extends React.PureComponent {
@@ -12,8 +14,10 @@ const withNavigationAuthorization = (WrappedComponent) => {
       history: PropTypes.object.isRequired,
       navigationMenu: PropTypes.object.isRequired,
       userAuthenticated: PropTypes.bool.isRequired,
+      appIsLoading: PropTypes.bool.isRequired,
       setMenuTitle: PropTypes.func.isRequired,
-      setMenuActive: PropTypes.func.isRequired
+      setMenuActive: PropTypes.func.isRequired,
+      setAppLoading: PropTypes.func.isRequired
     };
 
     state = {
@@ -34,7 +38,7 @@ const withNavigationAuthorization = (WrappedComponent) => {
         if (link.can && link.can.perform && link.can.on) {
           authorized = hasAbility(link.can.perform, link.can.on);
         }
-      } 
+      }
 
       this.setState({
         authorized,
@@ -70,7 +74,7 @@ const withNavigationAuthorization = (WrappedComponent) => {
       const { links, links_mapping } = this.props.navigationMenu;
       const link_map = links_mapping[pathname];
       let link = null;
-  
+
       if (link_map) {
         link_map.split(':').forEach((linkIndex, index) => {
           if (index === 0) {
@@ -85,10 +89,19 @@ const withNavigationAuthorization = (WrappedComponent) => {
     }
 
     render() {
-      const { navigationMenu, userAuthenticated, setMenuTitle, setMenuActive, ...other } = this.props;
+      const { navigationMenu, userAuthenticated, setMenuTitle, setMenuActive, appIsLoading, ...other } = this.props;
       const { authorized, validLink } = this.state;
-      if (authorized || !validLink) {
-        return <WrappedComponent {...other} />;
+
+      if (authorized) {
+        return (
+          <Fade in={!appIsLoading}>
+            <div>
+              <WrappedComponent {...other} />
+            </div>
+          </Fade>
+        );
+      } else if (!validLink) {
+        return <Error404 />;
       } else {
         return <Error401 />;
       }
@@ -97,12 +110,14 @@ const withNavigationAuthorization = (WrappedComponent) => {
 
   const mapStateToProps = (state) => ({
     userAuthenticated: state.user.authentication.authenticated,
-    navigationMenu: state.navigation.menu
+    navigationMenu: state.navigation.menu,
+    appIsLoading: state.application.loader.loading
   });
   
   const mapDispatchToProps = {
     setMenuTitle,
-    setMenuActive
+    setMenuActive,
+    setAppLoading
   };
   
   return connect(mapStateToProps, mapDispatchToProps)(withNavigationAuthorizationComponent);  

@@ -72,7 +72,7 @@ const initialState = {
         nested_links: [
           {
             title: 'Accounts',
-            url: '/admin/accounts',
+            url: '/admin/accounts/',
             icon: 'PeopleOutline',
             can: {
               perform: 'view',
@@ -84,7 +84,7 @@ const initialState = {
                 url: '/admin/accounts/new',
                 can: {
                   perform: 'new',
-                  on: 'user'
+                  on: 'users'
                 },
                 activeParent: 1
               },
@@ -92,8 +92,8 @@ const initialState = {
                 title: 'Edit',
                 url: '/admin/accounts/:id',
                 can: {
-                  perform: 'edit',
-                  on: 'user'
+                  perform: 'update',
+                  on: 'users'
                 },
                 activeParent: 1
               }

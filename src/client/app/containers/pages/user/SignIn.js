@@ -20,6 +20,7 @@ const styles = (theme) => ({
 
 class SignInComponent extends React.PureComponent {
   static propTypes = {
+    userAuthentication: PropTypes.object.isRequired,
     authenticateUser: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
   };
@@ -54,7 +55,7 @@ class SignInComponent extends React.PureComponent {
   }
 
   render() {
-    const { authenticateUser, classes } = this.props;
+    const { userAuthentication, authenticateUser, classes } = this.props;
 
     return (
       <Grid container justify="center">
@@ -64,6 +65,7 @@ class SignInComponent extends React.PureComponent {
               <div>
                 {this.state.guestLogin ?
                   <GuestSignInForm
+                    userAuthentication={userAuthentication}
                     authenticateUser={authenticateUser}
                     handleCancel={this.cancelGuestLogin}
                   />
@@ -82,12 +84,16 @@ class SignInComponent extends React.PureComponent {
   }
 }
 
+const mapStateToProps = (state) => ({
+  userAuthentication: state.user.authentication
+});
+
 const mapDispatchToProps = {
   authenticateUser
 };
 
 export const SignIn = compose(
-  connect(null, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles),
   withNavigationAuthorization
 )(SignInComponent);

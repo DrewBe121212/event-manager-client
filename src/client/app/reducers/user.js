@@ -49,13 +49,14 @@ const initialState = {
 export const userReducer = createReducer(initialState, {
   [AUTHENTICATE_USER]: (state) => ({
     ...state,
-    authentication: Object.assign({}, state.authentication, {
+    authentication: Object.assign({}, initialState.authentication, {
       authenticating: true
     })
   }),
   [AUTHENTICATE_USER_FAILURE]: (state, payload) => ({
     ...state,
-    authentication: Object.assign({}, state.authentication, {
+    authentication: Object.assign({}, initialState.authentication, {
+      authenticating: false,
       errors: payload
     })
   }),

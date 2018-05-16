@@ -68,8 +68,10 @@ class ApplicationComponent extends React.Component {
   handleNavigationMenuItemClick = (link) => {
     const { location, history } = this.props;
 
-    if (link.url && link.url.length > 0 && link.url !== location.pathname) {
-      history.push(link.url);
+    if (link.url && link.url.length > 0) {
+      if (link.url !== location.pathname) {
+        history.push(link.url);
+      }
     } else if (link.nested_links) {
       this.handleToggleDrawerMenu(link.position);
     }

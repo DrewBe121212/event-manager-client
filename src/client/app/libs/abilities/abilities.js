@@ -1,7 +1,6 @@
 import { store } from 'store';
 
 const canManage = (can = true) => {
-
   const actions = {
     'view': can,
     'new': can,
@@ -13,7 +12,6 @@ const canManage = (can = true) => {
 };
 
 const setAbility = (objects = [], actions = [], can = true) => {
-
   let abilities = {};
 
   if (!Array.isArray(objects)) {
@@ -29,7 +27,6 @@ const setAbility = (objects = [], actions = [], can = true) => {
   }
 
   objects.forEach((object) => {
-
     if (typeof abilities[object] === 'undefined') {
       abilities[object] = {};
     }
