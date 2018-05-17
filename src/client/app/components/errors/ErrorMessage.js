@@ -4,11 +4,15 @@ import PropTypes from 'prop-types';
 export const ErrorMessage = ({ message }) => {
   let messages = [];
 
+  if (!message) {
+    return null;
+  } 
+
   if (Array.isArray(message)) {
     messages = [
       ...message
     ];
-  } else if (typeof message === 'object') {
+  } else if (message === Object(message)) {
     Object.keys(message).forEach((key) => {
       messages.push(message[key]);
     });
@@ -18,7 +22,7 @@ export const ErrorMessage = ({ message }) => {
 
   if (messages.length > 0) {
     return (
-      <div>
+      <React.Fragment>
         {messages.length === 1 ?
           messages.toString() :
           <ul>
@@ -27,7 +31,7 @@ export const ErrorMessage = ({ message }) => {
             ))}
           </ul>
         }
-      </div>
+      </React.Fragment>
     );
   }
 

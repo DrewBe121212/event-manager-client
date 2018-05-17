@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Collapse from 'material-ui/transitions/Collapse';
-import { MenuList } from 'material-ui/Menu';
-import { ListItemIcon, ListItemText } from 'material-ui/List';
-import PersonOutlineIcon from 'material-ui-icons/PersonOutline';
-import PeopleOutlineIcon from 'material-ui-icons/PeopleOutline';
-import ScheduleIcon from 'material-ui-icons/Schedule';
-import SettingsIcon from 'material-ui-icons/Settings';
-import ExpandLessIcon from 'material-ui-icons/ExpandLess';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import MenuList from '@material-ui/core/MenuList';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import NavigationMenuItem from './NavigationMenuItem';
 import { hasAbility } from 'libs/abilities';
 

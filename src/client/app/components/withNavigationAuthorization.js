@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Fade from 'material-ui/transitions/Fade';
+import Fade from '@material-ui/core/Fade';
 import { hasAbility } from 'libs/abilities';
 import { setAppLoading } from 'actions/application';
 import { setMenuTitle, setMenuActive } from 'actions/navigation';

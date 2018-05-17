@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import CssBaseline from 'material-ui/CssBaseline';
+import { withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import ApplicationLoadingBar from 'components/layout/ApplicationLoadingBar';
 import ApplicationBar from 'components/layout/ApplicationBar';
 import Navigation from 'components/layout/Navigation';
@@ -91,7 +91,7 @@ class ApplicationComponent extends React.Component {
     if (loaded) {
       return <Routes />;
     } else if (errors !== null) {
-      return <Error503 />;
+      return <Error503 errors={errors} />;
     }
   };
 

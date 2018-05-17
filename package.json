@@ -1,6 +1,6 @@
 {
   "name": "event-manager",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Event/Video Production - Inventory Management Application",
   "main": "index.js",
   "repository": {
@@ -19,11 +19,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^1.0.0-rc.1",
+    "@material-ui/icons": "^1.0.0-rc.0",
     "axios": "^0.18.0",
     "concurrently": "^3.5.1",
     "formik": "^0.11.11",
-    "material-ui": "^1.0.0-beta.44",
-    "material-ui-icons": "^1.0.0-beta.35",
     "moment": "^2.22.1",
     "postcss": "^6.0.22",
     "postcss-cssnext": "^3.1.0",
@@ -58,7 +58,7 @@
     "css-loader": "^0.28.8",
     "eslint": "^4.10.0",
     "eslint-plugin-flowtype": "^2.40.1",
-    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.4.0",
     "eslint-plugin-react-perf": "^2.0.8",

@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import List, { ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
-import IconButton from 'material-ui/IconButton';
-import Avatar from 'material-ui/Avatar';
-import ChevronRightIcon from 'material-ui-icons/ChevronRight';
-import PersonOutlineIcon from 'material-ui-icons/PersonOutline';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { hasAbility } from 'libs/abilities';
 
 const GuestSignInOptions = (props) => {
