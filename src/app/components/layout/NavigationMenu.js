@@ -13,8 +13,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import NavigationMenuItem from './NavigationMenuItem';
 import { hasAbility } from 'libs/abilities';
 
-const maxDepth = 1;
-
 const icons = {
   PersonOutline: PersonOutlineIcon,
   PeopleOutline: PeopleOutlineIcon,
@@ -33,7 +31,7 @@ const renderExpandIcon = (expanded) => {
 const NavigationMenu = (props) => {
   const { links, activeLink, handleNavigationMenuItemClick, navigationDrawerOpenMenus } = props;
 
-  const renderNavigationMenuItem = (link, activeLink, nested = false, currentlyExpanded = false, depth) => {
+  const renderNavigationMenuItem = (link, activeLink, nested = false, currentlyExpanded = false) => {
     const LinkIcon = icons[link.icon];
 
     return (
@@ -53,19 +51,19 @@ const NavigationMenu = (props) => {
     );
   };  
 
-  const renderMenuItem = (link, activeLink, depth) => {
+  const renderMenuItem = (link, activeLink) => {
     const isAuthorizedLink = link.can && link.can.perform && link.can.on;
-    const hasNestedLinks = link.nested_links && link.nested_links.length > 0 ? true : false;
-    const nestedLinks = hasNestedLinks && renderMenuList(link.nested_links, activeLink, depth+1);
+    const hasNestedLinks = link.nested_links && !link.url && link.nested_links.length > 0 ? true : false;
+    const nestedLinks = hasNestedLinks && renderMenuList(link.nested_links, activeLink);
     const hasVisibleNestedLinks = hasNestedLinks && (isAuthorizedLink || nestedLinks);
     const currentlyExpanded = hasVisibleNestedLinks && navigationDrawerOpenMenus.indexOf(link.position) >= 0;
 
     if (!hasNestedLinks) {
-      return renderNavigationMenuItem(link, activeLink, false, false, depth);
+      return renderNavigationMenuItem(link, activeLink, false, false);
     } else if (hasVisibleNestedLinks) {
       return (
         <React.Fragment>
-          {renderNavigationMenuItem(link, activeLink, nestedLinks, currentlyExpanded, depth)}
+          {renderNavigationMenuItem(link, activeLink, nestedLinks, currentlyExpanded)}
           <Collapse in={currentlyExpanded} timeout="auto" unmountOnExit>
             {nestedLinks}
           </Collapse>
@@ -74,23 +72,25 @@ const NavigationMenu = (props) => {
     }
   };
   
-  const renderMenuList = (links, activeLink, depth = 0) => {
+  const renderMenuList = (links, activeLink) => {
     let authorizedLinks = [];
-  
-    if (depth <= maxDepth) {
+    
       links.forEach((link) => {
-        if (link.can && link.can.perform && link.can.on) {
-          const hasAuthorization = hasAbility(link.can.perform, link.can.on);
-  
-          if (hasAuthorization) {
-            authorizedLinks.push(renderMenuItem(link, activeLink, depth));
+        const visible = link.visible || true;
+
+        if (visible) {
+          if (link.can && link.can.perform && link.can.on) {
+            const hasAuthorization = hasAbility(link.can.perform, link.can.on);
+    
+            if (hasAuthorization) {
+              authorizedLinks.push(renderMenuItem(link, activeLink));
+            }
+          } else {
+            authorizedLinks.push(renderMenuItem(link, activeLink));
           }
-        } else {
-          authorizedLinks.push(renderMenuItem(link, activeLink, depth));
         }
       });
-    }
-  
+    
     if (authorizedLinks.length > 0) {
       return (
         <MenuList>

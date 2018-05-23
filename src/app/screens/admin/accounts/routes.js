@@ -13,7 +13,7 @@ const LoadableAdminAccounts = Loadable({
 
 const AdminAccountRoutes = ({ match }) => (
   <Switch>
-    <Route exact path={`${match.path}/`} component={LoadableAdminAccounts} />
+    <Route exact path={`${match.path}`} component={LoadableAdminAccounts} />
     <Route exact path={`${match.path}/new`} component={LoadableAdminAccount} />
     <Route exact path={`${match.path}/:id`} component={LoadableAdminAccount} />
   </Switch>

@@ -3,7 +3,8 @@
     "production": {
       "plugins": [
         ["transform-react-remove-prop-types", {
-          "mode": "wrap"
+          "mode": "remove",
+          "removeImport": true
         }]
       ]
     }

@@ -2,15 +2,15 @@
   "name": "event-manager",
   "version": "0.0.5",
   "description": "Event/Video Production - Inventory Management Application",
-  "main": "index.js",
+  "main": "application.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/DrewBe121212/event-video-production-event-manager.git"
   },
   "scripts": {
-    "build": "rimraf dist && NODE_ENV=production webpack --mode production --progress",
+    "build": "NODE_ENV=production webpack --mode production --progress",
     "serve": "webpack-dev-server --mode development --progress",
-    "serve:build": "webpack-dev-server --mode production --progress",
+    "serve:build": "NODE_ENV=production webpack-dev-server --mode production --progress",
     "start:silence": "webpack-dev-server --mode development",
     "eslint": "eslint ./src/client/app/.",
     "eslint:fix": "eslint ./src/client/app/. --fix"
@@ -68,7 +68,6 @@
     "node-sass": "^4.8.2",
     "postcss-loader": "^2.0.10",
     "redux-freeze": "^0.1.5",
-    "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
     "webpack": "^4.6.0",

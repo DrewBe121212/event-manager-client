@@ -1,5 +1,5 @@
 {
   "API": {
-    "EVENT_MANAGER": "http://127.0.0.1/api"
+    "EVENT_MANAGER": "http://0.0.0.0:3000"
   }
 }

@@ -10,10 +10,9 @@ import Avatar from '@material-ui/core/Avatar';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { hasAbility } from 'libs/abilities';
+import withNavigationAuthorization from 'hoc/withNavigationAuthorization';
 
-const GuestSignInOptions = (props) => {
-  const { SSOLogin, guestLogin } = props;
-
+const SignInOptions = ({ match, history }) => {
   let options = [];
 
   if (hasAbility('new', 'session_sso')) {
@@ -22,7 +21,9 @@ const GuestSignInOptions = (props) => {
       primary: 'OSU User Login',
       secondary: 'Ohio State University Login via Single Sign On',
       icon: <PersonOutlineIcon />,
-      onClick: SSOLogin
+      onClick: () => {
+        alert('sign into sso');
+      }
     });
   }
 
@@ -32,7 +33,9 @@ const GuestSignInOptions = (props) => {
       primary: 'Guest Login',
       secondary: 'Sign in using a username and password that is not affiliated with OSU.',
       icon: <PersonOutlineIcon />,
-      onClick: guestLogin
+      onClick: () => {
+        history.push(`${match.path}/guest`);
+      }
     });
   }
 
@@ -40,7 +43,7 @@ const GuestSignInOptions = (props) => {
     return (
       <List>
         {options.map((option, index) => (
-          <ListItem button divider={index < options.length - 1} onClick={option.onClick} key={option.key}>
+          <ListItem button disableGutters divider={index < options.length - 1} onClick={option.onClick} key={option.key}>
             <ListItemAvatar>
               <Avatar>
                 {option.icon}
@@ -61,9 +64,11 @@ const GuestSignInOptions = (props) => {
   }
 };
 
-GuestSignInOptions.propTypes = {
-  SSOLogin: PropTypes.func.isRequired,
-  guestLogin: PropTypes.func.isRequired
+SignInOptions.propTypes = {
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
-export default GuestSignInOptions;
+export default withNavigationAuthorization(
+  SignInOptions
+);

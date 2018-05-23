@@ -21,7 +21,7 @@ const styles = (theme) => ({
     width: '100%',
     height: '100%'
   },
-  content: {
+  container: {
     marginLeft: -theme.drawer.width,
     width: '100%',
     flexGrow: 1,
@@ -36,13 +36,18 @@ const styles = (theme) => ({
       marginTop: 64
     }
   },
-  contentShift: {
+  containerShift: {
     marginLeft: 0,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     })
-  }
+  },
+  content: {
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  }  
 });
 
 class ApplicationRoot extends React.Component {
@@ -85,7 +90,7 @@ class ApplicationRoot extends React.Component {
     this.props.toggleDrawerMenu(menu, open);
   }
 
-  content = () => {
+  renderContent = () => {
     const { loaded, errors } = this.props.userProfile;
 
     if (loaded) {
@@ -115,9 +120,11 @@ class ApplicationRoot extends React.Component {
           navigationDrawer={navigationDrawer}
           handleToggleDrawer={this.handleToggleDrawer} />
 
-        <div className={classNames(classes.content, { [classes.contentShift]: navigationDrawer.open })}>
+        <div className={classNames(classes.container, { [classes.containerShift]: navigationDrawer.open })}>
           <ApplicationLoadingBar applicationLoader={applicationLoader} />
-          {this.content()}
+          <div className={classes.content}>
+            {this.renderContent()}
+          </div>
         </div>
       </div>
     );

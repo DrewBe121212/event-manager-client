@@ -41,7 +41,7 @@ class GuestSignInForm extends React.PureComponent {
             <TextField margin="normal" name="username" id="username" label="Username" value={values.username} onChange={handleChange} error={errors.username ? true : false} helperText={errors.username} fullWidth={true} required={true} autoFocus={true} />
           </Grid>
           <Grid item xs={12}>
-            <TextField margin="normal" name="password" id="password" label="Password" type="password" value={values.password} onChange={handleChange} error={errors.password ? true : false} helperText={errors.password} fullWidth={true} required={true} />
+            <TextField type="password" margin="normal" name="password" id="password" label="Password" value={values.password} onChange={handleChange} error={errors.password ? true : false} helperText={errors.password} fullWidth={true} required={true} />
           </Grid>
         </Grid>
         <div className="action-bar">

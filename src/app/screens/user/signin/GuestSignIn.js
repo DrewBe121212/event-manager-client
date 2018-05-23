@@ -7,14 +7,12 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { authenticateUser } from 'actions/user';
 import GuestSignInForm from './GuestSignInForm';
-import GuestSignInOptions from './GuestSignInOptions';
 import withNavigationAuthorization from 'hoc/withNavigationAuthorization';
 
 const styles = (theme) => ({
   paper: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-    marginTop: theme.spacing.unit * 3
+    paddingTop: 5,
+    paddingBottom: 5
   })
 });
 
@@ -29,20 +27,16 @@ class SignIn extends React.PureComponent {
     guestLogin: false
   };
 
-  SSOLogin = () => {
-    alert('redirect to shiboleth');
-  }
+  handleCancel = () => {
+    const { history, location } = this.props;
+    const currentLocation = location.pathname.split('/');
 
-  guestLogin = () => {
-    this.setState({
-      guestLogin: true
-    });
-  }
-
-  cancelGuestLogin = () => {
-    this.setState({
-      guestLogin: false
-    });
+    if (currentLocation.length > 1) {
+      currentLocation.pop();
+    }
+    console.log(currentLocation, currentLocation.join('/'));
+    history.push(currentLocation.join('/'));
+    
   }
 
   render() {
@@ -52,17 +46,11 @@ class SignIn extends React.PureComponent {
       <Grid container justify="center">
         <Grid item xs={12} md={10} lg={8} xl={6}>
           <Paper className={classes.paper} >
-            {this.state.guestLogin
-              ? <GuestSignInForm
-                  userAuthentication={userAuthentication}
-                  authenticateUser={authenticateUser}
-                  handleCancel={this.cancelGuestLogin}
-                />
-              : <GuestSignInOptions
-                  SSOLogin={this.SSOLogin}
-                  guestLogin={this.guestLogin}
-                />
-            }
+            <GuestSignInForm
+              userAuthentication={userAuthentication}
+              authenticateUser={authenticateUser}
+              handleCancel={this.handleCancel}
+            />
           </Paper>
         </Grid>
       </Grid>

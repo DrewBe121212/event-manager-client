@@ -64,7 +64,19 @@ const initialState = {
         can: {
           perform: 'new',
           on: 'session'
-        }
+        },
+        nested_links: [
+          {
+            title: 'Guest',
+            url: '/user/sign-in/guest',
+            icon: 'PersonOutline',
+            can: {
+              perform: 'new',
+              on: 'session'
+            },
+            activeParent: 1
+          }
+        ]
       },
       {
         title: 'Administration',
@@ -72,7 +84,7 @@ const initialState = {
         nested_links: [
           {
             title: 'Accounts',
-            url: '/admin/accounts/',
+            url: '/admin/accounts',
             icon: 'PeopleOutline',
             can: {
               perform: 'view',

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackAutoInjectVersion = require('webpack-auto-inject-version');
 const MinifyPlugin = require('babel-minify-webpack-plugin');
@@ -32,6 +33,9 @@ module.exports = {
     rules
   },
   plugins: [
+    new CleanWebpackPlugin(PATHS.BUILD, {
+      root: PATHS.ROOT
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.APP_VERSION': JSON.stringify(require(PATHS.ROOT + '/package.json').version)
