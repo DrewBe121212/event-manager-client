@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-class Form extends React.PureComponent {
+class GuestSignInForm extends React.PureComponent {
   static propTypes = {
     values: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
@@ -56,11 +56,12 @@ class Form extends React.PureComponent {
           </Button>
         </div>
       </form>
+
     );
   }
 }
 
-export const GuestSignInForm = withFormik({
+export default withFormik({
   validateOnBlur: false,
   validateOnChange: false,
   mapPropsToValues: (props) => ({
@@ -69,7 +70,7 @@ export const GuestSignInForm = withFormik({
   }),
   handleSubmit: (values, { props, setSubmitting, setFieldValue }) => {
     const { authenticateUser } = props;
-    
+
     authenticateUser(values.username, values.password)
       .finally(() => {
         setFieldValue('password', '');
@@ -77,4 +78,4 @@ export const GuestSignInForm = withFormik({
       });
 
   }
-})(Form);
+})(GuestSignInForm);

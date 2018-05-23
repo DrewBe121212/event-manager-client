@@ -1,14 +1,14 @@
-import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { Application } from './client/app/containers/Application';
-import { store, history, persistor } from './client/app/store';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import teal from '@material-ui/core/colors/teal';
 import lightBlue from '@material-ui/core/colors/lightBlue';
+
+import ApplicationRoot from 'screens/ApplicationRoot';
+import { store, history, persistor } from 'store';
 
 /* Application style sheets */
 import 'css/application.css';
@@ -21,7 +21,7 @@ const theme = createMuiTheme({
     type: 'light'
   },
   drawer: {
-    width: 250
+    width: 220
   }
 });
 
@@ -32,7 +32,7 @@ render(
         <PersistGate loading={null} persistor={persistor}>
           <MuiThemeProvider theme={theme}>
             <ConnectedRouter history={history}>
-              <Application />
+              <ApplicationRoot />
             </ConnectedRouter>
           </MuiThemeProvider>
         </PersistGate>

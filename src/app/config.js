@@ -1,4 +1,4 @@
-import * as baseConfig from 'conf/config';
+import * as baseConfig from 'config/config';
 import * as envConfig from 'env-config';
 import deepFreeze from 'utils/deepFreeze';
 

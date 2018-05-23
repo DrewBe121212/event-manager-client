@@ -12,7 +12,7 @@ import Navigation from 'components/layout/Navigation';
 import { Error503 } from 'components/errors';
 import { toggleDrawer, toggleDrawerMenu } from 'actions/navigation';
 import { fetchUserProfile } from 'actions/user';
-import Routes from 'routes';
+import Routes from 'screens/routes';
 
 const styles = (theme) => ({
   root: {
@@ -45,7 +45,7 @@ const styles = (theme) => ({
   }
 });
 
-class ApplicationComponent extends React.Component {
+class ApplicationRoot extends React.Component {
   static propTypes = {
     navigationDrawer: PropTypes.object.isRequired,
     applicationLoader: PropTypes.object.isRequired,
@@ -139,11 +139,9 @@ const mapDispatchToProps = {
   fetchUserProfile
 };
 
-const Application = withRouter(
+export default withRouter(
   compose(
     withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps)
-  )(ApplicationComponent)
+  )(ApplicationRoot)
 );
-
-export { Application };

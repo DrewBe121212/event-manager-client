@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import withNavigationAuthorization from 'components/withNavigationAuthorization';
+import withNavigationAuthorization from 'hoc/withNavigationAuthorization';
 
-class DailyScheduleComponent extends React.PureComponent {
+class DailySchedule extends React.PureComponent {
   static propTypes = {
     
   };
@@ -21,7 +21,7 @@ class DailyScheduleComponent extends React.PureComponent {
 
 const mapStateToProps = (state) => ({});
 
-export const DailySchedule = compose(
+export default compose(
   connect(mapStateToProps),
   withNavigationAuthorization,
-)(DailyScheduleComponent);
+)(DailySchedule);

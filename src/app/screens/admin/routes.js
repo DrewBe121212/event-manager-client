@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import AdminAccountRoutes from './accounts';
+import AdminAccountRoutes from './accounts/routes';
 
 const AdminRoutes = ({ match }) => (
   <Switch>

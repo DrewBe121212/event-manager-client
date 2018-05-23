@@ -66,4 +66,4 @@ GuestSignInOptions.propTypes = {
   guestLogin: PropTypes.func.isRequired
 };
 
-export { GuestSignInOptions };
+export default GuestSignInOptions;

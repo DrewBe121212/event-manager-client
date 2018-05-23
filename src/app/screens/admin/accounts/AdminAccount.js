@@ -1,5 +1,5 @@
 import React from 'react';
-import withNavigationAuthorization from 'components/withNavigationAuthorization';
+import withNavigationAuthorization from 'hoc/withNavigationAuthorization';
 
 const AdminAccount = ({ match }) => {
     const id = match.params.id || null;
