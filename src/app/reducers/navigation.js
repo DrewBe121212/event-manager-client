@@ -72,7 +72,7 @@ const initialState = {
             icon: 'PersonOutline',
             can: {
               perform: 'new',
-              on: 'session'
+              on: 'session_guest'
             },
             activeParent: 1
           }

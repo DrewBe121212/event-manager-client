@@ -34,9 +34,8 @@ class SignIn extends React.PureComponent {
     if (currentLocation.length > 1) {
       currentLocation.pop();
     }
-    console.log(currentLocation, currentLocation.join('/'));
+
     history.push(currentLocation.join('/'));
-    
   }
 
   render() {
@@ -44,8 +43,8 @@ class SignIn extends React.PureComponent {
 
     return (
       <Grid container justify="center">
-        <Grid item xs={12} md={10} lg={8} xl={6}>
-          <Paper className={classes.paper} >
+        <Grid item xs={10} md={8} lg={6} xl={4}>
+          <Paper className={classes.paper}>
             <GuestSignInForm
               userAuthentication={userAuthentication}
               authenticateUser={authenticateUser}

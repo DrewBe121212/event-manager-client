@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const ErrorMessage = ({ message }) => {
+const ErrorMessage = ({ message }) => {
   let messages = [];
 
   if (!message) {
     return null;
-  } 
+  }
 
   if (Array.isArray(message)) {
     messages = [
@@ -45,3 +45,5 @@ ErrorMessage.propTypes = {
     PropTypes.object
   ])
 };
+
+export { ErrorMessage };

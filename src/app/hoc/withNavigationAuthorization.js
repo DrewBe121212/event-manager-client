@@ -28,7 +28,7 @@ const withNavigationAuthorization = (WrappedComponent) => {
     componentDidMount() {
 
       const { setMenuTitle, setMenuActive, userAuthenticated, match, history } = this.props;
-      const signInPath = '/user/sign-in/';
+      const signInPath = '/user/sign-in';
       const link = this.getActiveLink(match.path);
       let authorized = false;
       let validLink = false;
@@ -50,7 +50,6 @@ const withNavigationAuthorization = (WrappedComponent) => {
           } else if (!userAuthenticated && !this.state.authorized && match.path !== signInPath) {
             history.push(signInPath);
           } else if (link) {
-            
             if (link.full_title && link.full_title.length > 0) {
               const full_title = [
                 ...link.full_title

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import Loadable from 'hoc/Loadable';
 
-const LoadableSignInOptions = Loadable({
-  loader: () => import('./SignInOptions')
+const LoadableSignIn = Loadable({
+  loader: () => import('./SignIn')
 });
 
 const LoadableGuestSignIn = Loadable({
@@ -13,7 +13,7 @@ const LoadableGuestSignIn = Loadable({
 
 const UserSignInRoutes = ({ match }) => (
   <Switch>
-    <Route exact path={`${match.path}`} component={LoadableSignInOptions} />
+    <Route exact path={`${match.path}`} component={LoadableSignIn} />
     <Route exact path={`${match.path}/guest`} component={LoadableGuestSignIn} />
   </Switch>
 );

@@ -51,11 +51,20 @@ export const formatAbilities = ({ can, cannot }) => {
 
   // rebuild
   for (let action in can) {
-    abilities = Object.assign({}, abilities, setAbility(can[action], action, true));
+    const newAbilities = setAbility(can[action], action, true);
+    
+    for (let newObject in newAbilities) {
+      abilities[newObject] = Object.assign({}, abilities[newObject], newAbilities[newObject]);
+    }
+
   }
 
   for (let action in cannot) {
-    abilities = Object.assign({}, abilities, setAbility(cannot[action], action, false));
+    const newAbilities = setAbility(can[action], action, false);
+
+    for (let newObject in newAbilities) {
+      abilities[newObject] = Object.assign({}, abilities[newObject], newAbilities[newObject]);
+    }
   }
 
   return abilities;
