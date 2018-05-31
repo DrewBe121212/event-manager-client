@@ -1,15 +1,7 @@
-import axios from 'axios';
 import path from 'path';
-import config from 'config';
+import clients from './clients';
 
-const clients = {
-  eventManager: axios.create({
-    baseURL: config.API.EVENT_MANAGER,
-    responseType: 'json'
-  })
-};
-
-export class BaseService {
+class BaseService {
 
   constructor(resource) {
     this.resource = resource;
@@ -60,3 +52,5 @@ export class BaseService {
   }
 
 }
+
+export default BaseService;

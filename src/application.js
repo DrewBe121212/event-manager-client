@@ -13,13 +13,13 @@ import 'css/application.css';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#07889b'
+      main: '#0095b6'
     },
     secondary: {
-      main: '#e37222'
+      main: '#0892d0'
     },
     error: {
-      main: '#cc0000'
+      main: '#a83a01'
     }
   },
   typography: {

@@ -2,73 +2,39 @@ import {
   AUTHENTICATE_USER,
   AUTHENTICATE_USER_SUCCESSFUL,
   AUTHENTICATE_USER_FAILURE,
+  RESET_AUTHENTICATE_USER,
   FETCH_USER_PROFILE,
   FETCH_USER_PROFILE_SUCCESSFUL,
   FETCH_USER_PROFILE_FAILURE
 } from 'constants/user';
-import { setAppLoading } from './application';
 import { SessionService } from 'api';
 import { formatAbilities } from 'libs/abilities';
 
-export const authenticateUser = (username, password) => (dispatch, getState) => {
-  dispatch({
-    type: AUTHENTICATE_USER
-  });
-  
-  return SessionService.authenticate(username, password)
-    .then((response) => {
-      if (response.data.errors) {
-        dispatch(authenticateUserFailure(response.data.errors));
-      } else {
-        dispatch(authenticateUserSuccessful());
-      }
-    })
-    .catch((error) => {
-      dispatch(authenticateUserFailure(error));
-    });
-};
-
-const authenticateUserSuccessful = (user) => ({
-  type: AUTHENTICATE_USER_SUCCESSFUL,
-  payload: user
+export const authenticateUser = (username, password) => ({
+  types: [
+    AUTHENTICATE_USER, 
+    AUTHENTICATE_USER_SUCCESSFUL, 
+    AUTHENTICATE_USER_FAILURE
+  ],
+  service: () => SessionService.authenticate(username, password),
+  loader: true
 });
 
-const authenticateUserFailure = (error) => ({
-  type: AUTHENTICATE_USER_FAILURE,
-  payload: {
-    ...error
-  }
+export const resetAuthenticateUser = () => ({
+  type: RESET_AUTHENTICATE_USER
 });
 
-export const fetchUserProfile = () => (dispatch) => {
-  dispatch({
-    type: FETCH_USER_PROFILE
-  });
-
-  dispatch(setAppLoading());
-
-  return SessionService.profile()
-    .then((response) => {
-      dispatch(fetchUserProfileSuccessful(response.data));
-    })
-    .catch((error) => {
-      dispatch(fetchUserProfileFailure(error));
-    })
-    .finally(() => {
-      dispatch(setAppLoading(false));
-    });
-};
-
-const fetchUserProfileSuccessful = (payload) => {
-  payload.abilities = formatAbilities(payload.abilities);
-
-  return {
-    type: FETCH_USER_PROFILE_SUCCESSFUL,
-    payload
-  };
-};
-
-const fetchUserProfileFailure = (error) => ({
-  type: FETCH_USER_PROFILE_FAILURE,
-  payload: error
+export const fetchUserProfile = () => ({
+  types: [
+    FETCH_USER_PROFILE,
+    FETCH_USER_PROFILE_SUCCESSFUL,
+    FETCH_USER_PROFILE_FAILURE
+  ],
+  service: () => SessionService.profile().then((response) => {
+    if (response && response.data && response.data.abilities) {
+      response.data.abilities = formatAbilities(response.data.abilities);
+    }
+    return response;
+  }),
+  loader: true
 });

@@ -4,6 +4,7 @@ import {
   AUTHENTICATE_USER,
   AUTHENTICATE_USER_FAILURE,
   AUTHENTICATE_USER_SUCCESSFUL,
+  RESET_AUTHENTICATE_USER,
   FETCH_USER_PROFILE,
   FETCH_USER_PROFILE_SUCCESSFUL,
   FETCH_USER_PROFILE_FAILURE
@@ -36,7 +37,10 @@ const initialState = {
     authenticating: false,
     authenticated: false,
     token: null,
-    errors: null
+    errors: {
+      error: null,
+      fields: {}
+    }
   },
   authorization: {
     abilities: {
@@ -57,7 +61,7 @@ export const userReducer = createReducer(initialState, {
     ...state,
     authentication: Object.assign({}, state.authentication, {
       authenticating: false,
-      errors: payload
+      errors: Object.assign({}, initialState.authentication.errors, payload)
     })
   }),
   [AUTHENTICATE_USER_SUCCESSFUL]: (state, payload) => {
@@ -73,6 +77,10 @@ export const userReducer = createReducer(initialState, {
       })
     };
   },
+  [RESET_AUTHENTICATE_USER]: (state) => ({
+    ...state,
+    authentication: Object.assign({}, initialState.authentication)
+  }),
   [FETCH_USER_PROFILE]: (state) => ({
     ...state,
     profile: Object.assign({}, initialState.profile, {

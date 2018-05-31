@@ -54,7 +54,7 @@ const SignIn = ({ classes, match, history }) => {
       <Grid container justify="center">
         <Grid item xs={10} md={8} lg={6} xl={4}>
           <Paper >
-            <List>
+            <List disablePadding>
               {options.map((option, index) => (
                 <ListItem button disableGutters divider={index < options.length - 1} onClick={option.onClick} key={option.key}>
                   <Avatar className={classes.avatar}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const initialState = {
@@ -111,4 +112,11 @@ class ApplicationLoadingBar extends React.PureComponent {
   }
 }
 
-export default ApplicationLoadingBar;
+const mapStateToProps = (state) => ({
+  applicationLoader: state.application.loader
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(ApplicationLoadingBar);

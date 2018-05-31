@@ -1,3 +1,3 @@
-export { SessionService } from './session';
-export { UserService } from './user';
+export { SessionService } from './services/session';
+export { UserService } from './services/user';
 

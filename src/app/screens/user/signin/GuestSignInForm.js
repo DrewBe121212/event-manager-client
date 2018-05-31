@@ -4,6 +4,7 @@ import { withFormik } from 'formik';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import ErrorMessage from 'components/errors';
 
 class GuestSignInForm extends React.PureComponent {
   static propTypes = {
@@ -23,11 +24,9 @@ class GuestSignInForm extends React.PureComponent {
     const { errors } = this.props.userAuthentication;
 
     if (prevProps.userAuthentication.errors !== errors) {
-      if (errors === null) {
-        setErrors({});
-      } else if (errors.fields) {
-        setErrors(errors.fields);
-      }
+      const fieldErrors = errors.fields || {};
+
+      setErrors(fieldErrors);
     }
   }
 
@@ -38,10 +37,10 @@ class GuestSignInForm extends React.PureComponent {
       <form onSubmit={handleSubmit}>
         <Grid container>
           <Grid item xs={12}>
-            <TextField margin="normal" name="username" id="username" label="Username" value={values.username} onChange={handleChange} error={errors.username ? true : false} helperText={errors.username} fullWidth={true} required={true} autoFocus={true} />
+            <TextField margin="normal" name="username" id="username" label="Username" value={values.username} onChange={handleChange} error={errors.hasOwnProperty('username')} helperText={errors.username} fullWidth={true} required={true} autoFocus={true} />
           </Grid>
           <Grid item xs={12}>
-            <TextField type="password" margin="normal" name="password" id="password" label="Password" value={values.password} onChange={handleChange} error={errors.password ? true : false} helperText={errors.password} fullWidth={true} required={true} />
+            <TextField type="password" margin="normal" name="password" id="password" label="Password" value={values.password} onChange={handleChange} error={errors.hasOwnProperty('password')} helperText={errors.password} fullWidth={true} required={true} />
           </Grid>
         </Grid>
         <div className="action-bar">

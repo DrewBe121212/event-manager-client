@@ -26,7 +26,6 @@ const withNavigationAuthorization = (WrappedComponent) => {
     };
 
     componentDidMount() {
-
       const { setMenuTitle, setMenuActive, userAuthenticated, match, history } = this.props;
       const signInPath = '/user/sign-in';
       const link = this.getActiveLink(match.path);

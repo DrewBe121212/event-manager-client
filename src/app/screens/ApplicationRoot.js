@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import classNames from 'classnames';
+import { Helmet } from "react-helmet";
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ApplicationLoadingBar from 'components/layout/ApplicationLoadingBar';
@@ -13,6 +14,7 @@ import { Error503 } from 'components/errors';
 import { toggleDrawer, toggleDrawerMenu } from 'actions/navigation';
 import { fetchUserProfile } from 'actions/user';
 import Routes from 'screens/routes';
+import config from 'config';
 
 const styles = (theme) => ({
   root: {
@@ -47,13 +49,12 @@ const styles = (theme) => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
-  }  
+  }
 });
 
 class ApplicationRoot extends React.Component {
   static propTypes = {
     navigationDrawer: PropTypes.object.isRequired,
-    applicationLoader: PropTypes.object.isRequired,
     navigationMenu: PropTypes.object.isRequired,
     userProfile: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
@@ -101,39 +102,47 @@ class ApplicationRoot extends React.Component {
   };
 
   render() {
-    const { applicationLoader, navigationDrawer, userProfile, classes } = this.props;
+    const { navigationDrawer, userProfile, classes } = this.props;
     const { title, active, links } = this.props.navigationMenu;
 
     return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <ApplicationBar
-          userProfile={userProfile}
-          title={title}
-          navigationDrawer={navigationDrawer}
-          handleToggleDrawer={this.handleToggleDrawer}
-        />
-        <Navigation
-          links={links}
-          activeLink={active}
-          handleNavigationMenuItemClick={this.handleNavigationMenuItemClick}
-          navigationDrawer={navigationDrawer}
-          handleToggleDrawer={this.handleToggleDrawer} />
+      <React.Fragment>
+        <Helmet>
+          <title>
+          {title 
+            ? `${title} | ${config.APPLICATION.NAME}`
+            : config.APPLICATION.NAME}
+          </title>
+        </Helmet>
+        <div className={classes.root}>
+          <CssBaseline />
+          <ApplicationBar
+            userProfile={userProfile}
+            title={title}
+            navigationDrawer={navigationDrawer}
+            handleToggleDrawer={this.handleToggleDrawer}
+          />
+          <Navigation
+            links={links}
+            activeLink={active}
+            handleNavigationMenuItemClick={this.handleNavigationMenuItemClick}
+            navigationDrawer={navigationDrawer}
+            handleToggleDrawer={this.handleToggleDrawer} />
 
-        <div className={classNames(classes.container, { [classes.containerShift]: navigationDrawer.open })}>
-          <ApplicationLoadingBar applicationLoader={applicationLoader} />
-          <div className={classes.content}>
-            {this.renderContent()}
+          <div className={classNames(classes.container, { [classes.containerShift]: navigationDrawer.open })}>
+            <ApplicationLoadingBar />
+            <div className={classes.content}>
+              {this.renderContent()}
+            </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    applicationLoader: state.application.loader,
     navigationMenu: state.navigation.menu,
     navigationDrawer: state.navigation.drawer,
     userProfile: state.user.profile

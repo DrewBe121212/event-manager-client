@@ -5,14 +5,17 @@ import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { authenticateUser } from 'actions/user';
+import { authenticateUser, resetAuthenticateUser } from 'actions/user';
 import GuestSignInForm from './GuestSignInForm';
 import withNavigationAuthorization from 'hoc/withNavigationAuthorization';
 
 const styles = (theme) => ({
+  errorPaper: {
+    marginBottom: theme.spacing.unit
+  },
   paper: theme.mixins.gutters({
-    paddingTop: 5,
-    paddingBottom: 5
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit
   })
 });
 
@@ -27,6 +30,11 @@ class SignIn extends React.PureComponent {
     guestLogin: false
   };
 
+  componentDidMount() {
+    const { resetAuthenticateUser } = this.props;
+    resetAuthenticateUser();
+  }
+
   handleCancel = () => {
     const { history, location } = this.props;
     const currentLocation = location.pathname.split('/');
@@ -40,19 +48,31 @@ class SignIn extends React.PureComponent {
 
   render() {
     const { userAuthentication, authenticateUser, classes } = this.props;
+    const { error } = userAuthentication.errors;
 
     return (
-      <Grid container justify="center">
-        <Grid item xs={10} md={8} lg={6} xl={4}>
-          <Paper className={classes.paper}>
-            <GuestSignInForm
-              userAuthentication={userAuthentication}
-              authenticateUser={authenticateUser}
-              handleCancel={this.handleCancel}
-            />
-          </Paper>
+      <React.Fragment>
+        {error && 
+          <Grid container justify="center">
+            <Grid item xs={10} md={8} lg={6} xl={4}>
+              <Paper className={classes.errorPaper}>
+                {error}
+              </Paper>
+            </Grid>
+          </Grid>
+        }
+        <Grid container justify="center">
+          <Grid item xs={10} md={8} lg={6} xl={4}>
+            <Paper className={classes.paper}>
+              <GuestSignInForm
+                userAuthentication={userAuthentication}
+                authenticateUser={authenticateUser}
+                handleCancel={this.handleCancel}
+              />
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      </React.Fragment>
     );
   }
 }
@@ -62,7 +82,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  authenticateUser
+  authenticateUser,
+  resetAuthenticateUser
 };
 
 export default compose(

@@ -36,6 +36,7 @@ const NavigationMenu = (props) => {
 
     return (
       <NavigationMenuItem
+        key={link.position}
         link={link}
         activeLink={activeLink}
         handleNavigationMenuItemClick={handleNavigationMenuItemClick}
@@ -49,7 +50,7 @@ const NavigationMenu = (props) => {
         {nested && renderExpandIcon(currentlyExpanded)}
       </NavigationMenuItem>
     );
-  };  
+  };
 
   const renderMenuItem = (link, activeLink) => {
     const isAuthorizedLink = link.can && link.can.perform && link.can.on;
@@ -62,7 +63,7 @@ const NavigationMenu = (props) => {
       return renderNavigationMenuItem(link, activeLink, false, false);
     } else if (hasVisibleNestedLinks) {
       return (
-        <React.Fragment>
+        <React.Fragment key={link.position}>
           {renderNavigationMenuItem(link, activeLink, nestedLinks, currentlyExpanded)}
           <Collapse in={currentlyExpanded} timeout="auto" unmountOnExit>
             {nestedLinks}
@@ -71,26 +72,26 @@ const NavigationMenu = (props) => {
       );
     }
   };
-  
+
   const renderMenuList = (links, activeLink) => {
     let authorizedLinks = [];
-    
-      links.forEach((link) => {
-        const visible = link.visible || true;
 
-        if (visible) {
-          if (link.can && link.can.perform && link.can.on) {
-            const hasAuthorization = hasAbility(link.can.perform, link.can.on);
-    
-            if (hasAuthorization) {
-              authorizedLinks.push(renderMenuItem(link, activeLink));
-            }
-          } else {
+    links.forEach((link) => {
+      const visible = link.visible || true;
+
+      if (visible) {
+        if (link.can && link.can.perform && link.can.on) {
+          const hasAuthorization = hasAbility(link.can.perform, link.can.on);
+
+          if (hasAuthorization) {
             authorizedLinks.push(renderMenuItem(link, activeLink));
           }
+        } else {
+          authorizedLinks.push(renderMenuItem(link, activeLink));
         }
-      });
-    
+      }
+    });
+
     if (authorizedLinks.length > 0) {
       return (
         <MenuList>
@@ -98,9 +99,9 @@ const NavigationMenu = (props) => {
         </MenuList>
       );
     }
-  
+
     return false;
-  };  
+  };
 
   return renderMenuList(links, activeLink);
 };

@@ -1,4 +1,4 @@
-import {BaseService} from './baseService';
+import BaseService from 'api/baseService';
 
 class Session extends BaseService {
   constructor() {

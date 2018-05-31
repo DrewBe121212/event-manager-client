@@ -6,6 +6,7 @@ import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { rootReducer } from 'reducers/index';
+import { reduxApiMiddleware } from 'libs/redux-api-middleware';
 
 // initialize history
 const history = createHistory();
@@ -16,6 +17,7 @@ const routingMiddleware = routerMiddleware(history);
 // collect the middlewares used
 const middleware = [
   thunk,
+  reduxApiMiddleware,
   routingMiddleware
 ];
 
