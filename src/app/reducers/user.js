@@ -31,7 +31,7 @@ const initialState = {
     created_at: null,
     updated_at: null,
     roles: [],
-    errors: null
+    error: null
   },
   authentication: {
     authenticating: false,
@@ -92,7 +92,7 @@ export const userReducer = createReducer(initialState, {
     profile: Object.assign({}, state.profile, {
       loading: false,
       loaded: false,
-      errors: payload.message
+      error: payload.error
     })
   }),
   [FETCH_USER_PROFILE_SUCCESSFUL]: (state, payload) => ({

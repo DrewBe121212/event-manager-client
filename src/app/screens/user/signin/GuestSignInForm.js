@@ -36,10 +36,10 @@ class GuestSignInForm extends React.PureComponent {
       <form onSubmit={handleSubmit}>
         <Grid container>
           <Grid item xs={12}>
-            <TextField margin="normal" name="username" id="username" label="Username" value={values.username} onChange={handleChange} error={errors.hasOwnProperty('username')} helperText={errors.username} fullWidth={true} required={true} autoFocus={true} />
+            <TextField margin="normal" name="username" id="username" label="Username" value={values.username} onChange={handleChange} error={errors.hasOwnProperty('username')} helperText={errors.username} disabled={isSubmitting} fullWidth={true} required={true} autoFocus={true} />
           </Grid>
           <Grid item xs={12}>
-            <TextField type="password" margin="normal" name="password" id="password" label="Password" value={values.password} onChange={handleChange} error={errors.hasOwnProperty('password')} helperText={errors.password} fullWidth={true} required={true} />
+            <TextField type="password" margin="normal" name="password" id="password" label="Password" value={values.password} onChange={handleChange} error={errors.hasOwnProperty('password')} helperText={errors.password} disabled={isSubmitting} fullWidth={true} required={true} />
           </Grid>
         </Grid>
         <div className="action-bar">

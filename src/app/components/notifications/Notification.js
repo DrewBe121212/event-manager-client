@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 import ErrorIcon from '@material-ui/icons/Error';
 
 const variants = {
@@ -19,16 +20,21 @@ const variants = {
 const styles = (theme) => ({
   paper: theme.mixins.gutters({
     paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    display: 'flex',
-    flexWrap: 'nowrap',
-    alignItems: 'center'
+    paddingBottom: theme.spacing.unit * 2
   }),
   iconContainer: {
     alignSelf: 'flex-start'
   },
   contentContainer: {
-
+    display: 'flex',
+    flexWrap: 'nowrap',
+    alignItems: 'center'
+  },
+  actionContainer: {
+    marginTop: theme.spacing.unit * 2
+  },
+  actionItems: {
+    marginTop: theme.spacing.unit
   },
   default: {
     color: theme.palette.grey.A700
@@ -43,24 +49,36 @@ const styles = (theme) => ({
   }
 });
 
-const NotificationComponent = ({ variant='default', title = null, classes, children }) => {
+const NotificationComponent = ({ variant = 'default', title = null, actions = null, classes, children }) => {
   const variantType = variants[variant];
-  
+
   return (
     <Fade in={true}>
+
       <Paper className={classNames(classes.paper, classes[variant])}>
-        {variantType && variantType.icon && 
-          <div className={classes.iconContainer}>
-            {React.createElement(variantType.icon, {className: classes.icon})}
+        <div className={classes.contentContainer}>
+          {variantType && variantType.icon &&
+            <div className={classes.iconContainer}>
+              {React.createElement(variantType.icon, { className: classes.icon })}
+            </div>
+          }
+          <div>
+            {title && <Typography color="inherit" variant="headline" component="h4">{title}</Typography>}
+            <Typography color="inherit" component="div">
+              {children}
+            </Typography>
+          </div>
+        </div>
+        {actions && 
+          <div className={classes.actionContainer}>
+            <Divider />
+            <div className={classes.actionItems}>
+              {actions}
+            </div>
           </div>
         }
-        <div className={classes.contentContainer}>
-          {title && <Typography color="inherit" variant="headline" component="h4">{title}</Typography>}
-          <Typography color="inherit" component="div">
-            {children}
-          </Typography>
-        </div>
       </Paper>
+
     </Fade>
   );
 };

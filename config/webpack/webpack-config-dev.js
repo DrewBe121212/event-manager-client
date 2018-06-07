@@ -49,6 +49,8 @@ module.exports = {
     port: 8080,
     inline: true,
     hot: false,
+    hotOnly: false,
+    overlay: true,
     historyApiFallback: true,
     watchOptions: {
       ignored: /node_modules/

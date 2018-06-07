@@ -53,8 +53,9 @@ module.exports = {
     contentBase: PATHS.BUILD,
     host: 'localhost',
     port: 8080,
-    inline: true,
+    inline: false,
     hot: false,
+    hotOnly: false,
     historyApiFallback: true,
     watchOptions: {
       ignored: /node_modules/

@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { Helmet } from "react-helmet";
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Button from '@material-ui/core/Button';
 import ApplicationLoadingBar from 'components/layout/ApplicationLoadingBar';
 import ApplicationBar from 'components/layout/ApplicationBar';
 import Navigation from 'components/layout/Navigation';
@@ -67,12 +68,14 @@ class ApplicationRoot extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.handleFetchUserProfile();
+  }
+
+  handleFetchUserProfile = () => {
     const { fetchUserProfile } = this.props;
 
     fetchUserProfile();
   }
-
-  
 
   handleNavigationMenuItemClick = (link) => {
     const { location, history } = this.props;
@@ -95,12 +98,19 @@ class ApplicationRoot extends React.PureComponent {
   }
 
   renderContent = () => {
-    const { loaded, errors } = this.props.userProfile;
+    const { loaded, error } = this.props.userProfile;
 
     if (loaded) {
       return <Routes />;
-    } else if (errors !== null) {
-      return <Error503 errors={errors} />;
+    } else if (error !== null) {
+
+      const actions = [
+        <Button variant="raised" color="primary" onClick={this.handleFetchUserProfile}>
+          Re-Try
+        </Button>
+      ];
+
+      return <Error503 errors={error} actions={actions} />;
     }
   };
 
@@ -113,9 +123,9 @@ class ApplicationRoot extends React.PureComponent {
       <React.Fragment>
         <Helmet>
           <title>
-          {title 
-            ? `${title} | ${config.APPLICATION.NAME}`
-            : config.APPLICATION.NAME}
+            {title
+              ? `${title} | ${config.APPLICATION.NAME}`
+              : config.APPLICATION.NAME}
           </title>
         </Helmet>
         <div className={classes.root}>
@@ -133,7 +143,6 @@ class ApplicationRoot extends React.PureComponent {
             drawerOpen={drawerOpen}
             handleNavigationMenuItemClick={this.handleNavigationMenuItemClick}
             handleToggleDrawer={this.handleToggleDrawer} />
-
           <div className={classNames(classes.container, { [classes.containerShift]: drawerOpen })}>
             <ApplicationLoadingBar applicationLoader={applicationLoader} />
             <div className={classes.content}>

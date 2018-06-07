@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
 import { Notification } from 'components/notifications';
 import { ErrorMessage } from './ErrorMessage';
 
-export const ErrorContainer = ({ title = null, errors = null, classes, children }) => {
+export const ErrorContainer = ({ title = null, errors = null, actions = null, classes, children }) => {
   return (
     <Grid container justify="center">
       <Grid item xs={8} md={6} lg={4} xl={4}>
-        <Notification title={title}>
+        <Notification title={title} actions={actions}>
           {errors ? <ErrorMessage message={errors} /> : children}
         </Notification>
       </Grid>
