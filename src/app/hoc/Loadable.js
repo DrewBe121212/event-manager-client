@@ -6,7 +6,7 @@ import { Error404, Error408 } from 'components/errors';
 const Loading = (props) => {
 
   const actions = [
-    <Button variant="raised" color="primary" onClick={props.retry}>
+    <Button variant="contained" color="primary" onClick={props.retry}>
       Re-Try
     </Button>
   ];

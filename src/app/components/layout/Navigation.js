@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -37,35 +38,49 @@ const Navigation = (props) => {
     paper: classes.drawerPaper
   };
 
-  function closeDrawer() {
+  
+  function handleCloseDrawer() {
     handleToggleDrawer(false);
   }
 
-  return (
-    <Drawer variant="persistent" open={drawerOpen} classes={drawerClasses}>
-      <div className={classes.drawerInner}>
-        <div className={classes.drawerHeader}>
+  const drawer = (
+    <div className={classes.drawerInner}>
+      <div className={classes.drawerHeader}>
+        <div>
           <div>
-            <div>
-              <Typography variant="subheading" noWrap>{config.APPLICATION.NAME}</Typography>
-            </div>
-            <div>
-              <Typography variant="caption" noWrap align="right" className={classes.environment}>Version {config.APPLICATION.VERSION}</Typography>
-            </div>
+            <Typography variant="subheading" noWrap>{config.APPLICATION.NAME}</Typography>
           </div>
-          <IconButton onClick={closeDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
+          <div>
+            <Typography variant="caption" noWrap align="right" className={classes.environment}>Version {config.APPLICATION.VERSION}</Typography>
+          </div>
         </div>
-        <Divider />
-        <NavigationMenu
-          links={links}
-          activeLink={activeLink}
-          handleNavigationMenuItemClick={handleNavigationMenuItemClick}
-          navigationDrawerOpenMenus={navigationDrawer.openMenus}
-        />
+        <IconButton onClick={handleCloseDrawer}>
+          <ChevronLeftIcon />
+        </IconButton>
       </div>
-    </Drawer>
+      <Divider />
+      <NavigationMenu
+        links={links}
+        activeLink={activeLink}
+        handleNavigationMenuItemClick={handleNavigationMenuItemClick}
+        navigationDrawerOpenMenus={navigationDrawer.openMenus}
+      />
+    </div>
+  );
+
+  return (
+    <React.Fragment>
+      <Hidden only="xs">
+        <Drawer variant="persistent" open={drawerOpen} classes={drawerClasses}>
+          {drawer}
+        </Drawer>
+      </Hidden>
+      <Hidden smUp>
+        <Drawer variant="temporary" open={drawerOpen} onClose={handleCloseDrawer} ModalProps={{ keepMounted: true }}>
+          {drawer}
+        </Drawer>
+      </Hidden>
+    </React.Fragment>
   );
 };
 

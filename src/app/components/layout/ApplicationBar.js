@@ -11,29 +11,47 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 const styles = (theme) => ({
   appBar: {
-    position: 'absolute',
-    transition: theme.transitions.create([
-      'margin',
-      'width'
-    ], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+    [theme.breakpoints.up('sm')]: {
+      transition: theme.transitions.create([
+        'margin',
+        'width'
+      ], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+      })
+    }
   },
   appBarShift: {
-    marginLeft: theme.drawer.width,
-    width: `calc(100% - ${theme.drawer.width}px)`,
-    transition: theme.transitions.create([
-      'margin',
-      'width'
-    ], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.drawer.width,
+      width: `calc(100% - ${theme.drawer.width}px)`,
+      transition: theme.transitions.create([
+        'margin',
+        'width'
+      ], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen
+      })
+    }
   },
   drawerButton: {
     marginLeft: 12,
     marginRight: 20
+  },
+  title: {
+    fontSize: '1.25em'
+  },
+  titleShift: {
+    marginLeft: 5,
+    [theme.breakpoints.only('xs')]: {
+      marginLeft: theme.drawer.width + theme.spacing.unit,
+      transition: theme.transitions.create([
+        'margin'
+      ], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen
+      })      
+    }
   }
 });
 
@@ -64,7 +82,7 @@ class ApplicationBar extends React.PureComponent {
           <IconButton disabled={!userProfile.loaded} onClick={this.openDrawer} className={classNames(classes.drawerButton, { hidden: drawerOpen })} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="title" color="inherit" noWrap>
+          <Typography className={classNames(classes.title, { [classes.titleShift]: drawerOpen })} variant="title" color="inherit" noWrap>
             {title}
           </Typography>
         </Toolbar>

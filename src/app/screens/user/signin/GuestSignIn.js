@@ -53,7 +53,7 @@ class SignIn extends React.PureComponent {
       <React.Fragment>
         {error &&
           <Grid container justify="center">
-            <Grid item xs={10} md={8} lg={6} xl={4}>
+            <Grid item xs={8} md={8} lg={6} xl={4}>
               <Notification variant="alert">
                 <ErrorMessage message={error} />
               </Notification>
@@ -61,7 +61,7 @@ class SignIn extends React.PureComponent {
           </Grid>
         }
         <Grid container justify="center">
-          <Grid item xs={10} md={8} lg={6} xl={4}>
+          <Grid item xs={12} md={8} lg={6} xl={4}>
             <Paper className={classes.paper}>
               <GuestSignInForm
                 userAuthentication={userAuthentication}

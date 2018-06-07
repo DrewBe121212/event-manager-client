@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { Helmet } from "react-helmet";
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import ApplicationLoadingBar from 'components/layout/ApplicationLoadingBar';
 import ApplicationBar from 'components/layout/ApplicationBar';
@@ -25,26 +26,29 @@ const styles = (theme) => ({
     height: '100%'
   },
   container: {
-    marginLeft: -theme.drawer.width,
     width: '100%',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
     height: 'calc(100% - 56px)',
+    marginTop: 56,
     [theme.breakpoints.up('sm')]: {
+      marginLeft: -theme.drawer.width,
       height: 'calc(100% - 64px)',
-      marginTop: 64
+      marginTop: 64,
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+      })      
     }
   },
   containerShift: {
     marginLeft: 0,
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+    [theme.breakpoints.up('sm')]: {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen
+      })
+    }
   },
   content: {
     marginTop: theme.spacing.unit * 3,
@@ -143,6 +147,7 @@ class ApplicationRoot extends React.PureComponent {
             drawerOpen={drawerOpen}
             handleNavigationMenuItemClick={this.handleNavigationMenuItemClick}
             handleToggleDrawer={this.handleToggleDrawer} />
+
           <div className={classNames(classes.container, { [classes.containerShift]: drawerOpen })}>
             <ApplicationLoadingBar applicationLoader={applicationLoader} />
             <div className={classes.content}>
