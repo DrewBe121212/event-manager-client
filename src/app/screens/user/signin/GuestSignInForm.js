@@ -43,13 +43,13 @@ class GuestSignInForm extends React.PureComponent {
           </Grid>
         </Grid>
         <div className="action-bar">
-          <Button onClick={handleCancel}>
+          <Button variant="outlined" size="small" onClick={handleCancel}>
             cancel
           </Button>
-          <Button color="secondary">
+          <Button variant="contained" color="secondary">
             Forgot Password
           </Button>
-          <Button variant="raised" color="primary" disabled={isSubmitting} onClick={handleSubmit}>
+          <Button variant="contained" color="primary" disabled={isSubmitting} onClick={handleSubmit}>
             Login
           </Button>
         </div>

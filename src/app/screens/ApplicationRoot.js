@@ -105,7 +105,7 @@ class ApplicationRoot extends React.PureComponent {
     } else if (error !== null) {
 
       const actions = [
-        <Button variant="raised" color="primary" onClick={this.handleFetchUserProfile}>
+        <Button variant="contained" color="primary" onClick={this.handleFetchUserProfile}>
           Re-Try
         </Button>
       ];
