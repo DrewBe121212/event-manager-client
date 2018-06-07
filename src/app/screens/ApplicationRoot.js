@@ -52,11 +52,12 @@ const styles = (theme) => ({
   }
 });
 
-class ApplicationRoot extends React.Component {
+class ApplicationRoot extends React.PureComponent {
   static propTypes = {
     navigationDrawer: PropTypes.object.isRequired,
     navigationMenu: PropTypes.object.isRequired,
     userProfile: PropTypes.object.isRequired,
+    applicationLoader: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
@@ -65,11 +66,13 @@ class ApplicationRoot extends React.Component {
     fetchUserProfile: PropTypes.func.isRequired
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     const { fetchUserProfile } = this.props;
 
     fetchUserProfile();
   }
+
+  
 
   handleNavigationMenuItemClick = (link) => {
     const { location, history } = this.props;
@@ -102,8 +105,9 @@ class ApplicationRoot extends React.Component {
   };
 
   render() {
-    const { navigationDrawer, userProfile, classes } = this.props;
+    const { navigationDrawer, userProfile, applicationLoader, classes } = this.props;
     const { title, active, links } = this.props.navigationMenu;
+    const drawerOpen = userProfile.loaded && navigationDrawer.open;
 
     return (
       <React.Fragment>
@@ -119,18 +123,19 @@ class ApplicationRoot extends React.Component {
           <ApplicationBar
             userProfile={userProfile}
             title={title}
-            navigationDrawer={navigationDrawer}
+            drawerOpen={drawerOpen}
             handleToggleDrawer={this.handleToggleDrawer}
           />
           <Navigation
             links={links}
             activeLink={active}
-            handleNavigationMenuItemClick={this.handleNavigationMenuItemClick}
             navigationDrawer={navigationDrawer}
+            drawerOpen={drawerOpen}
+            handleNavigationMenuItemClick={this.handleNavigationMenuItemClick}
             handleToggleDrawer={this.handleToggleDrawer} />
 
-          <div className={classNames(classes.container, { [classes.containerShift]: navigationDrawer.open })}>
-            <ApplicationLoadingBar />
+          <div className={classNames(classes.container, { [classes.containerShift]: drawerOpen })}>
+            <ApplicationLoadingBar applicationLoader={applicationLoader} />
             <div className={classes.content}>
               {this.renderContent()}
             </div>
@@ -145,7 +150,8 @@ const mapStateToProps = (state) => {
   return {
     navigationMenu: state.navigation.menu,
     navigationDrawer: state.navigation.drawer,
-    userProfile: state.user.profile
+    userProfile: state.user.profile,
+    applicationLoader: state.application.loader
   };
 };
 

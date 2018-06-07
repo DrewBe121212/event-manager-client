@@ -8,11 +8,10 @@ import Paper from '@material-ui/core/Paper';
 import { authenticateUser, resetAuthenticateUser } from 'actions/user';
 import GuestSignInForm from './GuestSignInForm';
 import withNavigationAuthorization from 'hoc/withNavigationAuthorization';
+import { ErrorMessage } from 'components/errors';
+import { Notification } from 'components/notifications';
 
 const styles = (theme) => ({
-  errorPaper: {
-    marginBottom: theme.spacing.unit
-  },
   paper: theme.mixins.gutters({
     paddingTop: theme.spacing.unit,
     paddingBottom: theme.spacing.unit
@@ -52,12 +51,12 @@ class SignIn extends React.PureComponent {
 
     return (
       <React.Fragment>
-        {error && 
+        {error &&
           <Grid container justify="center">
             <Grid item xs={10} md={8} lg={6} xl={4}>
-              <Paper className={classes.errorPaper}>
-                {error}
-              </Paper>
+              <Notification variant="alert">
+                <ErrorMessage message={error} />
+              </Notification>
             </Grid>
           </Grid>
         }

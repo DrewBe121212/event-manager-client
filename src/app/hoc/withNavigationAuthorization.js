@@ -14,7 +14,6 @@ const withNavigationAuthorization = (WrappedComponent) => {
       history: PropTypes.object.isRequired,
       navigationMenu: PropTypes.object.isRequired,
       userAuthenticated: PropTypes.bool.isRequired,
-      appIsLoading: PropTypes.bool.isRequired,
       setMenuTitle: PropTypes.func.isRequired,
       setMenuActive: PropTypes.func.isRequired,
       setAppLoading: PropTypes.func.isRequired
@@ -36,9 +35,13 @@ const withNavigationAuthorization = (WrappedComponent) => {
         validLink = true;
         if (link.can && link.can.perform && link.can.on) {
           authorized = hasAbility(link.can.perform, link.can.on);
+        } else {
+          // if its a valid link, and it has no can permissions on it,
+          // go ahead and let user through
+          authorized = true;
         }
       }
-
+      
       this.setState({
         authorized,
         validLink
@@ -87,12 +90,12 @@ const withNavigationAuthorization = (WrappedComponent) => {
     }
 
     render() {
-      const { navigationMenu, userAuthenticated, setMenuTitle, setMenuActive, appIsLoading, ...other } = this.props;
+      const { navigationMenu, userAuthenticated, setMenuTitle, setMenuActive, ...other } = this.props;
       const { authorized, validLink } = this.state;
 
       if (authorized) {
         return (
-          <Fade in={!appIsLoading}>
+          <Fade in>
             <div>
               <WrappedComponent {...other} />
             </div>
@@ -108,8 +111,7 @@ const withNavigationAuthorization = (WrappedComponent) => {
 
   const mapStateToProps = (state) => ({
     userAuthenticated: state.user.authentication.authenticated,
-    navigationMenu: state.navigation.menu,
-    appIsLoading: state.application.loader.loading
+    navigationMenu: state.navigation.menu
   });
   
   const mapDispatchToProps = {

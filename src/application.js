@@ -13,17 +13,17 @@ import 'css/application.css';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#0095b6'
+      main: '#296A8A'
     },
     secondary: {
-      main: '#0892d0'
+      main: '#679298'
     },
     error: {
       main: '#a83a01'
     }
   },
   typography: {
-    fontFamily: "Arial, Helvetica, sans-serif"
+    fontFamily: 'Arial, Helvetica, sans-serif'
   },
   drawer: {
     width: 220

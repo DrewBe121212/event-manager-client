@@ -31,7 +31,8 @@ const styles = (theme) => ({
 });
 
 const Navigation = (props) => {
-  const { links, activeLink, navigationDrawer, classes, handleToggleDrawer, handleNavigationMenuItemClick } = props;
+  const { links, activeLink, navigationDrawer, drawerOpen, classes, handleToggleDrawer, handleNavigationMenuItemClick } = props;
+
   const drawerClasses = {
     paper: classes.drawerPaper
   };
@@ -41,7 +42,7 @@ const Navigation = (props) => {
   }
 
   return (
-    <Drawer variant="persistent" open={navigationDrawer.open} classes={drawerClasses}>
+    <Drawer variant="persistent" open={drawerOpen} classes={drawerClasses}>
       <div className={classes.drawerInner}>
         <div className={classes.drawerHeader}>
           <div>
@@ -72,6 +73,7 @@ Navigation.propTypes = {
   links: PropTypes.array.isRequired,
   activeLink: PropTypes.string.isRequired,
   navigationDrawer: PropTypes.object.isRequired,
+  drawerOpen: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
   handleToggleDrawer: PropTypes.func.isRequired,
   handleNavigationMenuItemClick: PropTypes.func.isRequired
