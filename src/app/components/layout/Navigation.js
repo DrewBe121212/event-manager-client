@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
@@ -11,6 +12,13 @@ import NavigationMenu from './NavigationMenu';
 import config from 'config';
 
 const styles = (theme) => ({
+  title: {
+    color: theme.palette.primary.dark,
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.palette.primary.light
+    }
+  },
   environment: {
     textTransform: 'capitalize'
   },
@@ -48,13 +56,19 @@ const Navigation = (props) => {
       <div className={classes.drawerHeader}>
         <div>
           <div>
-            <Typography variant="subheading" noWrap>{config.APPLICATION.NAME}</Typography>
+          <Link className={classes.title} to="/">
+            <Typography noWrap variant="subheading" color="inherit">
+              {config.APPLICATION.NAME}
+            </Typography>
+          </Link>
           </div>
           <div>
-            <Typography variant="caption" noWrap align="right" className={classes.environment}>Version {config.APPLICATION.VERSION}</Typography>
+            <Typography variant="caption" noWrap align="right" className={classes.environment}>
+              Version {config.APPLICATION.VERSION}
+            </Typography>
           </div>
         </div>
-        <IconButton onClick={handleCloseDrawer}>
+        <IconButton  onClick={handleCloseDrawer}>
           <ChevronLeftIcon />
         </IconButton>
       </div>

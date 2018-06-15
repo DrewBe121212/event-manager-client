@@ -36,10 +36,13 @@ const styles = (theme) => ({
   },
   drawerButton: {
     marginLeft: 12,
-    marginRight: 20
-  },
-  title: {
-    fontSize: '1.25em'
+    marginRight: 20,
+    transition: theme.transitions.create([
+      'margin'
+    ], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })    
   },
   titleShift: {
     marginLeft: 5,
@@ -82,7 +85,7 @@ class ApplicationBar extends React.PureComponent {
           <IconButton disabled={!userProfile.loaded} onClick={this.openDrawer} className={classNames(classes.drawerButton, { hidden: drawerOpen })} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography className={classNames(classes.title, { [classes.titleShift]: drawerOpen })} variant="title" color="inherit" noWrap>
+          <Typography className={classNames({ [classes.titleShift]: drawerOpen })} variant="title" color="inherit" noWrap>
             {title}
           </Typography>
         </Toolbar>

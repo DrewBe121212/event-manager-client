@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import { Helmet } from "react-helmet";
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import ApplicationLoadingBar from 'components/layout/ApplicationLoadingBar';
 import ApplicationBar from 'components/layout/ApplicationBar';
@@ -109,7 +108,7 @@ class ApplicationRoot extends React.PureComponent {
     } else if (error !== null) {
 
       const actions = [
-        <Button variant="contained" color="primary" onClick={this.handleFetchUserProfile}>
+        <Button key="retry_profile" variant="contained" color="primary" onClick={this.handleFetchUserProfile}>
           Re-Try
         </Button>
       ];

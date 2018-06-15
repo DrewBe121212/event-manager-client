@@ -20,6 +20,7 @@ const Routes = () => (
     <Route exact path='/daily-schedule' component={LoadableDailySchedule} />
     <Route path='/admin' component={LoadableAdminRoutes} />
     <Route path='/user' component={LoadableUserRoutes} />
+    <Route path='/' render={() => 'home'} />
     <Route path='*' component={Error404} />
   </Switch>
 );

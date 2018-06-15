@@ -1,4 +1,5 @@
 import path from 'path';
+import axios from 'axios';
 import clients from './clients';
 
 class BaseService {
@@ -8,7 +9,8 @@ class BaseService {
   }
 
   axios(method = 'GET', endpoint = null, params, client = 'eventManager') {
-
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
     const extension = '.json';
     let url = '';
 
@@ -19,11 +21,16 @@ class BaseService {
     }
 
     if (clients[client]) {
-      return clients[client].request({
-        method: method.toUpperCase(),
-        url,
-        data: params
-      });
+      return {
+        promise: clients[client].request({
+          method: method.toUpperCase(),
+          url,
+          data: params,
+          cancelToken: source.token
+        }),
+        cancel: (message) => source.cancel(message),
+        isCancel: axios.isCancel
+      }
     }
   }
 

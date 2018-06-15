@@ -22,7 +22,7 @@ const Loading = (props) => {
 
 const Loadable = (options) => ReactLoadable({
   loading: Loading,
-  delay: 200,
+  delay: 250,
   timeout: 30000,
   ...options
 });

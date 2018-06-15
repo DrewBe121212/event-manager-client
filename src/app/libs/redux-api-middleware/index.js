@@ -11,13 +11,15 @@ export const reduxApiMiddleware = store => next => action => {
     const REQUEST_SUCCESS = actionTypes[1];
     const REQUEST_FAILURE = actionTypes[2];
 
-    next({type: REQUEST, payload: action.payload});
-    
+    next({ type: REQUEST, payload: action.payload });
+
     if (loader) {
       store.dispatch(setAppLoading(true));
     }
-    
-    return service()
+
+    const serviceRequest = service();
+
+    serviceRequest.promise
       .then((response) => {
         if (response.data.errors) {
           store.dispatch({
@@ -34,20 +36,27 @@ export const reduxApiMiddleware = store => next => action => {
         }
       })
       .catch((error) => {
-        if (error.response) {
+        if (serviceRequest.isCancel(error)) {
+          store.dispatch({
+            type: REQUEST_FAILURE,
+            payload: {
+              error: 'Request was cancelled'
+            }
+          })
+        } else if (error.response) {
           store.dispatch({
             type: REQUEST_FAILURE,
             payload: {
               ...error.response.data
             }
-          });          
+          });
         } else {
           store.dispatch({
             type: REQUEST_FAILURE,
             payload: {
-              error: error.message
+              error: error.message || 'Unknown Error'
             }
-          });            
+          });
         }
       })
       .finally(() => {
@@ -55,6 +64,8 @@ export const reduxApiMiddleware = store => next => action => {
           store.dispatch(setAppLoading(false));
         }
       });
+
+    return serviceRequest;
   } else {
     next(action);
   }

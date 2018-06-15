@@ -34,7 +34,7 @@ const styles = (theme) => ({
     marginTop: theme.spacing.unit * 2
   },
   actionItems: {
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing.unit * 1.5
   },
   default: {
     color: theme.palette.grey.A700
@@ -54,7 +54,6 @@ const NotificationComponent = ({ variant = 'default', title = null, actions = nu
 
   return (
     <Fade in={true}>
-
       <Paper className={classNames(classes.paper, classes[variant])}>
         <div className={classes.contentContainer}>
           {variantType && variantType.icon &&
@@ -78,7 +77,6 @@ const NotificationComponent = ({ variant = 'default', title = null, actions = nu
           </div>
         }
       </Paper>
-
     </Fade>
   );
 };

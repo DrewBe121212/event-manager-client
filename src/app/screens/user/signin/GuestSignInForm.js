@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+let authenticateUserRequest;
+
 class GuestSignInForm extends React.PureComponent {
   static propTypes = {
     values: PropTypes.object.isRequired,
@@ -29,6 +31,12 @@ class GuestSignInForm extends React.PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    if (this.props.userAuthentication.authenticating) {
+      authenticateUserRequest.cancel();
+    }
+  }
+
   render() {
     const { values, errors, handleChange, handleSubmit, isSubmitting, handleCancel } = this.props;
 
@@ -46,7 +54,7 @@ class GuestSignInForm extends React.PureComponent {
           <Button variant="outlined" size="small" onClick={handleCancel}>
             cancel
           </Button>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" size="small" color="secondary">
             Forgot Password
           </Button>
           <Button variant="contained" color="primary" disabled={isSubmitting} onClick={handleSubmit}>
@@ -68,12 +76,16 @@ export default withFormik({
   }),
   handleSubmit: (values, { props, setSubmitting, setFieldValue }) => {
     const { authenticateUser } = props;
+    authenticateUserRequest = authenticateUser(values.username, values.password);
 
-    authenticateUser(values.username, values.password)
-      .finally(() => {
-        setFieldValue('password', '');
-        setSubmitting(false);
-      });
+    authenticateUserRequest.promise
+    .catch(() => {
+
+    })
+    .finally(() => {
+      setFieldValue('password', '');
+      setSubmitting(false);
+    });
 
   }
 })(GuestSignInForm);

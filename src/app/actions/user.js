@@ -12,8 +12,8 @@ import { formatAbilities } from 'libs/abilities';
 
 export const authenticateUser = (username, password) => ({
   types: [
-    AUTHENTICATE_USER, 
-    AUTHENTICATE_USER_SUCCESSFUL, 
+    AUTHENTICATE_USER,
+    AUTHENTICATE_USER_SUCCESSFUL,
     AUTHENTICATE_USER_FAILURE
   ],
   service: () => SessionService.authenticate(username, password),
@@ -30,11 +30,16 @@ export const fetchUserProfile = () => ({
     FETCH_USER_PROFILE_SUCCESSFUL,
     FETCH_USER_PROFILE_FAILURE
   ],
-  service: () => SessionService.profile().then((response) => {
-    if (response && response.data && response.data.abilities) {
-      response.data.abilities = formatAbilities(response.data.abilities);
-    }
-    return response;
-  }),
+  service: () => {
+    const profile = SessionService.profile();
+    profile.promise.then((response) => {
+      if (response && response.data && response.data.abilities) {
+        response.data.abilities = formatAbilities(response.data.abilities);
+      }
+    }).catch((error) => {
+      
+    });
+    return profile;
+  },
   loader: true
 });

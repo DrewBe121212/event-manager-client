@@ -26,13 +26,13 @@ const theme = createMuiTheme({
     fontFamily: 'Arial, Helvetica, sans-serif'
   },
   drawer: {
-    width: 220
+    width: 240
   }
 });
 
 render(
   (
-    <React.StrictMode>
+    //<React.StrictMode>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <MuiThemeProvider theme={theme}>
@@ -42,5 +42,5 @@ render(
           </MuiThemeProvider>
         </PersistGate>
       </Provider>
-    </React.StrictMode>
+    //</React.StrictMode>
   ), document.getElementById('app'));
