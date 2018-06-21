@@ -5,6 +5,7 @@ import {
 
 const initialState = {
   loader: {
+    active: 0,
     loading: false
   }
 };
@@ -13,7 +14,8 @@ export const applicationReducer = createReducer(initialState, {
   [SET_APP_LOADING]: (state, payload) => ({
     ...state,
     loader: Object.assign({}, state.loader, {
-      loading: payload
+      active: payload,
+      loading: payload > 0 ? true : false
     })
   })
 });

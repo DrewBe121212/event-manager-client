@@ -83,21 +83,21 @@ export const userReducer = createReducer(initialState, {
   }),
   [FETCH_USER_PROFILE]: (state) => ({
     ...state,
-    profile: Object.assign({}, initialState.profile, {
+    profile: Object.assign({}, state.profile, {
       loading: true
     })
   }),
   [FETCH_USER_PROFILE_FAILURE]: (state, payload) => ({
     ...state,
-    profile: Object.assign({}, state.profile, {
+    profile: Object.assign({}, initialState.profile, {
       loading: false,
-      loaded: false,
+      loaded: true,
       error: payload.error
     })
   }),
   [FETCH_USER_PROFILE_SUCCESSFUL]: (state, payload) => ({
     ...state,
-    profile: Object.assign({}, state.profile, {
+    profile: Object.assign({}, initialState.profile, {
       loading: false,
       loaded: true,
       id: payload.id || state.profile.id,

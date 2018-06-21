@@ -14,6 +14,7 @@ import Navigation from 'components/layout/Navigation';
 import { Error503 } from 'components/errors';
 import { toggleDrawer, toggleDrawerMenu } from 'actions/navigation';
 import { fetchUserProfile } from 'actions/user';
+import { fetchMenu } from 'actions/navigation';
 import Routes from 'screens/routes';
 import config from 'config';
 
@@ -37,7 +38,7 @@ const styles = (theme) => ({
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
-      })      
+      })
     }
   },
   containerShift: {
@@ -75,20 +76,19 @@ class ApplicationRoot extends React.PureComponent {
   }
 
   handleFetchUserProfile = () => {
-    const { fetchUserProfile } = this.props;
+    const { fetchUserProfile, fetchMenu } = this.props;
 
     fetchUserProfile();
+    fetchMenu();
   }
 
-  handleNavigationMenuItemClick = (link) => {
+  handleNavigationMenuItemClick = (menu) => {
     const { location, history } = this.props;
 
-    if (link.url && link.url.length > 0) {
-      if (link.url !== location.pathname) {
-        history.push(link.url);
-      }
-    } else if (link.nested_links) {
-      this.handleToggleDrawerMenu(link.position);
+    if (menu.visibleChildren > 0) {
+      this.handleToggleDrawerMenu(menu.id);
+    } else if (menu.url && menu.url.length > 0 && menu.url !== location.pathname) {
+      history.push(menu.url);
     }
   };
 
@@ -101,26 +101,31 @@ class ApplicationRoot extends React.PureComponent {
   }
 
   renderContent = () => {
-    const { loaded, error } = this.props.userProfile;
+    const { userProfile, navigationMenu } = this.props;
 
-    if (loaded) {
+    if (navigationMenu.loaded && userProfile.loaded && navigationMenu.error === null && userProfile.error === null) {
       return <Routes />;
-    } else if (error !== null) {
-
+    } else if (userProfile.error !== null || navigationMenu.error !== null) {
       const actions = [
-        <Button key="retry_profile" variant="contained" color="primary" onClick={this.handleFetchUserProfile}>
+        <Button
+          key="retry_profile"
+          variant="contained"
+          color="primary"
+          disabled={userProfile.loading || navigationMenu.loading}
+          onClick={this.handleFetchUserProfile}>
           Re-Try
         </Button>
       ];
 
-      return <Error503 errors={error} actions={actions} />;
+      return <Error503 errors={userProfile.error || navigationMenu.error} actions={actions} />;
     }
+    return null;
   };
 
   render() {
-    const { navigationDrawer, userProfile, applicationLoader, classes } = this.props;
-    const { title, active, links } = this.props.navigationMenu;
-    const drawerOpen = userProfile.loaded && navigationDrawer.open;
+    const { navigationDrawer, navigationMenu, applicationLoader, classes } = this.props;
+    const drawerOpen = navigationMenu.loaded && navigationMenu.error === null && navigationDrawer.open;
+    const { title } = navigationMenu.active;
 
     return (
       <React.Fragment>
@@ -134,14 +139,13 @@ class ApplicationRoot extends React.PureComponent {
         <div className={classes.root}>
           <CssBaseline />
           <ApplicationBar
-            userProfile={userProfile}
+            navigationMenu={navigationMenu}
             title={title}
             drawerOpen={drawerOpen}
             handleToggleDrawer={this.handleToggleDrawer}
           />
           <Navigation
-            links={links}
-            activeLink={active}
+            navigationMenu={navigationMenu}
             navigationDrawer={navigationDrawer}
             drawerOpen={drawerOpen}
             handleNavigationMenuItemClick={this.handleNavigationMenuItemClick}
@@ -171,7 +175,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   toggleDrawer,
   toggleDrawerMenu,
-  fetchUserProfile
+  fetchUserProfile,
+  fetchMenu
 };
 
 export default withRouter(

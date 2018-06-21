@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Fade from '@material-ui/core/Fade';
 import { hasAbility } from 'libs/abilities';
 import { setAppLoading } from 'actions/application';
-import { setMenuTitle, setMenuActive } from 'actions/navigation';
+import { setMenuActive } from 'actions/navigation';
 import { Error401, Error404 } from 'components/errors';
 
 const withNavigationAuthorization = (WrappedComponent) => {
@@ -14,29 +14,28 @@ const withNavigationAuthorization = (WrappedComponent) => {
       history: PropTypes.object.isRequired,
       navigationMenu: PropTypes.object.isRequired,
       userAuthenticated: PropTypes.bool.isRequired,
-      setMenuTitle: PropTypes.func.isRequired,
       setMenuActive: PropTypes.func.isRequired,
       setAppLoading: PropTypes.func.isRequired
     };
 
     state = {
       authorized: false,
-      validLink: false
+      validMenu: false
     };
 
     componentDidMount() {
-      const { setMenuTitle, setMenuActive, userAuthenticated, match, history } = this.props;
+      const { setMenuActive, userAuthenticated, match, history } = this.props;
       const signInPath = '/user/sign-in';
-      const link = this.getActiveLink(match.path);
+      const menu = this.getActiveMenu(match.path);
       let authorized = false;
-      let validLink = false;
+      let validMenu = false;
 
-      if (link) {
-        validLink = true;
-        if (link.can && link.can.perform && link.can.on) {
-          authorized = hasAbility(link.can.perform, link.can.on);
+      if (menu) {
+        validMenu = true;
+        if (menu.authorize_perform && menu.authorize_on) {
+          authorized = hasAbility(menu.authorize_perform, menu.authorize_on);
         } else {
-          // if its a valid link, and it has no can permissions on it,
+          // if its a valid menu, and it has no can permissions on it,
           // go ahead and let user through
           authorized = true;
         }
@@ -44,54 +43,41 @@ const withNavigationAuthorization = (WrappedComponent) => {
       
       this.setState({
         authorized,
-        validLink
+        validMenu
       }, () => {
-        if (this.state.validLink) {
+        if (this.state.validMenu) {
           if (userAuthenticated && match.path === signInPath) {
             history.push('/');
           } else if (!userAuthenticated && !this.state.authorized && match.path !== signInPath) {
             history.push(signInPath);
-          } else if (link) {
-            if (link.full_title && link.full_title.length > 0) {
-              const full_title = [
-                ...link.full_title
-              ];
-  
-              if (full_title.length === 1) {
-                setMenuTitle(full_title.toString());
-              } else {
-                const endTitle = full_title.splice(-1, 1).toString();
-                setMenuTitle(full_title.join(' - ').concat(`: ${endTitle}`));
-              }
-            }
-  
-            setMenuActive(link.active);
+          } else if (menu) {
+            setMenuActive(menu.id, menu.title);
           }
         }
       });
     }
 
-    getActiveLink = (pathname) => {
-      const { links, links_mapping } = this.props.navigationMenu;
-      const link_map = links_mapping[pathname];
-      let link = null;
+    getActiveMenu = (pathname) => {
+      const { menus, mapping } = this.props.navigationMenu;
+      const menu_map = mapping[pathname];
+      let menu = null;
 
-      if (link_map) {
-        link_map.split(':').forEach((linkIndex, index) => {
+      if (menu_map) {
+        menu_map.split(':').forEach((menuIndex, index) => {
           if (index === 0) {
-            link = links[linkIndex];
+            menu = menus[menuIndex];
           } else {
-            link = link.nested_links[linkIndex];
+            menu = menu.children[menuIndex];
           }
         });
       }
   
-      return link;
+      return menu;
     }
 
     render() {
-      const { navigationMenu, userAuthenticated, setMenuTitle, setMenuActive, ...other } = this.props;
-      const { authorized, validLink } = this.state;
+      const { navigationMenu, userAuthenticated, setMenuActive, ...other } = this.props;
+      const { authorized, validMenu } = this.state;
 
       if (authorized) {
         return (
@@ -101,7 +87,7 @@ const withNavigationAuthorization = (WrappedComponent) => {
             </div>
           </Fade>
         );
-      } else if (!validLink) {
+      } else if (!validMenu) {
         return <Error404 />;
       } else {
         return <Error401 />;
@@ -115,7 +101,6 @@ const withNavigationAuthorization = (WrappedComponent) => {
   });
   
   const mapDispatchToProps = {
-    setMenuTitle,
     setMenuActive,
     setAppLoading
   };

@@ -62,7 +62,7 @@ class ApplicationBar extends React.PureComponent {
 
   static propTypes = {
     title: PropTypes.string,
-    userProfile: PropTypes.object.isRequired,
+    navigationMenu: PropTypes.object.isRequired,
     drawerOpen: PropTypes.bool.isRequired,
     handleToggleDrawer: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
@@ -77,12 +77,12 @@ class ApplicationBar extends React.PureComponent {
   }
 
   render() {
-    const { title, userProfile, drawerOpen, classes } = this.props;
+    const { title, navigationMenu, drawerOpen, classes } = this.props;
 
     return (
       <AppBar className={classNames(classes.appBar, { [classes.appBarShift]: drawerOpen })}>
         <Toolbar disableGutters={!drawerOpen}>
-          <IconButton disabled={!userProfile.loaded} onClick={this.openDrawer} className={classNames(classes.drawerButton, { hidden: drawerOpen })} color="inherit" aria-label="Menu">
+          <IconButton disabled={!navigationMenu.loaded || navigationMenu.error !== null} onClick={this.openDrawer} className={classNames(classes.drawerButton, { hidden: drawerOpen })} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
           <Typography className={classNames({ [classes.titleShift]: drawerOpen })} variant="title" color="inherit" noWrap>

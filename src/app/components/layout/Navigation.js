@@ -40,7 +40,7 @@ const styles = (theme) => ({
 });
 
 const Navigation = (props) => {
-  const { links, activeLink, navigationDrawer, drawerOpen, classes, handleToggleDrawer, handleNavigationMenuItemClick } = props;
+  const { navigationMenu, navigationDrawer, drawerOpen, classes, handleToggleDrawer, handleNavigationMenuItemClick } = props;
 
   const drawerClasses = {
     paper: classes.drawerPaper
@@ -68,14 +68,13 @@ const Navigation = (props) => {
             </Typography>
           </div>
         </div>
-        <IconButton  onClick={handleCloseDrawer}>
+        <IconButton onClick={handleCloseDrawer}>
           <ChevronLeftIcon />
         </IconButton>
       </div>
       <Divider />
       <NavigationMenu
-        links={links}
-        activeLink={activeLink}
+        navigationMenu={navigationMenu}
         handleNavigationMenuItemClick={handleNavigationMenuItemClick}
         navigationDrawerOpenMenus={navigationDrawer.openMenus}
       />
@@ -99,8 +98,7 @@ const Navigation = (props) => {
 };
 
 Navigation.propTypes = {
-  links: PropTypes.array.isRequired,
-  activeLink: PropTypes.string.isRequired,
+  navigationMenu: PropTypes.object.isRequired,
   navigationDrawer: PropTypes.object.isRequired,
   drawerOpen: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,

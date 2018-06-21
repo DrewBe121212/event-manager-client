@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import { Error404, Error408 } from 'components/errors';
 
 const Loading = (props) => {
-
   const actions = [
     <Button variant="contained" color="primary" onClick={props.retry}>
       Re-Try

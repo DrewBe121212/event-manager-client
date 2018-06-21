@@ -11,7 +11,6 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import NavigationMenuItem from './NavigationMenuItem';
-import { hasAbility } from 'libs/abilities';
 
 const icons = {
   PersonOutline: PersonOutlineIcon,
@@ -29,73 +28,61 @@ const renderExpandIcon = (expanded) => {
 };
 
 const NavigationMenu = (props) => {
-  const { links, activeLink, handleNavigationMenuItemClick, navigationDrawerOpenMenus } = props;
+  const { navigationMenu, handleNavigationMenuItemClick, navigationDrawerOpenMenus } = props;
 
-  const renderNavigationMenuItem = (link, activeLink, nested = false, currentlyExpanded = false) => {
-    const LinkIcon = icons[link.icon];
+  const renderNavigationMenuItem = (menu, activeMenu, children = false, currentlyExpanded = false) => {
+    const MenuIcon = icons[menu.icon];
 
     return (
       <NavigationMenuItem
-        key={link.position}
-        link={link}
-        activeLink={activeLink}
+        key={menu.id}
+        menu={menu}
+        activeMenu={activeMenu}
         handleNavigationMenuItemClick={handleNavigationMenuItemClick}
       >
-        {LinkIcon &&
+        {MenuIcon &&
           <ListItemIcon>
-            <LinkIcon />
+            <MenuIcon />
           </ListItemIcon>
         }
-        <ListItemText inset primary={link.title} />
-        {nested && renderExpandIcon(currentlyExpanded)}
+        <ListItemText inset primary={menu.menu_title} />
+        {children && renderExpandIcon(currentlyExpanded)}
       </NavigationMenuItem>
     );
   };
 
-  const renderMenuItem = (link, activeLink) => {
-    const isAuthorizedLink = link.can && link.can.perform && link.can.on;
-    const hasNestedLinks = link.nested_links && !link.url && link.nested_links.length > 0 ? true : false;
-    const nestedLinks = hasNestedLinks && renderMenuList(link.nested_links, activeLink);
-    const hasVisibleNestedLinks = hasNestedLinks && (isAuthorizedLink || nestedLinks);
-    const currentlyExpanded = hasVisibleNestedLinks && navigationDrawerOpenMenus.indexOf(link.position) >= 0;
+  const renderMenuItem = (menu, activeMenu) => {
+    const hasChildren = menu.visibleChildren > 0 ? true : false;
+    const childMenus = hasChildren && renderMenuList(menu.children, activeMenu);
+    const currentlyExpanded = childMenus && navigationDrawerOpenMenus.indexOf(menu.id) >= 0;
 
-    if (!hasNestedLinks) {
-      return renderNavigationMenuItem(link, activeLink, false, false);
-    } else if (hasVisibleNestedLinks) {
+    if (!hasChildren) {
+      return renderNavigationMenuItem(menu, activeMenu, false, false);
+    } else {
       return (
-        <React.Fragment key={link.position}>
-          {renderNavigationMenuItem(link, activeLink, nestedLinks, currentlyExpanded)}
+        <React.Fragment key={menu.id}>
+          {renderNavigationMenuItem(menu, activeMenu, childMenus, currentlyExpanded)}
           <Collapse in={currentlyExpanded} timeout="auto" unmountOnExit>
-            {nestedLinks}
+            {childMenus}
           </Collapse>
         </React.Fragment>
       );
     }
   };
 
-  const renderMenuList = (links, activeLink) => {
-    let authorizedLinks = [];
+  const renderMenuList = (menus, activeMenu) => {
+    let menuList = [];
 
-    links.forEach((link) => {
-      const visible = link.visible || true;
-
-      if (visible) {
-        if (link.can && link.can.perform && link.can.on) {
-          const hasAuthorization = hasAbility(link.can.perform, link.can.on);
-
-          if (hasAuthorization) {
-            authorizedLinks.push(renderMenuItem(link, activeLink));
-          }
-        } else {
-          authorizedLinks.push(renderMenuItem(link, activeLink));
-        }
+    menus.forEach((menu) => {
+      if (menu.visible) {
+        menuList.push(renderMenuItem(menu, activeMenu));
       }
     });
 
-    if (authorizedLinks.length > 0) {
+    if (menuList.length > 0) {
       return (
         <MenuList>
-          {authorizedLinks}
+          {menuList}
         </MenuList>
       );
     }
@@ -103,12 +90,15 @@ const NavigationMenu = (props) => {
     return false;
   };
 
-  return renderMenuList(links, activeLink);
+  if (navigationMenu.loaded && navigationMenu.error === null) {
+    return renderMenuList(navigationMenu.menus, navigationMenu.active);
+  }
+
+  return null;
 };
 
 NavigationMenu.propTypes = {
-  links: PropTypes.array.isRequired,
-  activeLink: PropTypes.string.isRequired,
+  navigationMenu: PropTypes.object.isRequired,
   handleNavigationMenuItemClick: PropTypes.func.isRequired,
   navigationDrawerOpenMenus: PropTypes.array.isRequired
 };

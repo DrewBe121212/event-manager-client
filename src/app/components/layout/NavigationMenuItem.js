@@ -11,17 +11,17 @@ const styles = (theme) => ({
 });
 
 const NavigationMenuItem = (props) => {
-  const { link, activeLink, handleNavigationMenuItemClick, children, classes } = props;
+  const { menu, activeMenu, handleNavigationMenuItemClick, children, classes } = props;
 
   function handleClick() {
-    handleNavigationMenuItemClick(link);
+    handleNavigationMenuItemClick(menu);
   }
 
   return (
     <MenuItem 
       onClick={handleClick}
-      className={classNames({[classes.nested]: link.position.length > 1 })}
-      selected={link.position === activeLink}
+      className={classNames({[classes.nested]: menu.position.length > 1 })}
+      selected={menu.id === activeMenu.id}
     > 
       {children}
     </MenuItem>
@@ -29,8 +29,8 @@ const NavigationMenuItem = (props) => {
 };
 
 NavigationMenuItem.propTypes = {
-  link: PropTypes.object.isRequired,
-  activeLink: PropTypes.string.isRequired,
+  menu: PropTypes.object.isRequired,
+  activeMenu: PropTypes.object.isRequired,
   handleNavigationMenuItemClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   classes: PropTypes.object.isRequired
