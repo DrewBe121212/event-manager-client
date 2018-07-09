@@ -85,7 +85,7 @@ class ApplicationRoot extends React.PureComponent {
   handleNavigationMenuItemClick = (menu) => {
     const { location, history } = this.props;
 
-    if (menu.visibleChildren > 0) {
+    if (menu.visible_children > 0) {
       this.handleToggleDrawerMenu(menu.id);
     } else if (menu.url && menu.url.length > 0 && menu.url !== location.pathname) {
       history.push(menu.url);

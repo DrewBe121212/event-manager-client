@@ -25,14 +25,10 @@ const mapMenus = (menus, position = [], activeId = null) => {
     } else {
       menu.activeId = activeId;
     }
-    menu.visibleChildren = menu.children.length;
-        
+
     mapping[menu.url] = menuIndex.join(':');
 
-    if (menu.visibleChildren > 0) {
-      // calculate how many menu items are actually visible
-      menu.visibleChildren = menu.children.filter((menu) => menu.visible).length;
-
+    if (menu.visible_children >= 0) {
       mapping = Object.assign(mapping, mapMenus(menu.children, menuIndex));
     }
   });

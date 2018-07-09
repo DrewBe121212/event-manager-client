@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Fade from '@material-ui/core/Fade';
-import { hasAbility } from 'libs/abilities';
+import { pundit } from 'libs/pundit';
 import { setAppLoading } from 'actions/application';
 import { setMenuActive } from 'actions/navigation';
 import { Error401, Error404 } from 'components/errors';
@@ -33,7 +33,9 @@ const withNavigationAuthorization = (WrappedComponent) => {
       if (menu) {
         validMenu = true;
         if (menu.authorize_perform && menu.authorize_on) {
-          authorized = hasAbility(menu.authorize_perform, menu.authorize_on);
+          authorized = pundit[menu.authorize_on.concat('Policy')](menu.authorize_perform);
+          console.log(menu.authorize_on, menu.authorize_perform, authorized);
+
         } else {
           // if its a valid menu, and it has no can permissions on it,
           // go ahead and let user through

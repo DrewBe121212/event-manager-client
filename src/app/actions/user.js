@@ -8,7 +8,7 @@ import {
   FETCH_USER_PROFILE_FAILURE
 } from 'constants/user';
 import { SessionService } from 'api';
-import { formatAbilities } from 'libs/abilities';
+import { pundit } from 'libs/pundit';
 
 export const authenticateUser = (username, password) => ({
   types: [
@@ -33,11 +33,11 @@ export const fetchUserProfile = () => ({
   service: () => {
     const profile = SessionService.profile();
     profile.promise.then((response) => {
-      if (response && response.data && response.data.abilities) {
-        response.data.abilities = formatAbilities(response.data.abilities);
+      if (response && response.data && response.data.policies) {
+        pundit.setPolicies(response.data.policies);
       }
     }).catch((error) => {
-      
+      throw error;
     });
     return profile;
   },

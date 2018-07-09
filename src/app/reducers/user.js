@@ -20,16 +20,8 @@ const initialState = {
     first_name: null,
     middle_name: null,
     last_name: null,
-    sso: false,
-    active: false,
-    reset_password_sent_at: null,
     current_sign_in_at: null,
     last_sign_in_at: null,
-    confirmed_at: null,
-    confirmation_sent_at: null,
-    unconfirmed_email: null,
-    created_at: null,
-    updated_at: null,
     roles: [],
     error: null
   },
@@ -43,10 +35,7 @@ const initialState = {
     }
   },
   authorization: {
-    abilities: {
-      can: {},
-      cannot: {}
-    }
+    policies: {}
   }
 };
 
@@ -106,20 +95,12 @@ export const userReducer = createReducer(initialState, {
       first_name: payload.first_name || state.profile.first_name,
       middle_name: payload.middle_name || state.profile.middle_name,
       last_name: payload.last_name || state.profile.last_name,
-      sso: payload.sso || state.profile.sso,
-      active: payload.active || state.profile.active,
-      reset_password_sent_at: payload.reset_password_sent_at || state.profile.reset_password_sent_at,
       current_sign_in_at: payload.current_sign_in_at || state.profile.current_sign_in_at,
       last_sign_in_at: payload.last_sign_in_at || state.profile.last_sign_in_at,
-      confirmed_at: payload.confirmed_at || state.profile.confirmed_at,
-      confirmation_sent_at: payload.confirmation_sent_at || state.profile.confirmation_sent_at,
-      unconfirmed_email: payload.unconfirmed_email || state.profile.unconfirmed_email,
-      created_at: payload.created_at || state.profile.created_at,
-      updated_at: payload.updated_at || state.profile.updated_at,
       roles: payload.roles || state.profile.roles
     }),
     authorization: Object.assign({}, state.authorization, {
-      abilities: payload.abilities || state.authorization.abilities
+      policies: payload.policies || state.authorization.policies
     })
   })
 });

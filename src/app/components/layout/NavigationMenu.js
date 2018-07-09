@@ -52,7 +52,7 @@ const NavigationMenu = (props) => {
   };
 
   const renderMenuItem = (menu, activeMenu) => {
-    const hasChildren = menu.visibleChildren > 0 ? true : false;
+    const hasChildren = menu.visible_children > 0 ? true : false;
     const childMenus = hasChildren && renderMenuList(menu.children, activeMenu);
     const currentlyExpanded = childMenus && navigationDrawerOpenMenus.indexOf(menu.id) >= 0;
 

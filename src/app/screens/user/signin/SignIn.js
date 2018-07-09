@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import { hasAbility } from 'libs/abilities';
+import { pundit } from 'libs/pundit';
 import withNavigationAuthorization from 'hoc/withNavigationAuthorization';
 
 const styles = (theme) => ({
@@ -25,7 +25,7 @@ const styles = (theme) => ({
 const SignIn = ({ classes, match, history }) => {
   let options = [];
 
-  if (hasAbility('new', 'session_sso')) {
+  if (pundit.SessionPolicy('create?')) {
     options.push({
       key: 'osu',
       primary: 'OSU User Login',
@@ -37,7 +37,7 @@ const SignIn = ({ classes, match, history }) => {
     });
   }
 
-  if (hasAbility('new', 'session_guest')) {
+  if (pundit.SessionPolicy('create_sso?')) {
     options.push({
       key: 'guest',
       primary: 'Guest Login',
