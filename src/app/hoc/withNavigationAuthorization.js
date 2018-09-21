@@ -33,9 +33,8 @@ const withNavigationAuthorization = (WrappedComponent) => {
       if (menu) {
         validMenu = true;
         if (menu.authorize_perform && menu.authorize_on) {
-          authorized = pundit[menu.authorize_on.concat('Policy')](menu.authorize_perform);
-          console.log(menu.authorize_on, menu.authorize_perform, authorized);
-
+          //authorized = pundit[menu.authorize_on.concat('Policy')](menu.authorize_perform);
+          authorized = pundit.authorize(menu.authorize_on, menu.authorize_perform);
         } else {
           // if its a valid menu, and it has no can permissions on it,
           // go ahead and let user through

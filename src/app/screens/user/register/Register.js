@@ -2,26 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import RegisterForm from './RegisterForm';
 import withNavigationAuthorization from 'hoc/withNavigationAuthorization';
 
-class DailySchedule extends React.PureComponent {
-  static propTypes = {
-    
-  };
+const Register = () => (
+  <RegisterForm />
+);
 
-  state = {
-    events: []
-  }
-
-  render() {
-    return 'Daily Schedule';
-  }
-
-}
 
 const mapStateToProps = (state) => ({});
 
+const mapDispatchToProps = {};
+
 export default compose(
-  connect(mapStateToProps),
-  withNavigationAuthorization,
-)(DailySchedule);
+  connect(mapStateToProps, mapDispatchToProps),
+  withNavigationAuthorization
+)(Register);

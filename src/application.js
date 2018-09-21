@@ -13,10 +13,11 @@ import 'css/application.css';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#296A8A'
+      main: '#4b85a8'
     },
     secondary: {
-      main: '#679298'
+      main: '#d98100',
+      contrastText: '#FFFFFF'
     },
     error: {
       main: '#a83a01'

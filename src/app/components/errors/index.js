@@ -1,3 +1,4 @@
+export { Error } from './Error';
 export { ErrorMessage } from './ErrorMessage';
 export { Error401 } from './Error401';
 export { Error404 } from './Error404';

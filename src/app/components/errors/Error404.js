@@ -1,8 +1,8 @@
 import React from 'react';
-import { ErrorContainer } from './ErrorContainer';
+import { Error } from './Error';
 
 export const Error404 = (props) => (
-  <ErrorContainer title="Resource Not Found" {...props}>
+  <Error title="Resource Not Found" {...props}>
     The requested resource could not be found.
-  </ErrorContainer>
+  </Error>
 );

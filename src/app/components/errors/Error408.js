@@ -1,8 +1,8 @@
 import React from 'react';
-import { ErrorContainer } from './ErrorContainer';
+import { Error } from './Error';
 
 export const Error408 = (props) => (
-  <ErrorContainer title="Request Timeout" {...props}>
+  <Error title="Request Timeout" {...props}>
     This request took to long to process. 
-  </ErrorContainer>
+  </Error>
 );

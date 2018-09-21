@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 const styles = (theme) => ({
   appBar: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       transition: theme.transitions.create([
         'margin',
         'width'
@@ -22,7 +22,7 @@ const styles = (theme) => ({
     }
   },
   appBarShift: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       marginLeft: theme.drawer.width,
       width: `calc(100% - ${theme.drawer.width}px)`,
       transition: theme.transitions.create([
@@ -46,7 +46,7 @@ const styles = (theme) => ({
   },
   titleShift: {
     marginLeft: 5,
-    [theme.breakpoints.only('xs')]: {
+    [theme.breakpoints.only('sm')]: {
       marginLeft: theme.drawer.width + theme.spacing.unit,
       transition: theme.transitions.create([
         'margin'
@@ -59,7 +59,6 @@ const styles = (theme) => ({
 });
 
 class ApplicationBar extends React.PureComponent {
-
   static propTypes = {
     title: PropTypes.string,
     navigationMenu: PropTypes.object.isRequired,

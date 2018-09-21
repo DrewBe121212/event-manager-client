@@ -22,7 +22,7 @@ class ApplicationLoadingBar extends React.PureComponent {
       return {
         active: nextProps.applicationLoader.loading ? true : false,
         pastDelay: false
-      }
+      };
     }
     return null;
   }

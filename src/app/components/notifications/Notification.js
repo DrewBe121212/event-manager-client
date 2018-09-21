@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
-import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import ErrorIcon from '@material-ui/icons/Error';
+import HeroPaper from 'components/layout/HeroPaper';
 
 const variants = {
   default: {
@@ -18,10 +17,6 @@ const variants = {
 };
 
 const styles = (theme) => ({
-  paper: theme.mixins.gutters({
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
-  }),
   iconContainer: {
     alignSelf: 'flex-start'
   },
@@ -54,7 +49,7 @@ const NotificationComponent = ({ variant = 'default', title = null, actions = nu
 
   return (
     <Fade in={true}>
-      <Paper className={classNames(classes.paper, classes[variant])}>
+      <HeroPaper className={classes[variant]}>
         <div className={classes.contentContainer}>
           {variantType && variantType.icon &&
             <div className={classes.iconContainer}>
@@ -62,7 +57,7 @@ const NotificationComponent = ({ variant = 'default', title = null, actions = nu
             </div>
           }
           <div>
-            {title && <Typography color="inherit" variant="headline" component="h4">{title}</Typography>}
+            {title && <Typography variant="title" color="inherit" noWrap>{title}</Typography>}
             <Typography color="inherit" component="div">
               {children}
             </Typography>
@@ -76,14 +71,15 @@ const NotificationComponent = ({ variant = 'default', title = null, actions = nu
             </div>
           </div>
         }
-      </Paper>
+      </HeroPaper>
     </Fade>
   );
 };
 
 NotificationComponent.propTypes = {
+  variant: PropTypes.string,
   title: PropTypes.string,
-  errors: PropTypes.any,
+  actions: PropTypes.array,
   classes: PropTypes.object.isRequired,
   children: PropTypes.node
 };

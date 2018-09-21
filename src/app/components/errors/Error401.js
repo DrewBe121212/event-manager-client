@@ -1,9 +1,9 @@
 import React from 'react';
-import { ErrorContainer } from './ErrorContainer';
+import { Error } from './Error';
 
 export const Error401 = (props) => (
-  <ErrorContainer title="Unauthorized" {...props}>
+  <Error title="Unauthorized" {...props}>
     You are not authorized to access this resource.
-  </ErrorContainer>
+  </Error>
 );
 

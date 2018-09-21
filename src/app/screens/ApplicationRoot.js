@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import classNames from 'classnames';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
@@ -12,9 +12,8 @@ import ApplicationLoadingBar from 'components/layout/ApplicationLoadingBar';
 import ApplicationBar from 'components/layout/ApplicationBar';
 import Navigation from 'components/layout/Navigation';
 import { Error503 } from 'components/errors';
-import { toggleDrawer, toggleDrawerMenu } from 'actions/navigation';
+import { toggleDrawer, toggleDrawerMenu, fetchMenu } from 'actions/navigation';
 import { fetchUserProfile } from 'actions/user';
-import { fetchMenu } from 'actions/navigation';
 import Routes from 'screens/routes';
 import config from 'config';
 
@@ -31,7 +30,7 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.background.default,
     height: 'calc(100% - 56px)',
     marginTop: 56,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       marginLeft: -theme.drawer.width,
       height: 'calc(100% - 64px)',
       marginTop: 64,
@@ -43,7 +42,7 @@ const styles = (theme) => ({
   },
   containerShift: {
     marginLeft: 0,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen
@@ -51,7 +50,7 @@ const styles = (theme) => ({
     }
   },
   content: {
-    marginTop: theme.spacing.unit * 3,
+    paddingTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   }
@@ -68,6 +67,7 @@ class ApplicationRoot extends React.PureComponent {
     classes: PropTypes.object.isRequired,
     toggleDrawer: PropTypes.func.isRequired,
     toggleDrawerMenu: PropTypes.func.isRequired,
+    fetchMenu: PropTypes.func.isRequired,
     fetchUserProfile: PropTypes.func.isRequired
   };
 
@@ -144,6 +144,7 @@ class ApplicationRoot extends React.PureComponent {
             drawerOpen={drawerOpen}
             handleToggleDrawer={this.handleToggleDrawer}
           />
+          <ApplicationLoadingBar applicationLoader={applicationLoader} />
           <Navigation
             navigationMenu={navigationMenu}
             navigationDrawer={navigationDrawer}
@@ -152,7 +153,7 @@ class ApplicationRoot extends React.PureComponent {
             handleToggleDrawer={this.handleToggleDrawer} />
 
           <div className={classNames(classes.container, { [classes.containerShift]: drawerOpen })}>
-            <ApplicationLoadingBar applicationLoader={applicationLoader} />
+            
             <div className={classes.content}>
               {this.renderContent()}
             </div>

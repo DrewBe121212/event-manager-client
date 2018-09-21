@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import Loadable from 'hoc/Loadable';
-
-const LoadableSignInRoutes = Loadable({
-  loader: () => import('./signin/routes')
-});
+import Register from './register/Register';
+import GuestSignIn from './signin/GuestSignIn';
 
 const UserRoutes = ({ match }) => (
   <Switch>
-    <Route path={`${match.path}/sign-in`} component={LoadableSignInRoutes} />
+    <Route path={`${match.path}/register`} component={Register} />
+    <Route path={`${match.path}/sign-in`} component={GuestSignIn} />
   </Switch>
 );
 

@@ -6,7 +6,9 @@ export const getActionTypes = (action) => {
 
   if (action.type) {
     const { type } = action;
-    types = [type, `${type}${SUCCESS_SUFFIX}`, `${type}${ERROR_SUFFIX}`];
+    types = [
+      type, `${type}${SUCCESS_SUFFIX}`, `${type}${ERROR_SUFFIX}`
+    ];
   } else if (action.types) {
     types = action.types;
   } else {
@@ -14,4 +16,4 @@ export const getActionTypes = (action) => {
   }
 
   return types;
-}
+};

@@ -34,8 +34,7 @@ const mapMenus = (menus, position = [], activeId = null) => {
   });
 
   return mapping;
-}
-
+};
 
 const initialState = {
   menu: {

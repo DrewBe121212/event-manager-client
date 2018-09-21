@@ -3,38 +3,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { authenticateUser, resetAuthenticateUser } from 'actions/user';
 import GuestSignInForm from './GuestSignInForm';
 import withNavigationAuthorization from 'hoc/withNavigationAuthorization';
-import { ErrorMessage } from 'components/errors';
-import { Notification } from 'components/notifications';
 
-const styles = (theme) => ({
-  paper: theme.mixins.gutters({
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit
-  })
-});
-
-const gridSizes = {
-  xs: 12,
-  md: 8,
-  lg: 6,
-  xl: 4
-};
+const styles = (theme) => ({});
 
 class SignIn extends React.PureComponent {
   static propTypes = {
     userAuthentication: PropTypes.object.isRequired,
     authenticateUser: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    resetAuthenticateUser: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
   };
 
-   componentDidMount() {
+  componentDidMount() {
     const { resetAuthenticateUser } = this.props;
-    
+
     resetAuthenticateUser();
   }
 
@@ -50,32 +37,14 @@ class SignIn extends React.PureComponent {
   }
 
   render() {
-    const { userAuthentication, authenticateUser, classes } = this.props;
-    const { error } = userAuthentication.errors;
+    const { userAuthentication, authenticateUser } = this.props;
 
     return (
-      <React.Fragment>
-        {error &&
-          <Grid container justify="center">
-            <Grid item {...gridSizes}>
-              <Notification variant="alert">
-                <ErrorMessage message={error} />
-              </Notification>
-            </Grid>
-          </Grid>
-        }
-        <Grid container justify="center">
-          <Grid item {...gridSizes}>
-            <Paper className={classes.paper}>
-              <GuestSignInForm
-                userAuthentication={userAuthentication}
-                authenticateUser={authenticateUser}
-                handleCancel={this.handleCancel}
-              />
-            </Paper>
-          </Grid>
-        </Grid>
-      </React.Fragment>
+      <GuestSignInForm
+        userAuthentication={userAuthentication}
+        authenticateUser={authenticateUser}
+        handleCancel={this.handleCancel}
+      />
     );
   }
 }

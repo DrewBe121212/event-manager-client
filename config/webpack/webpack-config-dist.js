@@ -13,7 +13,7 @@ const PATHS = CONFIG.PATHS;
 module.exports = {
   entry: {
     app: [
-      'babel-polyfill',
+      '@babel/polyfill',
       PATHS.SRC + '/application.js'
     ]
   },

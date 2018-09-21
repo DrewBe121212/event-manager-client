@@ -1,21 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import Loadable from 'hoc/Loadable';
 
-const LoadableAdminAccount = Loadable({
-  loader: () => import('./AdminAccount')
-});
-
-const LoadableAdminAccounts = Loadable({
-  loader: () => import('./AdminAccounts')
-});
+import AdminAccount from './AdminAccount';
+import AdminAccounts from './AdminAccounts';
 
 const AdminAccountRoutes = ({ match }) => (
   <Switch>
-    <Route exact path={`${match.path}`} component={LoadableAdminAccounts} />
-    <Route exact path={`${match.path}/new`} component={LoadableAdminAccount} />
-    <Route exact path={`${match.path}/:id`} component={LoadableAdminAccount} />
+    <Route exact path={`${match.path}`} component={AdminAccounts} />
+    <Route exact path={`${match.path}/new`} component={AdminAccount} />
+    <Route exact path={`${match.path}/:id`} component={AdminAccount} />
   </Switch>
 );
 

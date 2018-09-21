@@ -23,9 +23,9 @@ const ErrorMessage = ({ message }) => {
   if (messages.length > 0) {
     return (
       <React.Fragment>
-        {messages.length === 1 ?
-          messages.toString() :
-          <ul>
+        {messages.length === 1 
+          ? messages.toString() 
+          : <ul>
             {messages.map((msg, index) => (
               <li key={index}>{msg}</li>
             ))}

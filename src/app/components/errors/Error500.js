@@ -1,8 +1,8 @@
 import React from 'react';
-import { ErrorContainer } from './ErrorContainer';
+import { Error } from './Error';
 
 export const Error500 = (props) => (
-  <ErrorContainer title="Internal Server Error" {...props}>
+  <Error title="Internal Server Error" {...props}>
     Whoops. Something went wrong while processing your request.
-  </ErrorContainer>
+  </Error>
 );

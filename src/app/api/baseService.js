@@ -30,7 +30,7 @@ class BaseService {
         }),
         cancel: (message) => source.cancel(message),
         isCancel: axios.isCancel
-      }
+      };
     }
   }
 

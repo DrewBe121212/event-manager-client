@@ -45,7 +45,6 @@ const Navigation = (props) => {
   const drawerClasses = {
     paper: classes.drawerPaper
   };
-
   
   function handleCloseDrawer() {
     handleToggleDrawer(false);
@@ -56,11 +55,11 @@ const Navigation = (props) => {
       <div className={classes.drawerHeader}>
         <div>
           <div>
-          <Link className={classes.title} to="/">
-            <Typography noWrap variant="subheading" color="inherit">
-              {config.APPLICATION.NAME}
-            </Typography>
-          </Link>
+            <Link className={classes.title} to="/">
+              <Typography noWrap variant="subheading" color="inherit">
+                {config.APPLICATION.NAME}
+              </Typography>
+            </Link>
           </div>
           <div>
             <Typography variant="caption" noWrap align="right" className={classes.environment}>
@@ -83,12 +82,12 @@ const Navigation = (props) => {
 
   return (
     <React.Fragment>
-      <Hidden only="xs">
+      <Hidden smDown>
         <Drawer variant="persistent" open={drawerOpen} classes={drawerClasses}>
           {drawer}
         </Drawer>
       </Hidden>
-      <Hidden smUp>
+      <Hidden mdUp>
         <Drawer variant="temporary" open={drawerOpen} onClose={handleCloseDrawer} ModalProps={{ keepMounted: true }}>
           {drawer}
         </Drawer>

@@ -60,12 +60,12 @@ const NavigationMenu = (props) => {
       return renderNavigationMenuItem(menu, activeMenu, false, false);
     } else {
       return (
-        <React.Fragment key={menu.id}>
+        <span key={menu.id}>
           {renderNavigationMenuItem(menu, activeMenu, childMenus, currentlyExpanded)}
           <Collapse in={currentlyExpanded} timeout="auto" unmountOnExit>
             {childMenus}
           </Collapse>
-        </React.Fragment>
+        </span>
       );
     }
   };

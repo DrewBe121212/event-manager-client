@@ -1,28 +1,22 @@
-import { Policies } from './policies';
-
 class Pundit {
-
   constructor() {
-    this.policies = new Policies();
+    this.policies = {};
   }
 
-  setPolicies = (policies) => {
-    this.policies.setPolicies(policies);
-  }
+  setPolicies = (policies = {}) => {
+    this.policies = policies;
+  };
 
+  authorize = (policy, method) => {
+    const policyName = policy.endsWith('Policy') ? policy : policy.concat('Policy');
+    const methods = this.policies[policyName];
+
+    if (methods) {
+      return methods.indexOf(method) >= 0;
+    }
+    
+    return false;
+  };
 }
 
-export const pundit = new Proxy(new Pundit(), {
-  get: (target, prop, receiver) => {
-    
-    if (prop in target) {
-      return Reflect.get(target, prop, receiver);
-    }
-
-    // policy specific check
-    return target.policies.policy(prop).authorize;
-  }
-});
-
-
-//pundit.MenuPolicy.authorize('index?')
+export const pundit = new Pundit();

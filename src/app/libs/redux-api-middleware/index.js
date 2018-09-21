@@ -1,7 +1,7 @@
 import { setAppLoading } from 'actions/application';
 import { getActionTypes } from './actionTypes';
 
-export const reduxApiMiddleware = store => next => action => {
+export const reduxApiMiddleware = (store) => (next) => (action) => {
   const service = action.service;
 
   if (service) {
@@ -42,7 +42,7 @@ export const reduxApiMiddleware = store => next => action => {
             payload: {
               error: 'Request was cancelled'
             }
-          })
+          });
         } else if (error.response) {
           store.dispatch({
             type: REQUEST_FAILURE,
@@ -69,6 +69,5 @@ export const reduxApiMiddleware = store => next => action => {
   } else {
     next(action);
   }
-}
-
+};
 
